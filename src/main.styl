@@ -1,0 +1,43 @@
+body
+  margin 0
+  background-color #000
+
+img
+  -webkit-user-drag none
+  user-drag none
+  user-select none
+
+::-webkit-scrollbar
+  width 7px
+  height 7px
+
+::-webkit-scrollbar-track
+  background #c6c6c6
+  margin 20px 0
+
+::-webkit-scrollbar-thumb
+  background #545454
+
+#app
+  overflow hidden
+  width 100vw
+  height 100vh
+  display flex
+  justify-content center
+  align-items center
+
+.slide-top-enter-active, .slide-top-leave-active
+  transition all 0.5s
+
+.slide-top-enter-from, .slide-top-leave-to
+  opacity 0
+  transform translateY(50%)
+
+.fade-enter-active, .fade-leave-active
+  transition all 0.2s
+
+.fade-enter-from, .fade-leave-to
+  opacity 0
+
+.fade-enter-to, .fade-leave-from
+  opacity 1
