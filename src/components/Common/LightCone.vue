@@ -21,7 +21,7 @@
     <div
       class="mask"
       :style="{
-        backgroundColor: image ? '' : 'transparent'
+        backgroundColor: image !== undefined ? '' : 'transparent'
       }"
     >
       <svg
@@ -30,7 +30,7 @@
         xmlns="http://www.w3.org/2000/svg"
         width="200"
         height="200"
-        v-if="!image"
+        v-if="image === undefined"
       >
         <path
           d="M409.6 409.6V102.4a102.4 102.4 0 1 1 204.8 0V409.6h307.2a102.4 102.4 0 1 1 0 204.8H614.4v307.2a102.4 102.4 0 1 1-204.8 0V614.4H102.4a102.4 102.4 0 1 1 0-204.8H409.6z"
@@ -67,10 +67,11 @@ defineProps<{
   transition 0.4s
   cursor pointer
 
-  &:hover
-    .image
-      mask-position top
-      -webkit-mask-position top
+  // 兼容存在问题
+  // &:hover
+  //   .image
+  //     mask-position top
+  //     -webkit-mask-position top
 
   .top
     top -20px
@@ -193,10 +194,11 @@ defineProps<{
     height 100%
     border 15px solid #d8cdd2
     box-sizing border-box
+    // 兼容存在问题
     // backface-visibility hidden
-    -webkit-mask linear-gradient(135deg, #000c 40%, #000, #000c 60%) 100% 100% / 250% 250%
-    mask-position bottom
-    -webkit-mask-position bottom
+    // -webkit-mask linear-gradient(135deg, #000c 40%, #000, #000c 60%) 100% 100% / 250% 250%
+    // mask-position bottom
+    // -webkit-mask-position bottom
     transition 0.4s
 
     img

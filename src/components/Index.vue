@@ -10,7 +10,19 @@
       />
     </div>
     <div class="right">
-      <Card name="添加光锥" />
+      <Card
+        v-for="card in data.lightCone"
+        :key="card.id"
+        :name="card.name || '未知光锥'"
+        :image="card.image || ''"
+        :level="card.level"
+        :type="card.type"
+        @click="setting.lightConeID = card.id"
+      />
+      <Card
+        name="添加光锥"
+        @click="addLightCone"
+      />
     </div>
   </div>
 </template>
@@ -19,21 +31,22 @@
 import { ref } from 'vue'
 import GroupBtn from './Common/GroupBtn.vue'
 import Card from './Common/Card.vue'
-
-const groupList: ('全部' | Fate)[] = [
-  '全部',
-  '毁灭',
-  '巡猎',
-  '智识',
-  '同谐',
-  '虚无',
-  '存护',
-  '丰饶',
-  '欢愉',
-  '繁育'
-]
+import { data, setting } from '@/stpre/data'
+import { fateList } from '@/assets/images'
 
 const select = ref('全部')
+const groupList: ('全部' | Fate)[] = ['全部', ...fateList]
+
+const addLightCone = () => {
+  const id = Date.now()
+  data.lightCone.push({
+    id,
+    name: '',
+    type: '欢愉',
+    level: 5
+  })
+  setting.lightConeID = id
+}
 </script>
 
 <style lang="stylus" scoped>
