@@ -74,6 +74,7 @@ defineProps<{
   //     -webkit-mask-position top
 
   .top
+    z-index 4
     top -20px
     left 15px
 
@@ -96,6 +97,7 @@ defineProps<{
       transform translate3d(calc(-50% - 50px), calc(-50% - 20px), 50px)
 
   .bottom
+    z-index 1
     top 70px
     left 75px
     transform translateZ(-150px) scaleX(0.95)
@@ -173,6 +175,7 @@ defineProps<{
       transform-origin top
 
   .mask
+    z-index 2
     display flex
     justify-content center
     align-items center
@@ -186,7 +189,7 @@ defineProps<{
     transform translateZ(-50px)
 
   .image
-    z-index 5
+    z-index 3
     position absolute
     top 0
     left 0
@@ -199,6 +202,7 @@ defineProps<{
     // -webkit-mask linear-gradient(135deg, #000c 40%, #000, #000c 60%) 100% 100% / 250% 250%
     // mask-position bottom
     // -webkit-mask-position bottom
+    transform translateZ(0)
     transition 0.4s
 
     img

@@ -1,130 +1,136 @@
 <template>
-  <div
-    v-if="setting.lightConeIndex !== -1"
-    class="show-view"
-    @click="elementShow.mask = !elementShow.mask"
-  >
+  <Transition name="fade">
     <div
-      class="effects"
-      ref="effectsDOm"
+      v-if="setting.lightConeIndex !== -1"
+      class="show-view"
+      @click="elementShow.mask = !elementShow.mask"
+      ref="viewDom"
     >
-      <div class="star-view"></div>
-      <Transition name="slide-top">
-        <div
-          class="mask-view"
-          v-show="data.lightCone[setting.lightConeIndex].image && elementShow.mask"
-        ></div>
-      </Transition>
-      <!-- <div class="light-view">\</div> -->
-    </div>
-    <Transition name="fade">
       <div
-        class="info"
-        @click.stop
-        v-if="data.lightCone[setting.lightConeIndex].image"
+        class="effects"
+        ref="effectsDOm"
       >
-        <img
-          src="@/assets/光锥.webp"
-          alt=""
-          class="label"
-        />
-        <div class="name-box">
+        <div class="star-view"></div>
+        <Transition name="slide-top">
+          <div
+            class="mask-view"
+            v-show="data.lightCone[setting.lightConeIndex].image && elementShow.mask"
+          ></div>
+        </Transition>
+        <div class="light-view">\</div>
+        <Transition name="fade">
           <img
-            :src="fateFullIcon[data.lightCone[setting.lightConeIndex].type]"
+            v-show="elementShow.extra"
+            src="@/assets/彩虹.webp"
             alt=""
-            class="type"
-            @click.stop="onTypeClick"
+            class="rainbow"
           />
-          <div class="name-content">
-            <div class="name">
-              <span
-                contenteditable
-                @keydown.enter.esc="blur"
-                @blur="updateName"
+        </Transition>
+      </div>
+      <Transition
+        name="fade"
+        appear
+      >
+        <div
+          class="info"
+          @click.stop
+          v-if="data.lightCone[setting.lightConeIndex].image"
+        >
+          <img
+            src="@/assets/光锥.webp"
+            alt=""
+            class="label"
+          />
+          <div class="name-box">
+            <img
+              :src="fateFullIcon[data.lightCone[setting.lightConeIndex].type]"
+              alt=""
+              class="type"
+              @click.stop="onTypeClick"
+            />
+            <div class="name-content">
+              <div class="name">
+                <span
+                  contenteditable
+                  @keydown.enter.esc="blur"
+                  @blur="updateName"
+                >
+                  {{ data.lightCone[setting.lightConeIndex].name }}
+                </span>
+                <img
+                  class="new"
+                  src="@/assets/new.webp"
+                  alt=""
+                  :class="[elementShow.new ? 'show' : 'hide']"
+                  @click.stop="elementShow.new = !elementShow.new"
+                />
+              </div>
+              <div
+                class="level"
+                @click.stop="onLevelClick"
               >
-                {{ data.lightCone[setting.lightConeIndex].name }}
-              </span>
-              <img
-                src="@/assets/new.webp"
-                alt=""
-                :class="[elementShow.new ? 'show' : 'hide']"
-                @click.stop="elementShow.new = !elementShow.new"
-              />
-            </div>
-            <div
-              class="level"
-              @click.stop="onLevelClick"
-            >
-              <img
-                v-for="(_, index) in data.lightCone[setting.lightConeIndex].level"
-                :key="index"
-                src="@/assets/星.webp"
-                alt=""
-              />
+                <img
+                  v-for="(_, index) in data.lightCone[setting.lightConeIndex].level"
+                  :key="index"
+                  src="@/assets/星.webp"
+                  alt=""
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </Transition>
-    <LightCone
-      class="light-cone"
-      @click.stop="onImageClick"
-      :image="data.lightCone[setting.lightConeIndex].image"
-    />
-    <div
-      class="back"
-      @click.stop="setting.lightConeID = undefined"
-    >
-      <svg
-        viewBox="0 0 1024 1024"
-        version="1.1"
-        xmlns="http://www.w3.org/2000/svg"
-        p-id="4215"
-        width="100"
-        height="100"
-        fill="currentColor"
+      </Transition>
+      <Transition
+        name="slide-left"
+        appear
       >
-        <path
-          d="M648 307.2H217.6l128-128c12.8-12.8 12.8-32 0-44.8-12.8-12.8-32-12.8-44.8 0L118.4 315.2c-6.4 6.4-9.6 14.4-9.6 22.4s3.2 16 9.6 22.4l180.8 180.8c12.8 12.8 32 12.8 44.8 0 12.8-12.8 12.8-32 0-44.8l-124.8-124.8h428.8c120 0 216 96 216 216s-96 216-216 216H320c-17.6 0-32 14.4-32 32s14.4 32 32 32h328c155.2 0 280-124.8 280-280s-124.8-280-280-280z"
-        ></path>
-      </svg>
+        <div class="extra">
+          <img
+            :src="extraImage"
+            alt=""
+            :class="[elementShow.extra ? 'show' : 'hide']"
+            @click.stop="elementShow.extra = !elementShow.extra"
+          />
+        </div>
+      </Transition>
+      <div
+        v-show="!setting.loading"
+        class="share"
+        @click.stop="onShareClick"
+      >
+        <Icon name="share" />
+      </div>
+      <LightCone
+        class="light-cone"
+        @click.stop="onImageClick"
+        :image="data.lightCone[setting.lightConeIndex].image"
+      />
+      <div
+        class="back"
+        @click.stop="setting.lightConeID = undefined"
+      >
+        <Icon name="back" />
+      </div>
     </div>
-  </div>
+  </Transition>
 </template>
 
 <script lang="ts" setup>
-import { nextTick, reactive, ref, watch } from 'vue'
+import { computed, nextTick, reactive, ref, watch } from 'vue'
 import LightCone from './Common/LightCone.vue'
-import { data, setting } from '@/stpre/data'
-import { fateFullIcon, fateList } from '@/assets/images'
+import { data, setting } from '@/store/data'
+import { fateFullIcon, fateList, imageCropper } from '@/assets/images'
+import { screenshot } from '@/assets/screenshot'
+import r from '@/assets/r.webp'
+import sr from '@/assets/sr.webp'
+import ssr from '@/assets/ssr.webp'
+import Icon from './Common/Icon.vue'
 
 const getRandom = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
-const compressImage = (file: File | Blob, width?: number) => {
-  return new Promise<string>((reslove) => {
-    const src = URL.createObjectURL(file)
-    const img = new Image()
-    img.src = src
-    img.onload = () => {
-      const canvas = document.createElement('canvas')
-      const ctx = canvas.getContext('2d')
-      if (!ctx) {
-        reslove('')
-        return
-      }
-
-      width = width ? (img.width < width ? img.width : width) : img.width
-      canvas.width = width
-      canvas.height = width * (img.height / img.width)
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
-      reslove(canvas.toDataURL('image/webp'))
-      URL.revokeObjectURL(src)
-    }
-  })
-}
-
+const viewDom = ref<HTMLElement | null>(null)
 const effectsDOm = ref<HTMLElement | null>(null)
 
 watch(
@@ -182,9 +188,23 @@ watch(
   }
 )
 
+const extraImage = computed(() => {
+  switch (data.lightCone[setting.lightConeIndex].level) {
+    case 3:
+      return r
+    case 4:
+      return sr
+    case 5:
+      return ssr
+    default:
+      return ''
+  }
+})
+
 const elementShow = reactive({
   mask: true,
-  new: false
+  new: false,
+  extra: true
 })
 
 const blur = (e: Event) => {
@@ -218,21 +238,21 @@ const onLevelClick = () => {
 }
 
 const onImageClick = () => {
-  setTimeout(() => {
-    const input = document.createElement('input')
-    input.type = 'file'
-    input.accept = 'image/*'
-    input.onchange = async () => {
-      if (input.files?.[0]) {
-        if (data.lightCone[setting.lightConeIndex].name === '') {
-          data.lightCone[setting.lightConeIndex].name =
-            input.files?.[0].name.split('.')[0] ?? '未知光锥'
-        }
-        data.lightCone[setting.lightConeIndex].image = await compressImage(input.files[0])
-      }
+  imageCropper({ aspectRatio: 0.7, maxWidth: 1280 }).then((res) => {
+    data.lightCone[setting.lightConeIndex].image = res.base64
+  })
+}
+
+const onShareClick = () => {
+  if (setting.loading) return
+
+  setting.loading = true
+  nextTick(() => {
+    if (viewDom.value) {
+      screenshot(viewDom.value)
     }
-    input.click()
-  }, 0)
+    setting.loading = false
+  })
 }
 </script>
 
@@ -297,6 +317,12 @@ const onImageClick = () => {
       bottom 0
       left 0
 
+    .rainbow
+      position absolute
+      right 0
+      bottom 400px
+      bottom 300px
+
   .info
     z-index 3
     display flex
@@ -304,6 +330,10 @@ const onImageClick = () => {
     position absolute
     top 45%
     left 280px
+
+    &:hover
+      .new
+        opacity 0.3
 
     .label
       width 210px
@@ -332,10 +362,6 @@ const onImageClick = () => {
           display flex
           align-items center
 
-          &:hover
-            img
-              opacity 0.3
-
           span
             font-size 60px
             min-width 30px
@@ -345,10 +371,10 @@ const onImageClick = () => {
             text-overflow ellipsis
             white-space nowrap
 
-          img
+          .new
             width 80px
             margin 5px 0 0 10px
-            transition 0.1s
+            transition 0.2s
             cursor pointer
 
         .level
@@ -358,6 +384,38 @@ const onImageClick = () => {
           img
             width 38px
             height 38px
+
+  .extra
+    z-index 4
+    position absolute
+    right 0
+    bottom 20%
+    cursor pointer
+
+    img
+      transition 0.2s
+
+    &:hover
+      img
+        opacity 0.3
+
+  .share
+    z-index 4
+    display flex
+    justify-content center
+    align-items center
+    position absolute
+    right 5%
+    bottom 5%
+    border-radius 50%
+    background #f2f2f4
+    width 90px
+    height 90px
+    cursor pointer
+    box-shadow 0 0 5px rgba(255, 255, 255, 0.8)
+
+    svg
+      margin 5px 5px 0 0
 
   .light-cone
     z-index 4

@@ -1,5 +1,6 @@
 import 欢愉 from '@/assets/欢愉.webp'
 import 繁育 from '@/assets/繁育.webp'
+import { cropperOpen } from '@/store/cropper'
 
 export const fateList = <const>[
   '毁灭',
@@ -37,4 +38,45 @@ export const fateFullIcon: FateIcon = {
   丰饶: 'https://patchwiki.biligame.com/images/sr/5/53/1okpzbf8i1jh38zh61oupczeytz45rg.png',
   欢愉,
   繁育
+}
+
+export const imageCompress = (file: File | Blob, width?: number) => {
+  return new Promise<string>((reslove) => {
+    const src = URL.createObjectURL(file)
+    const img = new Image()
+    img.src = src
+    img.onload = () => {
+      const canvas = document.createElement('canvas')
+      const ctx = canvas.getContext('2d')
+      if (!ctx) {
+        reslove('')
+        return
+      }
+
+      width = width ? (img.width < width ? img.width : width) : img.width
+      canvas.width = width
+      canvas.height = width * (img.height / img.width)
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
+      reslove(canvas.toDataURL('image/webp'))
+      URL.revokeObjectURL(src)
+    }
+  })
+}
+
+export const imageCropper = async (config?: { aspectRatio?: number; maxWidth?: number }) => {
+  return new Promise<{ base64: string; raw: File }>((resolve) => {
+    const el = document.createElement('input')
+    el.type = 'file'
+    el.accept = 'image/*'
+    el.onchange = async () => {
+      if (el.files?.[0]) {
+        const img = await imageCompress(el.files[0])
+        resolve({
+          base64: await cropperOpen(img, config),
+          raw: el.files[0]
+        })
+      }
+    }
+    el.click()
+  })
 }

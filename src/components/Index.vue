@@ -31,21 +31,24 @@
 import { ref } from 'vue'
 import GroupBtn from './Common/GroupBtn.vue'
 import Card from './Common/Card.vue'
-import { data, setting } from '@/stpre/data'
-import { fateList } from '@/assets/images'
+import { data, setting } from '@/store/data'
+import { fateList, imageCropper } from '@/assets/images'
 
 const select = ref('全部')
 const groupList: ('全部' | Fate)[] = ['全部', ...fateList]
 
 const addLightCone = () => {
-  const id = Date.now()
-  data.lightCone.push({
-    id,
-    name: '',
-    type: '欢愉',
-    level: 5
+  imageCropper({ aspectRatio: 0.7, maxWidth: 1280 }).then((res) => {
+    const id = Date.now()
+    data.lightCone.push({
+      id,
+      name: res.raw.name.split('.')[0] ?? '未知光锥' ?? '未知光锥',
+      image: res.base64,
+      type: '欢愉',
+      level: 5
+    })
+    setting.lightConeID = id
   })
-  setting.lightConeID = id
 }
 </script>
 
@@ -92,3 +95,4 @@ const addLightCone = () => {
     height 98%
     margin-right 50px
 </style>
+@/store/data

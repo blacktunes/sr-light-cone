@@ -33,11 +33,18 @@ img
   opacity 0
 
 .slide-top-enter-active, .slide-top-leave-active
-  transition all 0.5s
+  transition all 0.3s linear
 
 .slide-top-enter-from, .slide-top-leave-to
   opacity 0
   transform translateY(50%)
+
+.slide-left-enter-active, .slide-left-leave-active
+  transition all 0.3s
+  transition-delay 0.35s
+
+.slide-left-enter-from, .slide-left-leave-to
+  transform translateX(100%)
 
 .fade-enter-active, .fade-leave-active
   transition all 0.2s
