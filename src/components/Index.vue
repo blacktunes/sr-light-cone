@@ -1,5 +1,8 @@
 <template>
-  <div class="index">
+  <div
+    class="index"
+    @click.stop
+  >
     <div class="left">
       <GroupBtn
         v-for="name in groupList"
@@ -18,6 +21,7 @@
         :level="card.level"
         :type="card.type"
         @click="setting.lightConeID = card.id"
+        @delete="handelDelete(card.id)"
       />
       <Card
         name="添加光锥"
@@ -33,6 +37,7 @@ import GroupBtn from './Common/GroupBtn.vue'
 import Card from './Common/Card.vue'
 import { data, setting } from '@/store/data'
 import { fateList, imageCropper } from '@/assets/scripts/images'
+import { showConfirm } from '@/store/popup'
 
 const select = ref<'全部' | Fate>('全部')
 
@@ -40,11 +45,14 @@ type AllFateList = ['全部', ...typeof fateList]
 const groupList: AllFateList = ['全部', ...fateList]
 
 const lightConeList = computed(() => {
+  let list
   if (select.value === '全部') {
-    return data.lightCone
+    list = [...data.lightCone]
   } else {
-    return data.lightCone.filter((item) => item.type === select.value)
+    list = data.lightCone.filter((item) => item.type === select.value)
   }
+  list.sort((a, b) => b.time - a.time).sort((a, b) => b.level - a.level)
+  return list
 })
 
 const addLightCone = () => {
@@ -55,10 +63,24 @@ const addLightCone = () => {
       name: res.raw.name.split('.')[0] ?? '未知光锥' ?? '未知光锥',
       image: res.base64,
       type: select.value === '全部' ? '欢愉' : select.value,
-      level: 5
+      level: 5,
+      time: id
     })
     setting.lightConeID = id
   })
+}
+
+const handelDelete = (id: number) => {
+  const index = data.lightCone.findIndex((item) => item.id === id)
+  if (id !== -1) {
+    showConfirm({
+      title: '删除光锥',
+      text: ['是否删除该光锥？'],
+      fn: () => {
+        data.lightCone.splice(index, 1)
+      }
+    })
+  }
 }
 </script>
 
@@ -104,5 +126,10 @@ const addLightCone = () => {
     align-content flex-start
     height 98%
     margin-right 50px
+
+    &::-webkit-scrollbar-track
+      background #545454
+
+    &::-webkit-scrollbar-thumb
+      background #c6c6c6
 </style>
-@/store/data @/assets/scripts/images

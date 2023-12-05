@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "html-to-image": "^1.11.11",
+    "mitt": "^3.0.1",
     "vue": "^3.3.4",
     "vue-picture-cropper": "^0.7.0"
   },

@@ -1,7 +1,9 @@
 import { watch, nextTick, toRaw } from 'vue'
 import { data } from '@/store/data'
+import { setLoadingType } from './setup'
 
 const setLightConeWatch = () => {
+  setLoadingType('lightCone')
   watch(data.lightCone, () => {
     nextTick(() => {
       updateDB('lightCone', toRaw(data.lightCone))
@@ -55,5 +57,6 @@ export const getDB = () => {
 try {
   getDB()
 } catch (err) {
+  setLoadingType('lightCone', true)
   console.error(err)
 }

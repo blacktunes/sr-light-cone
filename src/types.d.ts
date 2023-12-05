@@ -7,4 +7,5 @@ interface LightCone {
   type: Fate
   level: 3 | 4 | 5
   image?: string
+  time: number
 }

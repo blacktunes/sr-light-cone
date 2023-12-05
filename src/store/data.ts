@@ -5,7 +5,7 @@ export const setting: {
   lightConeID?: number
   readonly lightConeIndex: number
 } = reactive({
-  loading: false,
+  loading: true,
   lightConeID: undefined,
   lightConeIndex: computed(() =>
     data.lightCone.findIndex((item) => item.id === setting.lightConeID)

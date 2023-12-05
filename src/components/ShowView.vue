@@ -3,7 +3,7 @@
     <div
       v-if="setting.lightConeIndex !== -1"
       class="show-view"
-      @click="elementShow.mask = !elementShow.mask"
+      @click.stop="elementShow.mask = !elementShow.mask"
       ref="viewDom"
     >
       <div
@@ -18,7 +18,12 @@
           ></div>
         </Transition>
         <div class="light-view">\</div>
-        <Transition name="fade">
+        <Transition
+          name="fade"
+          appear
+          appearActiveClass="fade-delay-enter-active"
+          appearFromClass="fade-delay-enter-from"
+        >
           <img
             v-show="elementShow.extra"
             src="@/assets/images/彩虹.webp"
@@ -50,11 +55,7 @@
             />
             <div class="name-content">
               <div class="name">
-                <span
-                  contenteditable
-                  @keydown.enter.esc="blur"
-                  @blur="updateName"
-                >
+                <span @click.stop="onNameClick">
                   {{ data.lightCone[setting.lightConeIndex].name }}
                 </span>
                 <img
@@ -124,6 +125,8 @@ import r from '@/assets/images/r.webp'
 import sr from '@/assets/images/sr.webp'
 import ssr from '@/assets/images/ssr.webp'
 import Icon from './Common/Icon.vue'
+import { emitter } from '@/assets/scripts/event'
+import { showInput } from '@/store/popup'
 
 const getRandom = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1) + min)
@@ -206,13 +209,21 @@ const elementShow = reactive({
   extra: true
 })
 
-const blur = (e: Event) => {
-  ;(e.target as HTMLElement).blur()
+const updateTime = () => {
+  data.lightCone[setting.lightConeIndex].time = Date.now()
 }
 
-const updateName = (e: Event) => {
-  const name = (e.target as HTMLElement).innerText
-  data.lightCone[setting.lightConeIndex].name = name.length > 0 ? name : '未知光锥'
+const onNameClick = async () => {
+  const name = await showInput({
+    title: '修改光锥名',
+    required: false,
+    defaultText: data.lightCone[setting.lightConeIndex].name,
+    placeholder: '未知光锥'
+  })
+  if (name && data.lightCone[setting.lightConeIndex].name !== name) {
+    data.lightCone[setting.lightConeIndex].name = name
+    updateTime()
+  }
 }
 
 const onTypeClick = () => {
@@ -227,6 +238,7 @@ const onTypeClick = () => {
       data.lightCone[setting.lightConeIndex].type = fateList[index]
     }
   }
+  updateTime()
 }
 
 const onLevelClick = () => {
@@ -234,11 +246,13 @@ const onLevelClick = () => {
   if (data.lightCone[setting.lightConeIndex].level > 5) {
     data.lightCone[setting.lightConeIndex].level = 3
   }
+  updateTime()
 }
 
 const onImageClick = () => {
   imageCropper({ aspectRatio: 0.7, maxWidth: 1280 }).then((res) => {
     data.lightCone[setting.lightConeIndex].image = res.base64
+    updateTime()
   })
 }
 
@@ -255,6 +269,7 @@ const onShareClick = () => {
     }, 200)
   })
 }
+emitter.on('screenshot', onShareClick)
 </script>
 
 <style lang="stylus" scoped>
@@ -365,6 +380,7 @@ const onShareClick = () => {
           align-items center
 
           span
+            height 85px
             font-size 60px
             min-width 30px
             max-width 600px
@@ -372,6 +388,10 @@ const onShareClick = () => {
             overflow hidden
             text-overflow ellipsis
             white-space nowrap
+            cursor pointer
+
+            &:hover
+              color #fccf73
 
           .new
             width 80px

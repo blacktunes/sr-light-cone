@@ -2,6 +2,7 @@
   <div
     class="card"
     :class="[level ? `level-${level}` : undefined]"
+    @contextmenu.prevent="image && type && level ? $emit('delete') : undefined"
   >
     <img
       :src="type ? fateIcon[type] : undefined"
@@ -25,23 +26,34 @@
       </div>
     </div>
     <div
-      v-if="level"
+      v-if="image && type && level"
       class="figure"
     >
       <div class="line"></div>
     </div>
+    <Icon
+      v-if="image && type && level"
+      class="del"
+      name="delete"
+      @click.stop="$emit('delete')"
+    />
   </div>
 </template>
 
 <script lang="ts" setup>
 import { fateIcon } from '@/assets/scripts/images'
 import LightCone from './LightCone.vue'
+import Icon from './Icon.vue'
 
 defineProps<{
   name: string
   image?: string
   level?: number
   type?: Fate
+}>()
+
+defineEmits<{
+  (event: 'delete'): void
 }>()
 </script>
 
@@ -103,6 +115,9 @@ defineProps<{
   &:hover
     border-color #fff
 
+    .del
+      opacity 1
+
   .fate
     z-index 2
     position absolute
@@ -159,5 +174,15 @@ defineProps<{
       bottom 12px
       border-top 4px solid rgba(255, 255, 255, 0.1)
       width 100%
+
+  .del
+    position absolute
+    top 30px
+    right 20px
+    color #ddd
+    opacity 0
+    cursor pointer
+
+    &:hover
+      opacity 1
 </style>
-@/assets/scripts/images
