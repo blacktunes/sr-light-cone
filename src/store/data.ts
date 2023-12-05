@@ -17,5 +17,3 @@ export const data = reactive<{
 }>({
   lightCone: []
 })
-
-console.log(setting.lightConeIndex)
