@@ -1,5 +1,5 @@
-import 欢愉 from '@/assets/欢愉.webp'
-import 繁育 from '@/assets/繁育.webp'
+import 欢愉 from '@/assets/images/欢愉.webp'
+import 繁育 from '@/assets/images/繁育.webp'
 import { cropperOpen } from '@/store/cropper'
 
 export const fateList = <const>[

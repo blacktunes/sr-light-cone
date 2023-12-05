@@ -19,16 +19,22 @@
           class="level-star"
           v-for="(_, index) in level"
           :key="index"
-          src="@/assets/星.webp"
+          src="@/assets/images/星.webp"
           alt=""
         />
       </div>
+    </div>
+    <div
+      v-if="level"
+      class="figure"
+    >
+      <div class="line"></div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { fateIcon } from '@/assets/images'
+import { fateIcon } from '@/assets/scripts/images'
 import LightCone from './LightCone.vue'
 
 defineProps<{
@@ -42,6 +48,7 @@ defineProps<{
 <style lang="stylus" scoped>
 .level-3
   &:before
+    z-index 1
     content ''
     box-sizing border-box
     position absolute
@@ -55,6 +62,7 @@ defineProps<{
 
 .level-4
   &:before
+    z-index 1
     content ''
     box-sizing border-box
     position absolute
@@ -68,6 +76,7 @@ defineProps<{
 
 .level-5
   &:before
+    z-index 1
     content ''
     box-sizing border-box
     position absolute
@@ -80,6 +89,7 @@ defineProps<{
     border-top-right-radius 50px
 
 .card
+  overflow hidden
   box-sizing border-box
   position relative
   margin 30px 20px
@@ -88,32 +98,27 @@ defineProps<{
   width 400px
   background-color rgba(255, 255, 255, 0.1)
   border-top-right-radius 50px
+  border 5px solid transparent
 
   &:hover
-    &:after
-      content ''
-      box-sizing border-box
-      position absolute
-      top -5px
-      right -5px
-      bottom -5px
-      left -5px
-      border 5px solid #fff
-      border-top-right-radius 50px
+    border-color #fff
 
   .fate
+    z-index 2
     position absolute
     top 30px
     left 30px
     width 60px
 
   .light-cone
+    z-index 2
     position absolute
     top 42%
     left 50%
     transform translate(-50%, -50%) rotate3d(0, -1, 1, 10deg) scale(0.3)
 
   .info
+    z-index 2
     display flex
     flex-direction column
     justify-content center
@@ -135,4 +140,24 @@ defineProps<{
       .level-star
         width 32px
         height 32px
+
+  .figure
+    box-sizing border-box
+    position absolute
+    right -60px
+    bottom 5px
+    width 200px
+    height 40px
+    transform rotate(-45deg)
+    border 4px solid rgba(255, 255, 255, 0.1)
+    border-left none
+    border-right none
+
+    .line
+      position absolute
+      right 0
+      bottom 12px
+      border-top 4px solid rgba(255, 255, 255, 0.1)
+      width 100%
 </style>
+@/assets/scripts/images

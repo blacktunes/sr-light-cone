@@ -32,7 +32,7 @@ import { ref } from 'vue'
 import GroupBtn from './Common/GroupBtn.vue'
 import Card from './Common/Card.vue'
 import { data, setting } from '@/store/data'
-import { fateList, imageCropper } from '@/assets/images'
+import { fateList, imageCropper } from '@/assets/scripts/images'
 
 const select = ref('全部')
 const groupList: ('全部' | Fate)[] = ['全部', ...fateList]
@@ -62,7 +62,7 @@ const addLightCone = () => {
   height 100%
   padding 100px 60px 60px 60px
   background #000
-  background-image url('@/assets/背景.webp')
+  background-image url('https://patchwiki.biligame.com/images/sr/2/29/tjd2rlq7gbac4k46mnum5fvtt1218r8.png')
   background-repeat no-repeat
   background-size cover
   box-shadow 0 0 20px 20px rgba(0, 0, 0, 0.7) inset
@@ -96,3 +96,4 @@ const addLightCone = () => {
     margin-right 50px
 </style>
 @/store/data
+@/assets/scripts/images

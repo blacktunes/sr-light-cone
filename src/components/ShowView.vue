@@ -21,7 +21,7 @@
         <Transition name="fade">
           <img
             v-show="elementShow.extra"
-            src="@/assets/彩虹.webp"
+            src="@/assets/images/彩虹.webp"
             alt=""
             class="rainbow"
           />
@@ -37,7 +37,7 @@
           v-if="data.lightCone[setting.lightConeIndex].image"
         >
           <img
-            src="@/assets/光锥.webp"
+            src="@/assets/images/光锥.webp"
             alt=""
             class="label"
           />
@@ -59,7 +59,7 @@
                 </span>
                 <img
                   class="new"
-                  src="@/assets/new.webp"
+                  src="@/assets/images/new.webp"
                   alt=""
                   :class="[elementShow.new ? 'show' : 'hide']"
                   @click.stop="elementShow.new = !elementShow.new"
@@ -72,7 +72,7 @@
                 <img
                   v-for="(_, index) in data.lightCone[setting.lightConeIndex].level"
                   :key="index"
-                  src="@/assets/星.webp"
+                  src="@/assets/images/星.webp"
                   alt=""
                 />
               </div>
@@ -94,7 +94,6 @@
         </div>
       </Transition>
       <div
-        v-show="!setting.loading"
         class="share"
         @click.stop="onShareClick"
       >
@@ -119,11 +118,11 @@
 import { computed, nextTick, reactive, ref, watch } from 'vue'
 import LightCone from './Common/LightCone.vue'
 import { data, setting } from '@/store/data'
-import { fateFullIcon, fateList, imageCropper } from '@/assets/images'
-import { screenshot } from '@/assets/screenshot'
-import r from '@/assets/r.webp'
-import sr from '@/assets/sr.webp'
-import ssr from '@/assets/ssr.webp'
+import { fateFullIcon, fateList, imageCropper } from '@/assets/scripts/images'
+import { screenshot } from '@/assets/scripts/screenshot'
+import r from '@/assets/images/r.webp'
+import sr from '@/assets/images/sr.webp'
+import ssr from '@/assets/images/ssr.webp'
 import Icon from './Common/Icon.vue'
 
 const getRandom = (min: number, max: number) => {
@@ -248,16 +247,19 @@ const onShareClick = () => {
 
   setting.loading = true
   nextTick(() => {
-    if (viewDom.value) {
-      screenshot(viewDom.value)
-    }
-    setting.loading = false
+    setTimeout(() => {
+      if (viewDom.value) {
+        screenshot(viewDom.value)
+      }
+      setting.loading = false
+    }, 200)
   })
 }
 </script>
 
 <style lang="stylus" scoped>
 .show-view
+  z-index 9
   overflow hidden
   position relative
   width 100%
@@ -281,7 +283,7 @@ const onShareClick = () => {
     bottom 0
     left 0
     background #000
-    background-image url('@/assets/背景.webp')
+    background-image url('@/assets/images/背景.webp')
     background-repeat no-repeat
     background-size cover
     opacity 0.4
@@ -480,3 +482,4 @@ const onShareClick = () => {
   100%
     opacity 0
 </style>
+@/assets/scripts/images@/assets/scripts/screenshot

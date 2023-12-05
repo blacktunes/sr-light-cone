@@ -4,20 +4,11 @@
     :class="{ highlight }"
   >
     <div class="icon">
-      <svg
+      <Icon
         v-if="type === '全部'"
         class="svg"
-        viewBox="0 0 1029 1024"
-        version="1.1"
-        xmlns="http://www.w3.org/2000/svg"
-        width="70"
-        height="70"
-        fill="#fff"
-      >
-        <path
-          d="M995.744138 345.104972L797.733088 543.116022c-33.944751 33.944751-90.519337 33.944751-124.464089 0L480.915408 345.104972c-33.944751-33.944751-33.944751-90.519337 0-124.464088L678.926458 22.629834c33.944751-33.944751 90.519337-33.944751 124.464088 0L995.744138 226.298343c33.944751 28.287293 33.944751 84.861878 0 118.806629z m-50.917128-90.519337l-175.381215-175.381215c-16.972376-16.972376-39.60221-16.972376-56.574586 0L537.489994 254.585635c-16.972376 16.972376-16.972376 39.60221 0 56.574586l175.381215 175.381215c16.972376 16.972376 39.60221 16.972376 56.574586 0l175.381215-175.381215c11.314917-16.972376 11.314917-39.60221 0-56.574586zM362.108778 1024H84.893309c-45.259669 0-84.861878-39.60221-84.861879-84.861878v-277.21547c0-45.259669 39.60221-84.861878 84.861879-84.861879h277.215469c45.259669 0 84.861878 39.60221 84.861879 84.861879v277.21547c0 45.259669-33.944751 84.861878-84.861879 84.861878z m0-514.828729H84.893309C39.63364 509.171271 0.03143 469.569061 0.03143 424.309392v-282.872928C0.03143 96.176796 39.63364 56.574586 84.893309 56.574586h277.215469c45.259669 0 84.861878 39.60221 84.861879 84.861878v277.21547c0 50.917127-33.944751 90.519337-84.861879 90.519337z m237.61326 62.232044h277.21547c45.259669 0 84.861878 39.60221 84.861878 84.861878v277.21547c0 45.259669-39.60221 84.861878-84.861878 84.861878h-277.21547c-45.259669 0-84.861878-39.60221-84.861878-84.861878v-277.21547c0-45.259669 39.60221-84.861878 84.861878-84.861878z m0 0"
-        ></path>
-      </svg>
+        name="all"
+      />
       <img
         v-else
         class="img"
@@ -30,7 +21,8 @@
 </template>
 
 <script lang="ts" setup>
-import { fateIcon } from '@/assets/images'
+import { fateIcon } from '@/assets/scripts/images'
+import Icon from './Icon.vue'
 
 defineProps<{
   type: '全部' | Fate
@@ -50,7 +42,25 @@ defineProps<{
   user-select none
   cursor pointer
 
+  &:hover
+    .icon
+      background-color #3d414d
+      border-color #86888f
+
+    .name
+      color #e6e6e8
+
+  &:active
+    .icon
+      margin-right 30px
+      background-color #030306
+      border-color #fccf73
+
+    .name
+      color #fccf73
+
   .icon
+    position relative
     display flex
     align-items center
     justify-content center
@@ -58,25 +68,59 @@ defineProps<{
     height 110px
     margin-right 25px
     border-radius 50%
+    border 3px solid transparent
 
     .img
       width 85px
       height 85px
 
     .svg
+      color #fff
       transform rotate(90deg)
       margin 5px 0 0 5px
 
   .name
-    font-size 42px
+    font-size 44px
 
 .highlight
+  cursor auto !important
+
+  &:hover
+    .icon
+      background-color #fff
+
+    .name
+      color #e6e6e8
+
   .icon
     background-color #fff
+    margin-right 30px
+
+    &:after
+      content ''
+      position absolute
+      left 50%
+      bottom 50%
+      height 140%
+      width 140%
+      border-radius 50%
+      transform translate(-50%, 50%)
+      background url('@/assets/images/边框.webp')
+      background-size 100%
+      animation highlight-rotate 30s linear infinite
+      filter invert(1)
 
     .img, .svg
       filter invert(1)
 
   .name
     color #fff
+
+@keyframes highlight-rotate
+  from
+    transform translate(-50%, 50%) rotate(0deg)
+
+  to
+    transform translate(-50%, 50%) rotate(360deg)
 </style>
+@/assets/scripts/images
