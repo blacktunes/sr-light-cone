@@ -11,7 +11,7 @@
     </div>
     <div class="right">
       <Card
-        v-for="card in data.lightCone"
+        v-for="card in lightConeList"
         :key="card.id"
         :name="card.name || '未知光锥'"
         :image="card.image || ''"
@@ -28,14 +28,24 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import GroupBtn from './Common/GroupBtn.vue'
 import Card from './Common/Card.vue'
 import { data, setting } from '@/store/data'
 import { fateList, imageCropper } from '@/assets/scripts/images'
 
-const select = ref('全部')
-const groupList: ('全部' | Fate)[] = ['全部', ...fateList]
+const select = ref<'全部' | Fate>('全部')
+
+type AllFateList = ['全部', ...typeof fateList]
+const groupList: AllFateList = ['全部', ...fateList]
+
+const lightConeList = computed(() => {
+  if (select.value === '全部') {
+    return data.lightCone
+  } else {
+    return data.lightCone.filter((item) => item.type === select.value)
+  }
+})
 
 const addLightCone = () => {
   imageCropper({ aspectRatio: 0.7, maxWidth: 1280 }).then((res) => {
@@ -44,7 +54,7 @@ const addLightCone = () => {
       id,
       name: res.raw.name.split('.')[0] ?? '未知光锥' ?? '未知光锥',
       image: res.base64,
-      type: '欢愉',
+      type: select.value === '全部' ? '欢愉' : select.value,
       level: 5
     })
     setting.lightConeID = id
@@ -95,5 +105,4 @@ const addLightCone = () => {
     height 98%
     margin-right 50px
 </style>
-@/store/data
-@/assets/scripts/images
+@/store/data @/assets/scripts/images
