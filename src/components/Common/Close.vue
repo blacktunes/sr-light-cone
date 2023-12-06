@@ -8,7 +8,17 @@
   </div>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { computed } from 'vue';
+
+const props = withDefaults(defineProps<{
+  color?: string
+}>(), {
+  color: '#131313'
+})
+
+const bgColor = computed(() => props.color)
+</script>
 
 <style lang="stylus" scoped>
 .close
@@ -18,7 +28,7 @@
   cursor pointer
 
   div
-    background #131313
+    background v-bind(bgColor)
 
   div:nth-child(-n+4)
     position absolute

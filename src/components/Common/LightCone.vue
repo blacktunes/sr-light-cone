@@ -67,12 +67,6 @@ defineProps<{
   transition 0.4s
   cursor pointer
 
-  // 兼容存在问题
-  // &:hover
-  //   .image
-  //     mask-position top
-  //     -webkit-mask-position top
-
   .top
     z-index 4
     top -20px
@@ -82,7 +76,18 @@ defineProps<{
       background rgba(255, 255, 255, 0.5)
 
     .front
-      background-color rgba(255, 255, 255, 0.1)
+      // background-color rgba(255, 255, 255, 0.1)
+      position relative
+
+      &:after
+        content ''
+        position absolute
+        top -100%
+        left -100%
+        width 200%
+        height 200%
+        transition 0.3s
+        background linear-gradient(-45deg, transparent, transparent, rgba(255, 255, 255, 0.2), transparent, transparent)
 
     .back
       position absolute
@@ -113,6 +118,7 @@ defineProps<{
     width 100%
     height 100%
     transform-style preserve-3d
+    pointer-events none
 
     .front
       width 100%
@@ -197,11 +203,6 @@ defineProps<{
     height 100%
     border 15px solid #d8cdd2
     box-sizing border-box
-    // 兼容存在问题
-    // backface-visibility hidden
-    // -webkit-mask linear-gradient(135deg, #000c 40%, #000, #000c 60%) 100% 100% / 250% 250%
-    // mask-position bottom
-    // -webkit-mask-position bottom
     transform translateZ(0)
     transition 0.4s
 

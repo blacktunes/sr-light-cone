@@ -19,13 +19,11 @@
         </Transition>
         <div class="light-view">\</div>
         <Transition
-          name="fade"
           appear
           appearActiveClass="fade-delay-enter-active"
           appearFromClass="fade-delay-enter-from"
         >
           <img
-            v-show="elementShow.extra"
             src="@/assets/images/彩虹.webp"
             alt=""
             class="rainbow"
@@ -58,13 +56,14 @@
                 <span @click.stop="onNameClick">
                   {{ data.lightCone[setting.lightConeIndex].name }}
                 </span>
-                <img
+                <!-- 制作高清素材 -->
+                <!-- <img
                   class="new"
                   src="@/assets/images/new.webp"
                   alt=""
                   :class="[elementShow.new ? 'show' : 'hide']"
                   @click.stop="elementShow.new = !elementShow.new"
-                />
+                /> -->
               </div>
               <div
                 class="level"
@@ -98,7 +97,14 @@
         class="share"
         @click.stop="onShareClick"
       >
-        <Icon name="share" />
+        <Icon
+          name="ring"
+          class="ring"
+        />
+        <Icon
+          name="share"
+          class="icon"
+        />
       </div>
       <LightCone
         class="light-cone"
@@ -109,7 +115,7 @@
         class="back"
         @click.stop="setting.lightConeID = undefined"
       >
-        <Icon name="back" />
+        <Close color="#fff" />
       </div>
     </div>
   </Transition>
@@ -118,6 +124,7 @@
 <script lang="ts" setup>
 import { computed, nextTick, reactive, ref, watch } from 'vue'
 import LightCone from './Common/LightCone.vue'
+import Close from './Common/Close.vue'
 import { data, setting } from '@/store/data'
 import { fateFullIcon, fateList, imageCropper } from '@/assets/scripts/images'
 import { screenshot } from '@/assets/scripts/screenshot'
@@ -135,28 +142,56 @@ const getRandom = (min: number, max: number) => {
 const viewDom = ref<HTMLElement | null>(null)
 const effectsDOm = ref<HTMLElement | null>(null)
 
+const triangleColor = computed(() => {
+  switch (data.lightCone[setting.lightConeIndex]?.level) {
+    case 4:
+      return '#af86fe'
+    case 5:
+      return '#ffcf70'
+    default:
+      return '#fff'
+  }
+})
+
 watch(
   () => setting.lightConeIndex,
   async () => {
     if (setting.lightConeIndex === -1) return
     await nextTick()
     if (effectsDOm.value) {
-      const screenW = effectsDOm.value.offsetWidth
-      const screenH = effectsDOm.value.offsetHeight
-
       const starView = effectsDOm.value.querySelector('.star-view')
       if (starView) {
         for (let i = 0; i < 30; i++) {
           const star = document.createElement('div')
           star.className = 'star'
-          star.style.left = `${(Math.random() * screenW) | 0}px`
-          star.style.top = `${(Math.random() * screenH) | 0}px`
+          star.style.left = `${getRandom(5, 90)}%`
+          star.style.top = `${getRandom(5, 90)}%`
           star.style.transform = `scale(${Math.random()})`
           star.style.animationDelay = `${Math.random() * 3}s`
           star.style.animationDuration = `${getRandom(2, 5)}s`
           starView.appendChild(star)
         }
       }
+
+      if (starView) {
+        for (let i = 0; i < 10; i++) {
+          const triangleBox = document.createElement('div')
+          triangleBox.className = 'triangle'
+          triangleBox.style.left =
+            Math.random() > 0.5 ? `${getRandom(10, 40)}%` : `${getRandom(60, 90)}%`
+          triangleBox.style.top =
+            Math.random() > 0.5 ? `${getRandom(10, 40)}%` : `${getRandom(60, 90)}%`
+          triangleBox.style.transform = `scale(${Math.random()}) rotate(${getRandom(0, 90)}deg)`
+
+          const triangle = document.createElement('div')
+          triangle.style.animationDelay = `${Math.random() * 2}s`
+          triangle.style.animationDuration = `${getRandom(6, 10)}s`
+
+          triangleBox.appendChild(triangle)
+          starView.appendChild(triangleBox)
+        }
+      }
+
       // TODO 随机光效
       // const lightView = effectsDOm.value.querySelector('.light-view')
       // if (lightView) {
@@ -263,7 +298,7 @@ const onShareClick = () => {
   nextTick(() => {
     setTimeout(() => {
       if (viewDom.value) {
-        screenshot(viewDom.value)
+        screenshot(viewDom.value, data.lightCone[setting.lightConeIndex].name)
       }
       setting.loading = false
     }, 200)
@@ -273,6 +308,8 @@ emitter.on('screenshot', onShareClick)
 </script>
 
 <style lang="stylus" scoped>
+@import '../assets/images/image.styl'
+
 .show-view
   z-index 9
   overflow hidden
@@ -298,7 +335,7 @@ emitter.on('screenshot', onShareClick)
     bottom 0
     left 0
     background #000
-    background-image url('@/assets/images/背景.webp')
+    background-image $background
     background-repeat no-repeat
     background-size cover
     opacity 0.4
@@ -313,11 +350,12 @@ emitter.on('screenshot', onShareClick)
 
     .star-view
       position absolute
-      top 0
-      right 0
-      bottom 0
-      left 0
-      animation rotate 300s linear infinite
+      top 50%
+      left 50%
+      width 100%
+      height 0
+      padding-bottom 100%
+      animation view-rotate 300s linear infinite
 
     .mask-view
       position absolute
@@ -339,6 +377,7 @@ emitter.on('screenshot', onShareClick)
       right 0
       bottom 400px
       bottom 300px
+      opacity 0.5
 
   .info
     z-index 3
@@ -422,6 +461,7 @@ emitter.on('screenshot', onShareClick)
         opacity 0.3
 
   .share
+    position relative
     z-index 4
     display flex
     justify-content center
@@ -436,7 +476,11 @@ emitter.on('screenshot', onShareClick)
     cursor pointer
     box-shadow 0 0 5px rgba(255, 255, 255, 0.8)
 
-    svg
+    .ring
+      position absolute
+      z-index -1
+
+    .icon
       margin 5px 5px 0 0
 
   .light-cone
@@ -445,6 +489,12 @@ emitter.on('screenshot', onShareClick)
 
     &:hover
       transform rotate3d(1, -1, 1, 10deg) scale(0.7)
+
+      :deep(.top)
+        .front
+          &:after
+            top 0
+            left 0
 
   .back
     z-index 9
@@ -456,12 +506,12 @@ emitter.on('screenshot', onShareClick)
     cursor pointer
     transition 0.2s
 
-@keyframes rotate
+@keyframes view-rotate
   0%
-    transform rotate(0deg)
+    transform translate(-50%, -50%) rotate(0deg)
 
   100%
-    transform rotate(360deg)
+    transform translate(-50%, -50%) rotate(360deg)
 </style>
 
 <style lang="stylus">
@@ -474,6 +524,17 @@ emitter.on('screenshot', onShareClick)
   opacity 0
   box-shadow 0 0 5px 5px rgba(255, 255, 255, 0.7)
   animation flash linear infinite alternate
+
+.triangle
+  position absolute
+
+  div
+    width 70px
+    height 70px
+    background-color v-bind(triangleColor)
+    opacity 0
+    animation triangle linear infinite alternate
+    clip-path polygon(50% 50%, 0% 100%, 100% 100%)
 
 .light
   position absolute
@@ -501,5 +562,16 @@ emitter.on('screenshot', onShareClick)
 
   100%
     opacity 0
+
+@keyframes triangle
+  0%
+    opacity 0
+    transform rotate(0deg)
+
+  50%
+    opacity 0.5
+
+  100%
+    opacity 0
+    transform rotate(90deg)
 </style>
-@/assets/scripts/images@/assets/scripts/screenshot
