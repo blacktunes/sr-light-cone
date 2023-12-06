@@ -176,6 +176,7 @@ defineEmits<{
       width 100%
 
   .del
+    z-index 5
     position absolute
     top 30px
     right 20px

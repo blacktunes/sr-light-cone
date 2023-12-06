@@ -5,12 +5,19 @@
   >
     <div class="left">
       <GroupBtn
-        v-for="name in groupList"
-        :key="name"
-        :type="name"
-        :highlight="select === name"
-        @click="select = name"
+        type="全部"
+        :highlight="select === '全部'"
+        @click="select = '全部'"
       />
+      <div class="group-list">
+        <GroupBtn
+          v-for="name in fateList"
+          :key="name"
+          :type="name"
+          :highlight="select === name"
+          @click="select = name"
+        />
+      </div>
     </div>
     <div class="right">
       <Card
@@ -41,9 +48,6 @@ import { showConfirm } from '@/store/popup'
 
 const select = ref<'全部' | Fate>('全部')
 
-type AllFateList = ['全部', ...typeof fateList]
-const groupList: AllFateList = ['全部', ...fateList]
-
 const lightConeList = computed(() => {
   let list
   if (select.value === '全部') {
@@ -62,7 +66,7 @@ const addLightCone = () => {
       id,
       name: res.raw.name.split('.')[0] ?? '未知光锥' ?? '未知光锥',
       image: res.base64,
-      type: select.value === '全部' ? '欢愉' : select.value,
+      type: select.value === '全部' ? '开拓' : select.value,
       level: 5,
       time: id
     })
@@ -92,7 +96,7 @@ const handelDelete = (id: number) => {
   position absolute
   width 100%
   height 100%
-  padding 100px 60px 60px 60px
+  padding 60px
   background #000
   background-image url('https://patchwiki.biligame.com/images/sr/2/29/tjd2rlq7gbac4k46mnum5fvtt1218r8.png')
   background-repeat no-repeat
@@ -114,9 +118,22 @@ const handelDelete = (id: number) => {
     display flex
     flex-direction column
     width 350px
-    height 100%
-    padding 15px
-    margin-right 150px
+    height calc(100% - 60px)
+    margin 15px 150px 15px 15px
+
+    .group-list
+      flex 1
+      display flex
+      flex-direction column
+      overflow-x hidden
+      overflow-y auto
+      overflow-y overlay
+      scrollbar-gutter stable
+      scrollbar-width none
+
+      &::-webkit-scrollbar
+        width 0
+        height 0
 
   .right
     overflow auto
