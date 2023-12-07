@@ -1,10 +1,11 @@
 <template>
   <window
     style="z-index: 999"
-    confirm
+    :show="popup.confirm"
     :title="confirmData.title"
     width="50%"
-    :show="popup.confirm"
+    confirm
+    @close="popup.confirm = false"
   >
     <div class="text">
       <div

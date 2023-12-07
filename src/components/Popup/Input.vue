@@ -1,10 +1,11 @@
 <template>
   <window
-    :show="popup.input"
     style="z-index: 990"
-    confirm
+    :show="popup.input"
     :title="inputData.title"
     width="55%"
+    confirm
+    @close="popup.input = false"
   >
     <div class="text">
       <input
