@@ -116,6 +116,21 @@ const Icon = computed<JSX.Element>(() => {
           />
         </svg>
       )
+    case 'add':
+      return (
+        <svg
+          viewBox="0 0 1024 1024"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          width="200"
+          height="200"
+        >
+          <path
+            d="M409.6 409.6V102.4a102.4 102.4 0 1 1 204.8 0V409.6h307.2a102.4 102.4 0 1 1 0 204.8H614.4v307.2a102.4 102.4 0 1 1-204.8 0V614.4H102.4a102.4 102.4 0 1 1 0-204.8H409.6z"
+            fill="#5F5F5F"
+          ></path>
+        </svg>
+      )
     default:
       return <div></div>
   }

@@ -94,6 +94,7 @@
         </div>
       </Transition>
       <div
+        v-show="!setting.loading"
         class="share"
         @click.stop="onShareClick"
       >
@@ -112,6 +113,7 @@
         :image="data.lightCone[setting.lightConeIndex].image"
       />
       <div
+        v-show="!setting.loading"
         class="back"
         @click.stop="setting.lightConeID = undefined"
       >
@@ -289,12 +291,12 @@ const onShareClick = () => {
 
   setting.loading = true
   nextTick(() => {
-    setTimeout(() => {
-      if (viewDom.value) {
-        screenshot(viewDom.value, data.lightCone[setting.lightConeIndex].name)
-      }
-      setting.loading = false
-    }, 200)
+    if (viewDom.value) {
+      screenshot(viewDom.value, data.lightCone[setting.lightConeIndex].name)
+      setTimeout(() => {
+        setting.loading = false
+      }, 200)
+    }
   })
 }
 emitter.on('screenshot', onShareClick)
@@ -316,6 +318,9 @@ emitter.on('screenshot', onShareClick)
   box-shadow 0 0 20px 20px rgba(0, 0, 0, 0.7) inset
 
   &:hover
+    .share
+      opacity 1
+
     .back
       opacity 0.9
 
@@ -466,8 +471,10 @@ emitter.on('screenshot', onShareClick)
     background #f2f2f4
     width 90px
     height 90px
-    cursor pointer
     box-shadow 0 0 5px rgba(255, 255, 255, 0.8)
+    cursor pointer
+    opacity 0
+    transition 0.2s
 
     .ring
       position absolute
