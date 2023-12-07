@@ -3,7 +3,8 @@ import { reactive } from 'vue'
 export const popup = reactive({
   log: false,
   confirm: false,
-  input: false
+  input: false,
+  select: false
 })
 
 export const popupCallbalk = reactive<{
@@ -69,6 +70,32 @@ export const showInput = (config: {
     openWindow('input')
     inputData.fn = (str: string) => {
       resolve(str)
+    }
+  })
+}
+
+export const selectData = reactive<{
+  title: string
+  list: string[] | readonly string[]
+  select?: string
+  fn?: () => void
+}>({
+  title: '测试',
+  list: [],
+  select: undefined,
+  fn: undefined
+})
+
+export const showSelect = <T extends string[] | readonly string[]>(
+  list: T,
+  defaultText?: string
+) => {
+  return new Promise<T[number] | undefined>((resolve) => {
+    selectData.list = list
+    selectData.select = defaultText
+    openWindow('select')
+    selectData.fn = () => {
+      resolve(selectData.select)
     }
   })
 }

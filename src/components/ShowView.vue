@@ -133,7 +133,7 @@ import sr from '@/assets/images/sr.webp'
 import ssr from '@/assets/images/ssr.webp'
 import Icon from './Common/Icon.vue'
 import { emitter } from '@/assets/scripts/event'
-import { showInput } from '@/store/popup'
+import { showInput, showSelect } from '@/store/popup'
 
 const getRandom = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1) + min)
@@ -261,19 +261,12 @@ const onNameClick = async () => {
   }
 }
 
-const onTypeClick = () => {
-  let index = fateList.findIndex((item) => item === data.lightCone[setting.lightConeIndex].type)
-  if (index === -1) {
-    data.lightCone[setting.lightConeIndex].type = '欢愉'
-  } else {
-    index += 1
-    if (index > fateList.length - 1) {
-      data.lightCone[setting.lightConeIndex].type = fateList[0]
-    } else {
-      data.lightCone[setting.lightConeIndex].type = fateList[index]
-    }
+const onTypeClick = async () => {
+  const type = await showSelect(fateList, data.lightCone[setting.lightConeIndex].type)
+  if (type) {
+    data.lightCone[setting.lightConeIndex].type = type
+    updateTime()
   }
-  updateTime()
 }
 
 const onLevelClick = () => {

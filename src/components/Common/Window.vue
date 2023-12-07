@@ -4,8 +4,8 @@
     appear
   >
     <div
-      class="window"
       v-if="show"
+      class="window"
       @click="close"
     >
       <div
@@ -41,7 +41,7 @@
                 @click="close"
               />
             </div>
-            <div class="item">
+            <div class="content">
               <slot></slot>
             </div>
             <slot name="bottom"></slot>
@@ -134,6 +134,7 @@ message()
       top 0
 
     .wrapper
+      flex 1
       overflow hidden
       display flex
       width 100%
@@ -154,18 +155,19 @@ message()
           font-weight bold
           border-bottom 5px solid rgba(150, 150, 150, 0.5)
           margin 0 80px
-          padding 40px 0 30px 0
+          padding 40px 0 20px 0
           user-select none
 
           .close
             margin-left 20px
 
-        .item
+        .content
           overflow auto
           display flex
           flex-direction column
           margin 40px 80px
           max-height calc(100% - 80px * 2 - 40px - 30px)
+          height 100%
 
     .footer
       position relative
