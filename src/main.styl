@@ -1,3 +1,6 @@
+:root
+  --box-background-color #d8d8d8
+
 body
   margin 0
   background-color #000
@@ -26,12 +29,28 @@ img
   justify-content center
   align-items center
 
+.win-btn
+  width 600px
+
+.show
+  opacity 1 !important
+
+.hide
+  opacity 0
+
 .slide-top-enter-active, .slide-top-leave-active
-  transition all 0.5s
+  transition all 0.3s linear
 
 .slide-top-enter-from, .slide-top-leave-to
   opacity 0
   transform translateY(50%)
+
+.slide-left-enter-active, .slide-left-leave-active
+  transition all 0.3s
+  transition-delay 0.35s
+
+.slide-left-enter-from, .slide-left-leave-to
+  transform translateX(100%)
 
 .fade-enter-active, .fade-leave-active
   transition all 0.2s
@@ -40,4 +59,14 @@ img
   opacity 0
 
 .fade-enter-to, .fade-leave-from
+  opacity 1
+
+.fade-delay-enter-active
+  transition all 0.2s
+  transition-delay 0.35s
+
+.fade-delay-enter-from
+  opacity 0
+
+.fade-delay-enter-to
   opacity 1
