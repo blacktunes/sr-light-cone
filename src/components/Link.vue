@@ -3,7 +3,7 @@
     <div
       class="log"
       title="更新记录"
-      @click="openWindow('log')"
+      @click.stop="openWindow('log')"
     >
       <Icon name="log" />
     </div>
