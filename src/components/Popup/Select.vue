@@ -41,7 +41,7 @@
 <script lang="ts" setup>
 import Window from '@/components/Common/Window.vue'
 import Btn from '@/components/Common/Btn.vue'
-import { popup, selectData } from '@/store/popup'
+import { popup, popupCallbalk, selectData } from '@/store/popup'
 import { watch } from 'vue'
 
 watch(
@@ -63,7 +63,10 @@ const reset = () => {
 const onConfirmlClick = () => {
   selectData.fn?.()
   popup.select = false
+  return true
 }
+
+popupCallbalk.select = onConfirmlClick
 </script>
 
 <style lang="stylus" scoped>
