@@ -48,9 +48,9 @@ export const fateFullIcon: FateIcon = {
   繁育
 }
 
-export const imageCompress = (file: File | Blob, gif?: boolean, width?: number) => {
+export const imageCompress = (file: File | Blob, width?: number) => {
   return new Promise<string>((reslove) => {
-    if (gif) {
+    if (file.type === 'image/gif') {
       const reader = new FileReader()
       reader.onload = (e) => {
         reslove((e.target?.result as string) || '')
@@ -88,7 +88,7 @@ export const imageCropper = async (config?: { aspectRatio?: number; maxWidth?: n
       if (el.files?.[0]) {
         resolve({
           base64: await cropperOpen(
-            await imageCompress(el.files[0], el.files[0].type === 'image/gif'),
+            await imageCompress(el.files[0]),
             config
           ),
           raw: el.files[0]
