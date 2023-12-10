@@ -108,7 +108,7 @@ defineEmits<{
   cursor pointer
   height 630px
   width 400px
-  background-color rgba(255, 255, 255, 0.1)
+  background-color rgba(100, 100, 100, 0.1)
   border-top-right-radius 50px
   border 5px solid transparent
 

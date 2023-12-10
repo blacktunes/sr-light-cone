@@ -12,6 +12,11 @@ const handelBack = () => {
   }
 }
 
+document.addEventListener('click', (e) => {
+  if ((e.target as HTMLElement).tagName.toLowerCase() === 'a') return
+  closeWindow()
+})
+
 const hasPopup = () => {
   let key: keyof typeof popup
   for (key in popup) {

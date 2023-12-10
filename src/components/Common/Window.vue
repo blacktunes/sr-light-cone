@@ -6,7 +6,6 @@
     <div
       v-if="show"
       class="window"
-      @click="close"
     >
       <div
         class="box"
