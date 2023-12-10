@@ -145,7 +145,12 @@ defineEmits<{
     width 100%
 
     .name
+      overflow hidden
+      text-overflow ellipsis
+      white-space nowrap
       color #fff
+      width 90%
+      text-align center
       font-size 46px
       margin-bottom 20px
 
