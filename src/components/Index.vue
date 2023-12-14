@@ -21,13 +21,14 @@
     </div>
     <div class="right">
       <Card
-        v-for="card in lightConeList"
+        v-for="(card, index) in lightConeList"
         :key="card.id"
         :name="card.name || '未知光锥'"
         :image="card.image || ''"
         :level="card.level"
         :type="card.type"
-        @click="setting.lightConeID = card.id"
+        :viewed="card.viewed"
+        @click="[(setting.lightConeID = card.id), (lightConeList[index].viewed = true)]"
         @delete="handelDelete(card.id)"
       />
       <Card

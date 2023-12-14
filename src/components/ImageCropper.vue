@@ -63,7 +63,10 @@ const onCropper = async () => {
     )
   }
   cropperClose()
+  return true
 }
+
+cropperSetting.cb = onCropper
 </script>
 
 <style lang="stylus" scoped>

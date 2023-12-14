@@ -9,6 +9,12 @@
       alt=""
       class="fate"
     />
+    <img
+      v-if="image && type && level && !viewed"
+      class="new"
+      src="@/assets/images/new.webp"
+      alt=""
+    />
     <LightCone
       :image="image"
       class="light-cone"
@@ -16,12 +22,12 @@
     <div class="info">
       <div class="name">{{ name }}</div>
       <div class="level">
-        <img
-          class="level-star"
+        <Icon
           v-for="(_, index) in level"
           :key="index"
-          src="@/assets/images/星.webp"
-          alt=""
+          name="star"
+          width="32"
+          height="32"
         />
       </div>
     </div>
@@ -29,7 +35,9 @@
       v-if="image && type && level"
       class="figure"
     >
-      <div class="line"></div>
+      <div class="line-box">
+        <div class="line"></div>
+      </div>
     </div>
     <Icon
       v-if="image && type && level"
@@ -50,6 +58,7 @@ defineProps<{
   image?: string
   level?: number
   type?: Fate
+  viewed?: boolean
 }>()
 
 defineEmits<{
@@ -101,12 +110,11 @@ defineEmits<{
     border-top-right-radius 50px
 
 .card
-  overflow hidden
   box-sizing border-box
   position relative
   margin 30px 20px
   cursor pointer
-  height 630px
+  height 680px
   width 400px
   background-color rgba(100, 100, 100, 0.1)
   border-top-right-radius 50px
@@ -114,6 +122,7 @@ defineEmits<{
 
   &:hover
     border-color #fff
+    background-color rgba(100, 100, 100, 0.4)
 
     .del
       opacity 1
@@ -123,14 +132,21 @@ defineEmits<{
     position absolute
     top 30px
     left 30px
-    width 60px
+    width 65px
+
+  .new
+    z-index 9
+    position absolute
+    top -15px
+    right -15px
+    width 90px
 
   .light-cone
     z-index 2
     position absolute
-    top 42%
+    top 43%
     left 50%
-    transform translate(-50%, -50%) rotate3d(0, -1, 1, 10deg) scale(0.3)
+    transform translate(-50%, -50%) rotateX(5deg) rotateY(-5deg) rotate(15deg) scale(0.3)
 
   .info
     z-index 2
@@ -157,33 +173,37 @@ defineEmits<{
     .level
       height 32px
 
-      .level-star
-        width 32px
-        height 32px
-
   .figure
-    box-sizing border-box
+    overflow hidden
     position absolute
-    right -60px
-    bottom 5px
-    width 200px
-    height 40px
-    transform rotate(-45deg)
-    border 4px solid rgba(255, 255, 255, 0.1)
-    border-left none
-    border-right none
+    bottom 0
+    left 0
+    width 100%
+    height 100px
 
-    .line
+    .line-box
+      box-sizing border-box
       position absolute
-      right 0
-      bottom 12px
-      border-top 4px solid rgba(255, 255, 255, 0.1)
-      width 100%
+      right -60px
+      bottom 5px
+      width 200px
+      height 40px
+      transform rotate(-45deg)
+      border 4px solid rgba(255, 255, 255, 0.1)
+      border-left none
+      border-right none
+
+      .line
+        position absolute
+        right 0
+        bottom 12px
+        border-top 4px solid rgba(255, 255, 255, 0.1)
+        width 100%
 
   .del
     z-index 5
     position absolute
-    top 30px
+    top 25px
     right 20px
     color #ddd
     opacity 0
