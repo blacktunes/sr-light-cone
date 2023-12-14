@@ -6,11 +6,13 @@ export const cropper = reactive<{
   aspectRatio?: number
   maxWidth?: number
   fn?: (img: string) => void
+  cb?: () => Promise<boolean> 
 }>({
   show: false,
   img: '',
   aspectRatio: undefined,
-  fn: undefined
+  fn: undefined,
+  cb: undefined
 })
 
 export const cropperOpen = (

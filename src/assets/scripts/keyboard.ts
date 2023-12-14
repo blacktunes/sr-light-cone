@@ -27,7 +27,7 @@ const hasPopup = () => {
   return false
 }
 
-document.addEventListener('keydown', (e) => {
+document.addEventListener('keydown', async (e) => {
   if (setting.loading) return
   switch (e.key) {
     // 保存截图
@@ -39,6 +39,12 @@ document.addEventListener('keydown', (e) => {
       }
       return
     case 'Enter':
+      // 裁剪窗口
+      if (cropper.show && (await cropper.cb?.())) {
+        console.log(1)
+        e.preventDefault()
+        return
+      }
       // 确认窗口
       if (closeWindow(true)) {
         e.preventDefault()
