@@ -16,12 +16,12 @@
     <div class="info">
       <div class="name">{{ name }}</div>
       <div class="level">
-        <img
-          class="level-star"
+        <Icon
           v-for="(_, index) in level"
           :key="index"
-          src="@/assets/images/星.webp"
-          alt=""
+          name="star"
+          width="32"
+          height="32"
         />
       </div>
     </div>
@@ -156,10 +156,6 @@ defineEmits<{
 
     .level
       height 32px
-
-      .level-star
-        width 32px
-        height 32px
 
   .figure
     box-sizing border-box

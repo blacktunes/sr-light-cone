@@ -56,24 +56,22 @@
                 <span @click.stop="onNameClick">
                   {{ data.lightCone[setting.lightConeIndex].name }}
                 </span>
-                <!-- 制作高清素材 -->
-                <!-- <img
+                <img
                   class="new"
                   src="@/assets/images/new.webp"
                   alt=""
                   :class="[elementShow.new ? 'show' : 'hide']"
                   @click.stop="elementShow.new = !elementShow.new"
-                /> -->
+                />
               </div>
               <div
                 class="level"
                 @click.stop="onLevelClick"
               >
-                <img
+                <Icon
                   v-for="(_, index) in data.lightCone[setting.lightConeIndex].level"
                   :key="index"
-                  src="@/assets/images/星.webp"
-                  alt=""
+                  name="star"
                 />
               </div>
             </div>
@@ -314,7 +312,7 @@ emitter.on('screenshot', onShareClick)
   display flex
   justify-content center
   align-items center
-  background #000
+  background rgb(0, 0, 15)
   box-shadow 0 0 20px 20px rgba(0, 0, 0, 0.7) inset
 
   &:hover
@@ -420,7 +418,7 @@ emitter.on('screenshot', onShareClick)
             height 85px
             font-size 60px
             min-width 30px
-            max-width 600px
+            max-width 550px
             color #fff
             overflow hidden
             text-overflow ellipsis
@@ -431,7 +429,7 @@ emitter.on('screenshot', onShareClick)
               color #fccf73
 
           .new
-            width 80px
+            width 100px
             margin 5px 0 0 10px
             transition 0.2s
             cursor pointer
@@ -439,10 +437,6 @@ emitter.on('screenshot', onShareClick)
         .level
           margin 10px 0 5px 0
           cursor pointer
-
-          img
-            width 38px
-            height 38px
 
   .extra
     z-index 4
