@@ -1,25 +1,34 @@
 <template>
   <div class="link">
-    <div
-      class="log"
-      title="更新记录"
-      @click.stop="openWindow('log')"
-    >
-      <Icon name="log" />
-    </div>
     <a
       href="https://github.com/blacktunes/sr-light-cone"
       target="_blank"
     >
-      Github
+      <Icon
+        class="icon"
+        name="github"
+      />
     </a>
-    <span>·</span>
+    <div class="sep"></div>
     <a
       href="https://space.bilibili.com/1384118"
       target="_blank"
     >
-      BiliBili
+      <Icon
+        class="icon"
+        name="bilibili"
+      />
     </a>
+    <div class="sep"></div>
+    <div>
+      <Icon
+        style="margin-top: 5px"
+        class="icon"
+        title="更新记录"
+        @click.stop="openWindow('log')"
+        name="log"
+      />
+    </div>
   </div>
 </template>
 
@@ -31,39 +40,25 @@ import { openWindow } from '@/store/popup'
 <style lang="stylus" scoped>
 .link
   position absolute
-  bottom -80px
+  bottom 70px
+  right 70px
   display flex
-  width 100%
-  justify-content center
+  flex-direction column
+  justify-content flex-end
+  align-items center
+  box-sizing border-box
 
-  &:hover
-    .log
-      opacity 1
+  .sep
+    width 10px
+    height 10px
+    margin 20px 0
+    border-radius 50%
+    background #666
 
-  a, span
-    color #eee
-    font-size 50px
-    user-select none
-
-  a
-    text-decoration none
-
-  span
-    margin 0 10px
-
-  .log
-    position absolute
-    top 0
-    right 30px
-    display flex
-    justify-content center
-    align-items center
-    height 80px
-    width 80px
+  .icon
     color #eee
     opacity 0.3
     transition 0.2s
-    cursor pointer
 
     &:hover
       opacity 1
