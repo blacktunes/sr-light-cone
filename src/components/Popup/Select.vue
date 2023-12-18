@@ -91,7 +91,6 @@ popupCallbalk.select = onConfirmlClick
     border 2px solid transparent
     box-shadow 0px 0px 5px 0px rgba(0, 0, 0, 0.2)
     user-select none
-    cursor pointer
 
     &:hover
       border-color #aaa

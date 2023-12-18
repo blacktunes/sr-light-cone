@@ -58,7 +58,6 @@ defineProps<{
   height 1200px
   transform-style preserve-3d
   transition 0.4s
-  cursor pointer
 
   .top
     z-index 4

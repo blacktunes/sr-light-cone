@@ -34,7 +34,6 @@ defineProps<{
   background transparent !important
   border 3px solid #afafaf !important
   color #afafaf !important
-  cursor auto !important
 
   &:before
     display none
@@ -53,7 +52,6 @@ defineProps<{
   font-size 40px
   color #161616
   user-select none
-  cursor pointer
   border 5px solid #e0e0e0
 
   span
@@ -88,7 +86,6 @@ defineProps<{
     border-radius 50%
     background #0c0b07
     border 5px solid #b4a177
+    color #d2c2a0
 
-    :deep(path)
-      fill #d2c2a0
 </style>

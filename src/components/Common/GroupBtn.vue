@@ -40,7 +40,6 @@ defineProps<{
   margin-bottom 30px
   color #b4b5b9
   user-select none
-  cursor pointer
 
   &:hover
     .icon
@@ -83,8 +82,6 @@ defineProps<{
     font-size 44px
 
 .highlight
-  cursor auto !important
-
   &:hover
     .icon
       background-color #fff
@@ -123,4 +120,3 @@ defineProps<{
   to
     transform translate(-50%, 50%) rotate(360deg)
 </style>
-@/assets/scripts/images

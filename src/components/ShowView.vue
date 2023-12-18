@@ -403,7 +403,6 @@ emitter.on('screenshot', onShareClick)
         width 170px
         height 170px
         filter invert(1)
-        cursor pointer
 
       .name-content
         display flex
@@ -413,6 +412,7 @@ emitter.on('screenshot', onShareClick)
         .name
           display flex
           align-items center
+          user-select none
 
           span
             height 85px
@@ -423,7 +423,6 @@ emitter.on('screenshot', onShareClick)
             overflow hidden
             text-overflow ellipsis
             white-space nowrap
-            cursor pointer
 
             &:hover
               color #fccf73
@@ -432,18 +431,15 @@ emitter.on('screenshot', onShareClick)
             width 100px
             margin 5px 0 0 10px
             transition 0.2s
-            cursor pointer
 
         .level
           margin 10px 0 5px 0
-          cursor pointer
 
   .extra
     z-index 4
     position absolute
     right 0
     bottom 20%
-    cursor pointer
 
     img
       transition 0.2s
@@ -466,7 +462,6 @@ emitter.on('screenshot', onShareClick)
     width 90px
     height 90px
     box-shadow 0 0 5px rgba(255, 255, 255, 0.8)
-    cursor pointer
     opacity 0
     transition 0.2s
 
@@ -497,7 +492,6 @@ emitter.on('screenshot', onShareClick)
     top 30px
     right 50px
     opacity 0
-    cursor pointer
     transition 0.2s
 
 @keyframes view-rotate

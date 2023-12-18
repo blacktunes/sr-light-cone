@@ -25,8 +25,7 @@ const bgColor = computed(() => props.color)
   position relative
   width 75px
   height 75px
-  cursor pointer
-
+  
   div
     background v-bind(bgColor)
 
