@@ -55,7 +55,7 @@ for (const i in modules) {
 // 计算窗口尺寸
 const width = 3200
 const height = (width / 16) * 9
-const bottom = 100
+const bottom = 0
 const scale = ref(1)
 
 const shouldHorizontal = ref(false)

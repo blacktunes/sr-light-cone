@@ -113,7 +113,6 @@ defineEmits<{
   box-sizing border-box
   position relative
   margin 30px 20px
-  cursor pointer
   height 680px
   width 400px
   background-color rgba(100, 100, 100, 0.1)
@@ -207,8 +206,7 @@ defineEmits<{
     right 20px
     color #ddd
     opacity 0
-    cursor pointer
-
+    
     &:hover
       opacity 1
 </style>
