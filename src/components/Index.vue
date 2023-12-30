@@ -122,8 +122,8 @@ $top = 50px
     display flex
     flex-direction column
     width 350px
-    height s('calc(100% - %s)', $top * 2 + 15px)
-    margin $top + 15px 150px $top 15px
+    height s('calc(100% - %s)', $top * 2)
+    margin $top 150px $top 15px
 
     .group-list
       flex 1
@@ -134,7 +134,7 @@ $top = 50px
       overflow-y overlay
       scrollbar-gutter stable
       scrollbar-width none
-      mask-image linear-gradient(to bottom, transparent, #000 50px, #000 calc(100% - 50px), transparent)
+      mask-image linear-gradient(to bottom, transparent, #000 25px, #000 calc(100% - 25px), transparent)
 
       &::-webkit-scrollbar
         width 0

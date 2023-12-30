@@ -37,7 +37,7 @@ defineProps<{
   align-items center
   height 150px
   padding 10px 30px
-  margin-bottom 30px
+  margin 15px 0
   color #b4b5b9
   font-weight bold
   user-select none
