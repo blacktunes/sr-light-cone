@@ -60,8 +60,8 @@
                   class="new"
                   src="@/assets/images/new.webp"
                   alt=""
-                  :class="[elementShow.new ? 'show' : 'hide']"
-                  @click.stop="elementShow.new = !elementShow.new"
+                  :class="[data.lightCone[setting.lightConeIndex].new ? 'show' : 'hide']"
+                  @click.stop="onNewClick"
                 />
               </div>
               <div
@@ -240,7 +240,6 @@ const extraImage = computed(() => {
 
 const elementShow = reactive({
   mask: true,
-  new: false,
   extra: true
 })
 
@@ -258,6 +257,14 @@ const onNameClick = async () => {
   if (name && data.lightCone[setting.lightConeIndex].name !== name) {
     data.lightCone[setting.lightConeIndex].name = name
     updateTime()
+  }
+}
+
+const onNewClick = () => {
+  if (data.lightCone[setting.lightConeIndex].new) {
+    data.lightCone[setting.lightConeIndex].new = false
+  } else {
+    data.lightCone[setting.lightConeIndex].new = true
   }
 }
 
