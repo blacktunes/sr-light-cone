@@ -90,6 +90,8 @@ const handelDelete = (id: number) => {
 </script>
 
 <style lang="stylus" scoped>
+$top = 50px
+
 .index
   display flex
   box-sizing border-box
@@ -97,11 +99,12 @@ const handelDelete = (id: number) => {
   position absolute
   width 100%
   height 100%
-  padding 60px
+  padding 30px 60px
   background #000
   background-image url('https://patchwiki.biligame.com/images/sr/2/29/tjd2rlq7gbac4k46mnum5fvtt1218r8.png')
   background-repeat no-repeat
-  background-size cover
+  background-position 100% 0
+  background-size 103%
   box-shadow 0 0 20px 20px rgba(0, 0, 0, 0.7) inset
 
   &:before
@@ -119,8 +122,8 @@ const handelDelete = (id: number) => {
     display flex
     flex-direction column
     width 350px
-    height calc(100% - 60px)
-    margin 15px 150px 15px 15px
+    height s('calc(100% - %s)', $top * 2 + 15px)
+    margin $top + 15px 150px $top 15px
 
     .group-list
       flex 1
@@ -131,23 +134,35 @@ const handelDelete = (id: number) => {
       overflow-y overlay
       scrollbar-gutter stable
       scrollbar-width none
+      mask-image linear-gradient(to bottom, transparent, #000 50px, #000 calc(100% - 50px), transparent)
 
       &::-webkit-scrollbar
         width 0
         height 0
 
   .right
+    box-sizing border-box
     overflow auto
+    overflow-y scroll
     flex 1
     display flex
     flex-wrap wrap
     align-content flex-start
-    height 98%
-    margin-right 50px
+    height s('calc(100% - %s)', $top * 2 + 30px)
+    margin $top 35px $top + 30px 0
+    mask-image linear-gradient(to bottom, transparent, #000 30px, #000, #000 calc(100% - 30px), transparent), linear-gradient(to left, black, transparent 50px)
+    mask-size 100% 100%
+    mask-position 0 0, 100% 0
+    mask-repeat no-repeat, no-repeat
+
+    &::-webkit-scrollbar
+      width 12px
+      height 12px
 
     &::-webkit-scrollbar-track
       background #545454
+      margin 0
 
     &::-webkit-scrollbar-thumb
-      background #c6c6c6
+      background #c1c8d2
 </style>

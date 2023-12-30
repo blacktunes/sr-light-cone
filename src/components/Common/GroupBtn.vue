@@ -39,6 +39,7 @@ defineProps<{
   padding 10px 30px
   margin-bottom 30px
   color #b4b5b9
+  font-weight bold
   user-select none
 
   &:hover

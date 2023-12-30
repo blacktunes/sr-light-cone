@@ -25,7 +25,7 @@
         class="win-btn"
         name="取消"
         type="wrong"
-        @click="popup.input = false"
+        @click="popup.select = false"
       />
       <Btn
         class="win-btn"
