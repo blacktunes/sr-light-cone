@@ -25,7 +25,7 @@
         class="win-btn"
         name="取消"
         type="wrong"
-        @click="popup.input = false"
+        @click="popup.select = false"
       />
       <Btn
         class="win-btn"
@@ -84,7 +84,7 @@ popupCallbalk.select = onConfirmlClick
     justify-content space-between
     width 32%
     height 90px
-    font-size 50px
+    font-size 46px
     margin-bottom 30px
     padding 0 30px 0 20px
     background #eee

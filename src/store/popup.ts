@@ -80,17 +80,19 @@ export const selectData = reactive<{
   select?: string
   fn?: () => void
 }>({
-  title: '测试',
+  title: '',
   list: [],
   select: undefined,
   fn: undefined
 })
 
 export const showSelect = <T extends string[] | readonly string[]>(
+  title: string,
   list: T,
   defaultText?: string
 ) => {
   return new Promise<T[number] | undefined>((resolve) => {
+    selectData.title = title
     selectData.list = list
     selectData.select = defaultText
     openWindow('select')

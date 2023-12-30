@@ -60,8 +60,8 @@
                   class="new"
                   src="@/assets/images/new.webp"
                   alt=""
-                  :class="[elementShow.new ? 'show' : 'hide']"
-                  @click.stop="elementShow.new = !elementShow.new"
+                  :class="[data.lightCone[setting.lightConeIndex].new ? 'show' : 'hide']"
+                  @click.stop="onNewClick"
                 />
               </div>
               <div
@@ -240,7 +240,6 @@ const extraImage = computed(() => {
 
 const elementShow = reactive({
   mask: true,
-  new: false,
   extra: true
 })
 
@@ -261,8 +260,16 @@ const onNameClick = async () => {
   }
 }
 
+const onNewClick = () => {
+  if (data.lightCone[setting.lightConeIndex].new) {
+    data.lightCone[setting.lightConeIndex].new = false
+  } else {
+    data.lightCone[setting.lightConeIndex].new = true
+  }
+}
+
 const onTypeClick = async () => {
-  const type = await showSelect(fateList, data.lightCone[setting.lightConeIndex].type)
+  const type = await showSelect('修改命途', fateList, data.lightCone[setting.lightConeIndex].type)
   if (type) {
     data.lightCone[setting.lightConeIndex].type = type
     updateTime()

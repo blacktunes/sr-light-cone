@@ -40,8 +40,8 @@ import { openWindow } from '@/store/popup'
 <style lang="stylus" scoped>
 .link
   position absolute
-  bottom 70px
-  right 70px
+  bottom 110px
+  right 130px
   display flex
   flex-direction column
   justify-content flex-end

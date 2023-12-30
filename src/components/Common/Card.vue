@@ -112,12 +112,15 @@ defineEmits<{
 .card
   box-sizing border-box
   position relative
-  margin 30px 20px
-  height 680px
-  width 400px
+  margin 50px 20px 5px 20px
+  height 645px
+  width 360px
   background-color rgba(100, 100, 100, 0.1)
   border-top-right-radius 50px
   border 5px solid transparent
+
+  &:nth-child(-n+6)
+    margin-top 15px !important
 
   &:hover
     border-color #fff
@@ -145,7 +148,7 @@ defineEmits<{
     position absolute
     top 43%
     left 50%
-    transform translate(-50%, -50%) rotateX(5deg) rotateY(-5deg) rotate(15deg) scale(0.3)
+    transform translate(-50%, -50%) rotateX(5deg) rotateY(-5deg) rotate(15deg) scale(0.275)
 
   .info
     z-index 2

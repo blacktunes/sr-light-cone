@@ -19,5 +19,5 @@ interface LightCone {
   level: 3 | 4 | 5
   image?: string
   time: number
-  viewed?: boolean
+  new?: boolean
 }
