@@ -262,7 +262,7 @@ const onNameClick = async () => {
 }
 
 const onTypeClick = async () => {
-  const type = await showSelect(fateList, data.lightCone[setting.lightConeIndex].type)
+  const type = await showSelect('修改命途', fateList, data.lightCone[setting.lightConeIndex].type)
   if (type) {
     data.lightCone[setting.lightConeIndex].type = type
     updateTime()
