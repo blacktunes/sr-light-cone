@@ -69,7 +69,8 @@ const addLightCone = () => {
       image: res.base64,
       type: select.value === '全部' ? '开拓' : select.value,
       level: 5,
-      time: id
+      time: id,
+      new: true
     })
     setting.lightConeID = id
   })
