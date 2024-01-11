@@ -436,7 +436,7 @@ emitter.on('screenshot', onShareClick)
 
           .new
             width 100px
-            margin 5px 0 0 10px
+            transform translate(10px, 5px)
             transition 0.2s
 
         .level
