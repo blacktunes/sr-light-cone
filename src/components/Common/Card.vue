@@ -9,12 +9,7 @@
       alt=""
       class="fate"
     />
-    <img
-      v-if="image && type && level && !viewed"
-      class="new"
-      src="@/assets/images/new.webp"
-      alt=""
-    />
+
     <LightCone
       :image="image"
       class="light-cone"
@@ -44,6 +39,12 @@
       class="del"
       name="delete"
       @click.stop="$emit('delete')"
+    />
+    <img
+      v-if="image && type && level && !viewed"
+      class="new"
+      src="@/assets/images/new.webp"
+      alt=""
     />
   </div>
 </template>
@@ -136,13 +137,6 @@ defineEmits<{
     left 30px
     width 65px
 
-  .new
-    z-index 9
-    position absolute
-    top -15px
-    right -15px
-    width 90px
-
   .light-cone
     z-index 2
     position absolute
@@ -209,7 +203,19 @@ defineEmits<{
     right 20px
     color #ddd
     opacity 0
-    
+
     &:hover
       opacity 1
+
+      +.new
+        opacity 0
+
+  .new
+    z-index 9
+    position absolute
+    top -15px
+    right -15px
+    width 90px
+    transition 0.2s
+    pointer-events none
 </style>

@@ -75,7 +75,7 @@ popupCallbalk.select = onConfirmlClick
   display flex
   flex-wrap wrap
   align-content flex-start
-  margin 10px 0
+  margin 30px 0 10px 0
 
   .select
     box-sizing border-box
