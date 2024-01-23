@@ -1,5 +1,6 @@
-import { setting } from '@/store/data'
+import { data, setting } from '@/store/data'
 import { showConfirm } from '@/store/popup'
+import { IndexedDB } from './indexedDB'
 
 const loadingFlag = {
   lightCone: false
@@ -39,3 +40,16 @@ setTimeout(() => {
     })
   }
 }, 30 * 1000)
+
+new IndexedDB('sr-light-cone', '光锥')
+  .add({
+    data: data,
+    key: 'lightCone',
+    name: 'lightCone',
+    cb: () => setLoadingType('lightCone')
+  })
+  .save()
+  .catch((err) => {
+    setLoadingType('lightCone', true)
+    console.error(err)
+  })
