@@ -34,7 +34,7 @@
 
 <script lang="ts" setup>
 import Icon from './Common/Icon.vue'
-import { openWindow } from '@/store/popup'
+import { openWindow } from '@/assets/scripts/popup'
 </script>
 
 <style lang="stylus" scoped>

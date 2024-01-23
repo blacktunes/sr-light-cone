@@ -1,6 +1,6 @@
 import { data, setting } from '@/store/data'
-import { showConfirm } from '@/store/popup'
 import { IndexedDB } from './indexedDB'
+import { openWindow } from './popup'
 
 const loadingFlag = {
   lightCone: false
@@ -19,7 +19,7 @@ export const setLoadingType = (type: 'lightCone', error?: boolean) => {
   }
 
   if (Object.values(errorFlag).some((flag) => flag)) {
-    showConfirm({
+    openWindow('confirm', {
       title: '数据库初始化失败',
       text: ['光锥编辑器可以正常使用', '但是数据可能丢失且不会被保存']
     })
@@ -28,7 +28,7 @@ export const setLoadingType = (type: 'lightCone', error?: boolean) => {
 
 setTimeout(() => {
   if (Object.values(loadingFlag).some((flag) => !flag)) {
-    showConfirm({
+    openWindow('confirm', {
       title: '数据库加载异常',
       text: [
         '加载时间过长，可能是数据损坏',

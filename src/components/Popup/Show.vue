@@ -1,8 +1,9 @@
 <template>
   <Transition name="fade">
     <div
-      v-if="setting.lightConeIndex !== -1"
       class="show-view"
+      v-if="props.index !== -1 && currentLightCone"
+      :style="{ zIndex: 10 + index }"
       @click.stop="elementShow.mask = !elementShow.mask"
       ref="viewDom"
     >
@@ -14,7 +15,7 @@
         <Transition name="slide-top">
           <div
             class="mask-view"
-            v-show="data.lightCone[setting.lightConeIndex].image && elementShow.mask"
+            v-show="currentLightCone.image && elementShow.mask"
           ></div>
         </Transition>
         <div class="light-view">\</div>
@@ -37,7 +38,7 @@
         <div
           class="info"
           @click.stop
-          v-if="data.lightCone[setting.lightConeIndex].image"
+          v-if="currentLightCone.image"
         >
           <img
             src="@/assets/images/光锥.webp"
@@ -46,7 +47,7 @@
           />
           <div class="name-box">
             <img
-              :src="fateFullIcon[data.lightCone[setting.lightConeIndex].type]"
+              :src="fateFullIcon[currentLightCone.type]"
               alt=""
               class="type"
               @click.stop="onTypeClick"
@@ -54,13 +55,13 @@
             <div class="name-content">
               <div class="name">
                 <span @click.stop="onNameClick">
-                  {{ data.lightCone[setting.lightConeIndex].name }}
+                  {{ currentLightCone.name }}
                 </span>
                 <img
                   class="new"
                   src="@/assets/images/new.webp"
                   alt=""
-                  :class="[data.lightCone[setting.lightConeIndex].new ? 'show' : 'hide']"
+                  :class="[currentLightCone.new ? 'show' : 'hide']"
                   @click.stop="onNewClick"
                 />
               </div>
@@ -69,7 +70,7 @@
                 @click.stop="onLevelClick"
               >
                 <Icon
-                  v-for="(_, index) in data.lightCone[setting.lightConeIndex].level"
+                  v-for="(_, index) in currentLightCone.level"
                   :key="index"
                   name="star"
                 />
@@ -108,12 +109,12 @@
       <LightCone
         class="light-cone"
         @click.stop="onImageClick"
-        :image="data.lightCone[setting.lightConeIndex].image"
+        :image="currentLightCone.image"
       />
       <div
         v-show="!setting.loading"
         class="back"
-        @click.stop="setting.lightConeID = undefined"
+        @click.stop="close"
       >
         <Close color="#fff" />
       </div>
@@ -123,17 +124,36 @@
 
 <script lang="ts" setup>
 import { computed, nextTick, reactive, ref, watch } from 'vue'
-import LightCone from './Common/LightCone.vue'
-import Close from './Common/Close.vue'
-import { data, setting } from '@/store/data'
-import { fateFullIcon, fateList, imageCropper } from '@/assets/scripts/images'
+import LightCone from '../Common/LightCone.vue'
+import Close from '../Common/Close.vue'
+import { currentLightCone, setting } from '@/store/data'
+import { fateFullIcon, fateList } from '@/assets/scripts/images'
 import { screenshot } from '@/assets/scripts/screenshot'
 import r from '@/assets/images/r.webp'
 import sr from '@/assets/images/sr.webp'
 import ssr from '@/assets/images/ssr.webp'
-import Icon from './Common/Icon.vue'
+import Icon from '../Common/Icon.vue'
 import { emitter } from '@/assets/scripts/event'
-import { showInput, showSelect } from '@/store/popup'
+import { openWindow } from '@/assets/scripts/popup'
+
+const props = defineProps<{
+  name: string
+  index: number
+}>()
+watch(
+  () => props,
+  () => {
+    console.log(props.index)
+  }
+)
+
+const emits = defineEmits<{
+  (event: 'close', name: string): void
+}>()
+
+const close = () => {
+  emits('close', props.name)
+}
 
 const getRandom = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1) + min)
@@ -143,7 +163,7 @@ const viewDom = ref<HTMLElement | null>(null)
 const effectsDOm = ref<HTMLElement | null>(null)
 
 const triangleColor = computed(() => {
-  switch (data.lightCone[setting.lightConeIndex]?.level) {
+  switch (currentLightCone.value?.level) {
     case 4:
       return '#af86fe'
     case 5:
@@ -154,9 +174,9 @@ const triangleColor = computed(() => {
 })
 
 watch(
-  () => setting.lightConeIndex,
+  () => currentLightCone,
   async () => {
-    if (setting.lightConeIndex === -1) return
+    if (!currentLightCone.value) return
     await nextTick()
     if (effectsDOm.value) {
       const starView = effectsDOm.value.querySelector('.star-view')
@@ -226,7 +246,9 @@ watch(
 )
 
 const extraImage = computed(() => {
-  switch (data.lightCone[setting.lightConeIndex].level) {
+  if (!currentLightCone.value) return ''
+
+  switch (currentLightCone.value.level) {
     case 3:
       return r
     case 4:
@@ -244,49 +266,61 @@ const elementShow = reactive({
 })
 
 const updateTime = () => {
-  data.lightCone[setting.lightConeIndex].time = Date.now()
+  if (!currentLightCone.value) return
+
+  currentLightCone.value.time = Date.now()
 }
 
 const onNameClick = async () => {
-  const name = await showInput({
+  if (!currentLightCone.value) return
+
+  const name = await openWindow('input', {
     title: '修改光锥名',
     required: false,
-    defaultText: data.lightCone[setting.lightConeIndex].name,
+    defaultText: currentLightCone.value.name,
     placeholder: '未知光锥'
   })
-  if (name && data.lightCone[setting.lightConeIndex].name !== name) {
-    data.lightCone[setting.lightConeIndex].name = name
+  if (name && currentLightCone.value.name !== name) {
+    currentLightCone.value.name = name
     updateTime()
   }
 }
 
 const onNewClick = () => {
-  if (data.lightCone[setting.lightConeIndex].new) {
-    data.lightCone[setting.lightConeIndex].new = false
+  if (!currentLightCone.value) return
+
+  if (currentLightCone.value.new) {
+    currentLightCone.value.new = false
   } else {
-    data.lightCone[setting.lightConeIndex].new = true
+    currentLightCone.value.new = true
   }
 }
 
 const onTypeClick = async () => {
-  const type = await showSelect('修改命途', fateList, data.lightCone[setting.lightConeIndex].type)
+  if (!currentLightCone.value) return
+
+  const type = await openWindow('select', '修改命途', fateList, currentLightCone.value.type)
   if (type) {
-    data.lightCone[setting.lightConeIndex].type = type
+    currentLightCone.value.type = type as Fate
     updateTime()
   }
 }
 
 const onLevelClick = () => {
-  data.lightCone[setting.lightConeIndex].level += 1
-  if (data.lightCone[setting.lightConeIndex].level > 5) {
-    data.lightCone[setting.lightConeIndex].level = 3
+  if (!currentLightCone.value) return
+
+  currentLightCone.value.level += 1
+  if (currentLightCone.value.level > 5) {
+    currentLightCone.value.level = 3
   }
   updateTime()
 }
 
 const onImageClick = () => {
-  imageCropper({ aspectRatio: 0.7, maxWidth: 1280 }).then((res) => {
-    data.lightCone[setting.lightConeIndex].image = res.base64
+  openWindow('cropper', { aspectRatio: 0.7, maxWidth: 1280 }).then((res) => {
+    if (!currentLightCone.value) return
+
+    currentLightCone.value.image = res.base64
     updateTime()
   })
 }
@@ -297,7 +331,9 @@ const onShareClick = () => {
   setting.loading = true
   nextTick(() => {
     if (viewDom.value) {
-      screenshot(viewDom.value, data.lightCone[setting.lightConeIndex].name)
+      if (!currentLightCone.value) return
+
+      screenshot(viewDom.value, currentLightCone.value.name)
       setTimeout(() => {
         setting.loading = false
       }, 200)
@@ -308,7 +344,7 @@ emitter.on('screenshot', onShareClick)
 </script>
 
 <style lang="stylus" scoped>
-@import '../assets/images/image.styl'
+@import '../../assets/images/image.styl'
 
 .show-view
   z-index 9
@@ -570,3 +606,4 @@ emitter.on('screenshot', onShareClick)
     opacity 0
     transform rotate(90deg)
 </style>
+@/assets/scripts/image

@@ -2,7 +2,6 @@ import 开拓 from '@/assets/images/开拓.webp'
 import 欢愉 from '@/assets/images/欢愉.webp'
 import 记忆 from '@/assets/images/记忆.webp'
 import 繁育 from '@/assets/images/繁育.webp'
-import { cropperOpen } from '@/store/cropper'
 
 export const fateList = <const>[
   '开拓',
@@ -36,7 +35,7 @@ export const fateIcon: FateIcon = {
 
 export const fateFullIcon: FateIcon = {
   开拓: 'https://patchwiki.biligame.com/images/sr/7/7e/audd034jxzmfmfkkeluyzm4nz1cpogk.png',
-  毁灭: 'https://patchwiki.biligame.com/images/sr/7/7f/q9b09m1w8qsmmsx50gk36ruzi2t4njy.png',
+  毁灭: 'https://patchwiki.biligame.com/images/sr/d/dd/5d3peyjx2zx12z5do4z2s8yh00glp8j.png',
   巡猎: 'https://patchwiki.biligame.com/images/sr/c/cd/2zjsly4r0sjvl81p7u5v0kafsk5jfn2.png',
   智识: 'https://patchwiki.biligame.com/images/sr/3/3e/517a28zga8ufjxcujfqcs5ycsq75n8w.png',
   同谐: 'https://patchwiki.biligame.com/images/sr/4/44/l84guf6iv5iltvetpb6x53jlpo3340s.png',
@@ -48,12 +47,12 @@ export const fateFullIcon: FateIcon = {
   繁育
 }
 
-export const imageCompress = (file: File | Blob, width?: number) => {
-  return new Promise<string>((reslove) => {
+export const imageCompress = (file: File | Blob, maxWidth?: number) => {
+  return new Promise<string>((resolve) => {
     if (file.type === 'image/gif') {
       const reader = new FileReader()
       reader.onload = (e) => {
-        reslove((e.target?.result as string) || '')
+        resolve((e.target?.result as string) || '')
       }
       reader.readAsDataURL(file)
     } else {
@@ -64,37 +63,17 @@ export const imageCompress = (file: File | Blob, width?: number) => {
         const canvas = document.createElement('canvas')
         const ctx = canvas.getContext('2d')
         if (!ctx) {
-          reslove('')
+          resolve('')
           return
         }
 
-        width = width ? (img.width < width ? img.width : width) : img.width
-        canvas.width = width
-        canvas.height = width * (img.height / img.width)
+        maxWidth = maxWidth ? (img.width < maxWidth ? img.width : maxWidth) : img.width
+        canvas.width = maxWidth
+        canvas.height = maxWidth * (img.height / img.width)
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
-        reslove(canvas.toDataURL('image/webp'))
+        resolve(canvas.toDataURL('image/webp'))
         URL.revokeObjectURL(src)
       }
     }
-  })
-}
-
-export const imageCropper = async (config?: { aspectRatio?: number; maxWidth?: number }) => {
-  return new Promise<{ base64: string; raw: File }>((resolve) => {
-    const el = document.createElement('input')
-    el.type = 'file'
-    el.accept = 'image/*'
-    el.onchange = async () => {
-      if (el.files?.[0]) {
-        resolve({
-          base64: await cropperOpen(
-            await imageCompress(el.files[0]),
-            config
-          ),
-          raw: el.files[0]
-        })
-      }
-    }
-    el.click()
   })
 }

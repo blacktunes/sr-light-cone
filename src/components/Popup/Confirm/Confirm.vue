@@ -1,0 +1,88 @@
+<template>
+  <Transition name="fade">
+    <window
+      v-if="props.index !== -1"
+      :style="{ zIndex: 10 + index }"
+      :title="confirmData.title"
+      width="50%"
+      confirm
+      @close="close"
+    >
+      <div class="text">
+        <div
+          v-for="(text, index) in confirmData.text"
+          :key="index"
+          v-html="text"
+        ></div>
+      </div>
+      <template
+        #bottom
+        v-if="confirmData.tip"
+      >
+        <div class="tip">{{ confirmData.tip }}</div>
+      </template>
+      <template #footer>
+        <Btn
+          v-if="!confirmData.fn"
+          class="win-btn"
+          name="知道了"
+          @click="close"
+        />
+        <template v-else>
+          <Btn
+            class="win-btn"
+            name="取消"
+            type="wrong"
+            @click="close"
+          />
+          <Btn
+            class="win-btn"
+            name="确认"
+            type="check"
+            @click="onConfirml"
+          />
+        </template>
+      </template>
+    </window>
+  </Transition>
+</template>
+
+<script lang="ts" setup>
+import Window from '@/components/Common/Window.vue'
+import Btn from '@/components/Common/Btn.vue'
+import { confirmData } from './confirm'
+import { enterCallback } from '@/assets/scripts/popup'
+
+const props = defineProps<{
+  name: string
+  index: number
+}>()
+
+const emits = defineEmits<{
+  (event: 'close', name: string): void
+}>()
+
+const close = () => {
+  emits('close', props.name)
+}
+
+const onConfirml = async () => {
+  confirmData.fn?.()
+  close()
+  return true
+}
+
+enterCallback.confirm = onConfirml
+</script>
+
+<style lang="stylus" scoped>
+.text
+  text-align center
+  font-size 50px
+  margin 50px auto 80px auto
+
+.tip
+  text-align center
+  background #e4c680
+  padding 10px
+</style>

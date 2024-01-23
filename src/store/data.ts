@@ -3,13 +3,15 @@ import { computed, reactive } from 'vue'
 export const setting: {
   loading: boolean
   lightConeID?: number
-  readonly lightConeIndex: number
 } = reactive({
   loading: true,
   lightConeID: undefined,
-  lightConeIndex: computed(() =>
-    data.lightCone.findIndex((item) => item.id === setting.lightConeID)
-  )
+})
+
+export const currentLightCone = computed(() => {
+  const index = data.lightCone.findIndex((item) => item.id === setting.lightConeID)
+  if (index === -1) return
+  return data.lightCone[index]
 })
 
 export const data = reactive<{

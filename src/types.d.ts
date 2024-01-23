@@ -1,3 +1,5 @@
+type Unpacked<T> = T extends Promise<infer U> ? U : T
+
 /** 命途列表 */
 type Fate =
   | '开拓'

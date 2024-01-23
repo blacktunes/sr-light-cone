@@ -121,3 +121,4 @@ defineProps<{
   to
     transform translate(-50%, 50%) rotate(360deg)
 </style>
+@/assets/scripts/image

@@ -1,31 +1,13 @@
-import { cropper, cropperClose } from '@/store/cropper'
-import { setting } from '@/store/data'
-import { closeWindow, popup } from '@/store/popup'
+import { currentLightCone, setting } from '@/store/data'
+import { closeWindow, currentComponent, enterCallback } from './popup'
 import { emitter } from './event'
-
-const handelBack = () => {
-  if (closeWindow()) return
-
-  if (setting.lightConeID) {
-    setting.lightConeID = undefined
-    return
-  }
-}
 
 document.addEventListener('click', (e) => {
   if ((e.target as HTMLElement).tagName.toLowerCase() === 'a') return
-  closeWindow()
-})
-
-const hasPopup = () => {
-  let key: keyof typeof popup
-  for (key in popup) {
-    if (popup[key]) {
-      return true
-    }
+  if (currentComponent.value) {
+    closeWindow(currentComponent.value)
   }
-  return false
-}
+})
 
 document.addEventListener('keydown', async (e) => {
   if (setting.loading) return
@@ -34,28 +16,20 @@ document.addEventListener('keydown', async (e) => {
     case 's':
       if (!e.ctrlKey) return
       e.preventDefault()
-      if (setting.lightConeIndex !== -1 && !hasPopup()) {
+      if (currentLightCone.value && currentComponent.value === 'show') {
         emitter.emit('screenshot')
       }
       return
     case 'Enter':
-      // 裁剪窗口
-      if (cropper.show && (await cropper.cb?.())) {
-        console.log(1)
+      if (currentComponent.value && enterCallback[currentComponent.value]) {
         e.preventDefault()
-        return
-      }
-      // 确认窗口
-      if (closeWindow(true)) {
-        e.preventDefault()
-        return
+        enterCallback[currentComponent.value]?.()
       }
       return
     case 'Escape':
-      if (cropper.show) {
-        cropperClose()
-        return
+      if (currentComponent.value) {
+        closeWindow(currentComponent.value)
       }
-      handelBack()
+      return
   }
 })

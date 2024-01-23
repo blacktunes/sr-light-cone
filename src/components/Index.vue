@@ -28,7 +28,7 @@
         :level="card.level"
         :type="card.type"
         :viewed="!card.new"
-        @click="setting.lightConeID = card.id"
+        @click="openWindow('show', card.id)"
         @delete="handelDelete(card.id)"
       />
       <Card
@@ -44,8 +44,8 @@ import { computed, ref } from 'vue'
 import GroupBtn from './Common/GroupBtn.vue'
 import Card from './Common/Card.vue'
 import { data, setting } from '@/store/data'
-import { fateList, imageCropper } from '@/assets/scripts/images'
-import { showConfirm } from '@/store/popup'
+import { fateList } from '@/assets/scripts/images'
+import { openWindow } from '@/assets/scripts/popup'
 
 const select = ref<'全部' | Fate>('全部')
 
@@ -61,7 +61,7 @@ const lightConeList = computed(() => {
 })
 
 const addLightCone = () => {
-  imageCropper({ aspectRatio: 0.7, maxWidth: 1280 }).then((res) => {
+  openWindow('cropper', { aspectRatio: 0.7, maxWidth: 1280 }).then((res) => {
     const id = Date.now()
     data.lightCone.push({
       id,
@@ -79,7 +79,7 @@ const addLightCone = () => {
 const handelDelete = (id: number) => {
   const index = data.lightCone.findIndex((item) => item.id === id)
   if (id !== -1) {
-    showConfirm({
+    openWindow('confirm', {
       title: '删除光锥',
       text: ['是否删除该光锥？'],
       fn: () => {
@@ -143,8 +143,11 @@ $top = 50px
 
   .right
     box-sizing border-box
-    overflow auto
-    overflow-y scroll
+    overflow-x hidden
+    overflow-y auto
+    overflow-y overlay
+    scrollbar-gutter stable
+    scrollbar-width none
     flex 1
     display flex
     flex-wrap wrap
@@ -167,3 +170,4 @@ $top = 50px
     &::-webkit-scrollbar-thumb
       background #c1c8d2
 </style>
+@/assets/scripts/image
