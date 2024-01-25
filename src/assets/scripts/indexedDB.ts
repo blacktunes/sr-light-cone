@@ -17,8 +17,18 @@ export class IndexedDB {
   db?: IDBDatabase
 
   private index = 0
+  private doneList: Record<string, boolean> = {}
+  private doneCheck = (key: string) => {
+    this.doneList[key] = true
+    for (const i in this.DBList) {
+      if (!this.doneList[i]) return
+    }
+    this.cb?.()
+  }
+  private cb: ((value: void | PromiseLike<void>) => void) | undefined
 
   private setWatch = (key: string) => {
+    this.doneCheck(key)
     this.DBList[key]?.cb?.()
     watch(this.DBList[key].data[this.DBList[key].key], () => {
       nextTick(() => {
@@ -42,8 +52,18 @@ export class IndexedDB {
     name?: string
     cb?: () => void
   }) => {
+    let has = false
+    for (const i in this.DBList) {
+      if (this.DBList[i].data === data.data && this.DBList[i].key === data.key) {
+        has = true
+        break
+      }
+    }
+    if (has) return this
     if (data.name) {
-      if (!(data.name in this.DBList)) {
+      if (data.name in this.DBList) {
+        throw new Error('数据库key重复')
+      } else {
         this.DBList[data.name] = {
           data: data.data,
           key: data.key,
@@ -51,25 +71,16 @@ export class IndexedDB {
         }
       }
     } else {
-      let has = false
-      for (const i in this.DBList) {
-        if (this.DBList[i].data === data.data && this.DBList[i].key === data.key) {
-          has = true
-          break
-        }
-      }
-      if (!has) {
-        this.DBList[this.index++] = {
-          data: data.data,
-          key: data.key,
-          cb: data.cb
-        }
+      this.DBList[this.index++] = {
+        data: data.data,
+        key: data.key,
+        cb: data.cb
       }
     }
     return this
   }
 
-  save = () => {
+  next = () => {
     return new Promise<void>((resolve, reject) => {
       try {
         console.log(`正在加${this.alias}数据库...`)
@@ -97,7 +108,7 @@ export class IndexedDB {
               this.setWatch(key)
             }
           }
-          resolve()
+          this.cb = () => resolve()
         }
 
         _db.onupgradeneeded = (event) => {
@@ -109,6 +120,8 @@ export class IndexedDB {
         }
       } catch (err) {
         reject(err)
+      } finally {
+        this.next = async () => {}
       }
     })
   }
