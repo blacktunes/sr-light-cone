@@ -1,6 +1,7 @@
 import { data, setting } from '@/store/data'
 import { IndexedDB } from './indexedDB'
 import { closeWindow, openWindow } from './popup'
+import log from '@/assets/data/log'
 
 const timeout = setTimeout(() => {
   openWindow('confirm', {
@@ -37,3 +38,12 @@ new IndexedDB('sr-light-cone', '光锥')
       text: ['光锥编辑器可以正常使用', '但是数据可能丢失且不会被保存']
     })
   })
+
+const lastUpdate = new Date(log[0].time).getTime()
+const localLastUpdate = Number(localStorage.getItem('sr-light-cone-time'))
+if (lastUpdate) {
+  if (lastUpdate > localLastUpdate) {
+    openWindow('log')
+    localStorage.setItem('sr-light-cone-time', JSON.stringify(lastUpdate))
+  }
+}

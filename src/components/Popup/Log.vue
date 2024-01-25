@@ -13,7 +13,7 @@
         :class="{
           highlight: index === 0
         }"
-        v-for="(item, index) in changeLog"
+        v-for="(item, index) in log"
         :key="`time-${index}`"
       >
         <div class="time">{{ item.time }}</div>
@@ -55,8 +55,7 @@
 
 <script lang="ts" setup>
 import Window from '@/components/Common/Window.vue'
-import log from '@/assets/data/log.json'
-import { openWindow } from '@/assets/scripts/popup';
+import log from '@/assets/data/log'
 
 const props = defineProps<{
   name: string
@@ -70,27 +69,6 @@ const emits = defineEmits<{
 const close = () => {
   emits('close', props.name)
 }
-
-const changeLog: {
-  time: string
-  text: {
-    text: string
-    info?: string | string[]
-    author?: string
-    url?: string
-  }[]
-}[] = log
-
-const checkUpdate = () => {
-  const lastUpdate = new Date(changeLog[0].time).getTime()
-  const localLastUpdate = Number(localStorage.getItem('sr-light-cone-time'))
-  if (lastUpdate) {
-    if (lastUpdate <= localLastUpdate) return
-  }
-  openWindow('log')
-  localStorage.setItem('sr-light-cone-time', JSON.stringify(lastUpdate))
-}
-checkUpdate()
 </script>
 
 <style lang="stylus" scoped>
@@ -125,3 +103,4 @@ ul
   background #ccc
   border-radius 5px
 </style>
+@/assets/data/log

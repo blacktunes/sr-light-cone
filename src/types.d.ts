@@ -23,3 +23,13 @@ interface LightCone {
   time: number
   new?: boolean
 }
+
+interface Log {
+  time: string
+  text: {
+    text: string
+    info?: string | string[]
+    author?: string
+    url?: string
+  }[]
+}
