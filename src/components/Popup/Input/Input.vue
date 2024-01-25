@@ -46,7 +46,7 @@
 import Window from '@/components/Common/Window.vue'
 import Btn from '@/components/Common/Btn.vue'
 import { nextTick, ref, watch } from 'vue'
-import { inputData } from './input'
+import { inputData } from './'
 import { enterCallback } from '@/assets/scripts/popup'
 
 const inputDom = ref<HTMLInputElement | null>(null)
@@ -110,3 +110,4 @@ enterCallback.input = onConfirmlClick
   background #b4b4b4
   padding 10px
 </style>
+.

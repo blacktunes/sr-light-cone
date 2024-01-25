@@ -1,16 +1,15 @@
-import ShowViewVue from '@/components/Popup/Show.vue'
+import { confirmClose, confirmOpen } from '@/components/Popup/Confirm'
 import ConfirmVue from '@/components/Popup/Confirm/Confirm.vue'
+import { cropperClose, cropperOpen } from '@/components/Popup/Cropper'
 import ImageCropperVue from '@/components/Popup/Cropper/Cropper.vue'
-import SelectVue from '@/components/Popup/Select/Select.vue'
+import { inputClose, inputOpen } from '@/components/Popup/Input'
 import InputVue from '@/components/Popup/Input/Input.vue'
 import LogVue from '@/components/Popup/Log.vue'
+import { selectClose, selectOpen } from '@/components/Popup/Select'
+import SelectVue from '@/components/Popup/Select/Select.vue'
+import ShowViewVue from '@/components/Popup/Show.vue'
 import { setting } from '@/store/data'
-import { cropper, cropperSetting } from '@/components/Popup/Cropper/cropper'
-import { confirmData } from '@/components/Popup/Confirm/confirm'
-import { selectData } from '@/components/Popup/Select/select'
-import { inputData } from '@/components/Popup/Input/input'
-import { imageCompress } from './images'
-import { computed, markRaw, ref, reactive, type Component, type ComputedRef } from 'vue'
+import { computed, markRaw, reactive, ref, type Component, type ComputedRef } from 'vue'
 
 const components = {
   show: ShowViewVue,
@@ -26,93 +25,19 @@ const callbacks = {
     show: (id: number) => {
       setting.lightConeID = id
     },
-    cropper: (config?: { aspectRatio?: number; maxWidth?: number }) => {
-      return new Promise<{ base64: string; raw: File }>((resolve) => {
-        const el = document.createElement('input')
-        el.type = 'file'
-        el.accept = 'image/*'
-        el.onchange = async () => {
-          if (el.files?.[0]) {
-            resolve({
-              base64: await cropper(await imageCompress(el.files[0], config?.maxWidth), config),
-              raw: el.files[0]
-            })
-          }
-        }
-        el.click()
-      })
-    },
-    confirm: (config: { title: string; tip?: string; text: string[]; fn?: () => void }) => {
-      confirmData.title = config.title
-      confirmData.tip = config.tip
-      confirmData.text = config.text
-      confirmData.fn = config.fn
-    },
-    select: <T extends string[] | readonly string[]>(
-      title: string,
-      list: T,
-      defaultText?: string
-    ) => {
-      return new Promise<T[number] | undefined>((resolve) => {
-        selectData.title = title
-        selectData.list = list
-        selectData.select = defaultText
-        selectData.fn = () => {
-          resolve(selectData.select)
-        }
-      })
-    },
-    input: (config: {
-      title: string
-      tip?: string
-      required?: boolean
-      defaultText?: string
-      placeholder?: string
-    }) => {
-      return new Promise<string>((resolve) => {
-        inputData.title = config.title
-        inputData.tip = config.tip
-        inputData.required = config.required === undefined ? true : config.required
-        if (config.defaultText) {
-          inputData.text = config.defaultText
-        }
-        inputData.placeholder = config.placeholder
-        inputData.fn = (str: string) => {
-          resolve(str)
-        }
-      })
-    }
+    cropper: cropperOpen,
+    confirm: confirmOpen,
+    select: selectOpen,
+    input: inputOpen
   },
   close: {
     show: () => {
       setting.lightConeID = undefined
     },
-    cropper: async () => {
-      cropperSetting.img = ''
-      cropperSetting.fn = undefined
-      cropperSetting.aspectRatio = undefined
-    },
-    confirm: () => {
-      confirmData.title = ''
-      confirmData.tip = undefined
-      confirmData.text = []
-      confirmData.fn = undefined
-    },
-    select: () => {
-      selectData.title = ''
-      selectData.list = []
-      selectData.select = undefined
-      selectData.fn = undefined
-    },
-    input: () => {
-      inputData.fn?.('')
-      inputData.title = ''
-      inputData.tip = undefined
-      inputData.required = true
-      inputData.text = ''
-      inputData.placeholder = undefined
-      inputData.fn = undefined
-    }
+    cropper: cropperClose,
+    confirm: confirmClose,
+    select: selectClose,
+    input: inputClose
   },
   enter: {}
 }

@@ -50,7 +50,7 @@
 <script lang="ts" setup>
 import Window from '@/components/Common/Window.vue'
 import Btn from '@/components/Common/Btn.vue'
-import { confirmData } from './confirm'
+import { confirmData } from './'
 import { enterCallback } from '@/assets/scripts/popup'
 
 const props = defineProps<{
@@ -86,3 +86,4 @@ enterCallback.confirm = onConfirml
   background #e4c680
   padding 10px
 </style>
+.

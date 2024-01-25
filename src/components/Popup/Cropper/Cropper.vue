@@ -50,7 +50,7 @@ import viewport from '@/store/viewport'
 import Btn from '@/components/Common/Btn.vue'
 import VuePictureCropper, { cropper } from 'vue-picture-cropper'
 import { enterCallback } from '@/assets/scripts/popup'
-import { imageCropper, cropperSetting } from './cropper'
+import { imageCropper, cropperSetting } from './'
 
 const props = defineProps<{
   name: string
@@ -108,3 +108,4 @@ enterCallback.cropper = onCropper
     width 600px
     height 100px
 </style>
+.

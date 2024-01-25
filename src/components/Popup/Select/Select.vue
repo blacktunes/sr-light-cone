@@ -45,7 +45,7 @@
 import Window from '@/components/Common/Window.vue'
 import Btn from '@/components/Common/Btn.vue'
 import { enterCallback } from '@/assets/scripts/popup'
-import { selectData } from './select'
+import { selectData } from './'
 
 const props = defineProps<{
   name: string
@@ -123,3 +123,4 @@ enterCallback.select = onConfirmlClick
       border-radius 50%
       background-color #ec9a37
 </style>
+.
