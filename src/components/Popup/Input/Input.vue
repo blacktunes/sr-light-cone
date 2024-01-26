@@ -1,8 +1,6 @@
 <template>
-  <Transition name="fade">
+  <Popup :index="index">
     <window
-      v-if="props.index !== -1"
-      :style="{ zIndex: 10 + index }"
       :title="inputData.title"
       width="55%"
       confirm
@@ -39,10 +37,11 @@
         />
       </template>
     </window>
-  </Transition>
+  </Popup>
 </template>
 
 <script lang="ts" setup>
+import Popup from '@/components/Common/Popup.vue'
 import Window from '@/components/Common/Window.vue'
 import Btn from '@/components/Common/Btn.vue'
 import { nextTick, ref, watch } from 'vue'
@@ -83,7 +82,7 @@ const onConfirmlClick = () => {
   return true
 }
 
-enterCallback.input = onConfirmlClick
+enterCallback[props.name] = onConfirmlClick
 </script>
 
 <style lang="stylus" scoped>
@@ -110,4 +109,3 @@ enterCallback.input = onConfirmlClick
   background #b4b4b4
   padding 10px
 </style>
-.

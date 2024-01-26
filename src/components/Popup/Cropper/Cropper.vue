@@ -79,7 +79,7 @@ const onCropper = async () => {
   return true
 }
 
-enterCallback.cropper = onCropper
+enterCallback[props.name] = onCropper
 </script>
 
 <style lang="stylus" scoped>

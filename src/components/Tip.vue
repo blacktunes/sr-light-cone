@@ -3,7 +3,7 @@
     <transition name="fade">
       <div
         class="horizontal-tip"
-        v-if="isShow && show"
+        v-if="isShow && viewport.horizontal"
         @click.stop="isShow = false"
       >
         <div class="bg"></div>
@@ -32,10 +32,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-
-defineProps<{
-  show: boolean
-}>()
+import viewport from '@/store/viewport'
 
 const isShow = ref(true)
 </script>

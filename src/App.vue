@@ -18,7 +18,6 @@
         v-for="(item, index) in components"
         :key="index"
         :is="item"
-        :show="item === Tip ? viewport.horizontal : undefined"
       />
       <Component
         v-for="(item, key) in popupComponents"
@@ -36,7 +35,6 @@
 import { defineComponent, toRef } from 'vue'
 import type { Component } from 'vue'
 import viewport from './store/viewport'
-import Tip from './components/Tip.vue'
 import { closeWindow, popupComponents } from './assets/scripts/popup'
 
 // 动态加载所有组件

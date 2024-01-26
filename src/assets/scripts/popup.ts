@@ -43,6 +43,7 @@ const callbacks = {
 }
 
 /*------------------------------------------------------------*/
+type Unpacked<T> = T extends Promise<infer U> ? U : T
 type ComponentKeys = keyof typeof components
 
 export const popupComponents: Record<
@@ -52,17 +53,35 @@ export const popupComponents: Record<
     index: ComputedRef<number>
   }
 > = reactive({})
-// 正在显示的组件
+
+/** 正在显示的组件 */
 export const popup = ref<Set<ComponentKeys>>(new Set())
 const _popup = computed(() => Array.from(popup.value))
-// 最后打开的组件
+
+/** 是否有组件显示 */
+export const hasPopup = () => popup.value.size > 0
+
+/** 最后打开的组件 */
 export const currentComponent = computed<ComponentKeys | undefined>(
   () => _popup.value[_popup.value.length - 1]
 )
-// 组件的确认事件
-export const enterCallback: Partial<Record<ComponentKeys, () => boolean | Promise<boolean>>> =
-  callbacks.enter
+/** 关闭最后打开的组件 */
+export const closeCurrentWindow = () => {
+  if (currentComponent.value) {
+    closeWindow(currentComponent.value)
+  }
+}
 
+/** 组件的确认事件 */
+export const enterCallback: Partial<
+  Record<ComponentKeys | string, () => (boolean | void) | Promise<boolean | void>>
+> = callbacks.enter
+/** 执行最后打开组件的确认事件 */
+export const currentCallback = () => {
+  if (currentComponent.value && enterCallback[currentComponent.value]) {
+    return enterCallback[currentComponent.value]?.()
+  }
+}
 let i: ComponentKeys
 for (i in components) {
   const key = i

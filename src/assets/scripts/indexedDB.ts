@@ -3,7 +3,7 @@ import { watch, nextTick, toRaw } from 'vue'
 export class IndexedDB {
   constructor(
     public readonly name: string,
-    public readonly alias?: string
+    public readonly alias = ''
   ) {}
   private DBList: Record<
     string,
@@ -81,9 +81,10 @@ export class IndexedDB {
   }
 
   next = () => {
+    console.log(`正在加${this.alias}数据库...`)
+
     return new Promise<void>((resolve, reject) => {
       try {
-        console.log(`正在加${this.alias}数据库...`)
         const _db = window.indexedDB.open(this.name)
         _db.onsuccess = (event) => {
           this.db = (event.target as IDBOpenDBRequest).result

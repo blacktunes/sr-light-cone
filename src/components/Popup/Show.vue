@@ -1,9 +1,8 @@
 <template>
-  <Transition name="fade">
+  <Popup :index="index">
     <div
       class="show-view"
-      v-if="props.index !== -1 && currentLightCone"
-      :style="{ zIndex: 10 + index }"
+      v-if="currentLightCone"
       @click.stop="elementShow.mask = !elementShow.mask"
       ref="viewDom"
     >
@@ -119,13 +118,14 @@
         <Close color="#fff" />
       </div>
     </div>
-  </Transition>
+  </Popup>
 </template>
 
 <script lang="ts" setup>
-import { computed, nextTick, reactive, ref, watch } from 'vue'
+import Popup from '../Common/Popup.vue'
 import LightCone from '../Common/LightCone.vue'
 import Close from '../Common/Close.vue'
+import { computed, nextTick, reactive, ref, watch } from 'vue'
 import { currentLightCone, setting } from '@/store/data'
 import { fateFullIcon, fateList } from '@/assets/scripts/images'
 import { screenshot } from '@/assets/scripts/screenshot'

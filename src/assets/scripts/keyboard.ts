@@ -1,12 +1,11 @@
 import { currentLightCone, setting } from '@/store/data'
-import { closeWindow, currentComponent, enterCallback } from './popup'
 import { emitter } from './event'
+import { closeCurrentWindow, currentCallback, currentComponent } from './popup'
 
 document.addEventListener('click', (e) => {
+  if (setting.loading) return
   if ((e.target as HTMLElement).tagName.toLowerCase() === 'a') return
-  if (currentComponent.value) {
-    closeWindow(currentComponent.value)
-  }
+  closeCurrentWindow()
 })
 
 document.addEventListener('keydown', async (e) => {
@@ -21,15 +20,10 @@ document.addEventListener('keydown', async (e) => {
       }
       return
     case 'Enter':
-      if (currentComponent.value && enterCallback[currentComponent.value]) {
-        e.preventDefault()
-        enterCallback[currentComponent.value]?.()
-      }
+      currentCallback()
       return
     case 'Escape':
-      if (currentComponent.value) {
-        closeWindow(currentComponent.value)
-      }
+      closeCurrentWindow()
       return
   }
 })

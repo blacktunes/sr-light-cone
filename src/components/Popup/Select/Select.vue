@@ -1,8 +1,6 @@
 <template>
-  <Transition name="fade">
+  <Popup :index="index">
     <window
-      v-if="props.index !== -1"
-      :style="{ zIndex: 10 + index }"
       :title="selectData.title"
       width="65%"
       confirm
@@ -38,10 +36,11 @@
         />
       </template>
     </window>
-  </Transition>
+  </Popup>
 </template>
 
 <script lang="ts" setup>
+import Popup from '@/components/Common/Popup.vue'
 import Window from '@/components/Common/Window.vue'
 import Btn from '@/components/Common/Btn.vue'
 import { enterCallback } from '@/assets/scripts/popup'
@@ -66,7 +65,7 @@ const onConfirmlClick = () => {
   return true
 }
 
-enterCallback.select = onConfirmlClick
+enterCallback[props.name] = onConfirmlClick
 </script>
 
 <style lang="stylus" scoped>
@@ -123,4 +122,3 @@ enterCallback.select = onConfirmlClick
       border-radius 50%
       background-color #ec9a37
 </style>
-.

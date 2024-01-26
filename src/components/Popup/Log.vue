@@ -1,8 +1,6 @@
 <template>
-  <Transition name="fade">
+  <Popup :index="index">
     <window
-      v-if="props.index !== -1"
-      :style="{ zIndex: 10 + index }"
       title="更新记录"
       width="40%"
       height="90%"
@@ -50,10 +48,11 @@
         </ul>
       </div>
     </window>
-  </Transition>
+  </Popup>
 </template>
 
 <script lang="ts" setup>
+import Popup from '../Common/Popup.vue'
 import Window from '@/components/Common/Window.vue'
 import log from '@/assets/data/log'
 
