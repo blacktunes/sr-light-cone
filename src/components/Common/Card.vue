@@ -219,3 +219,4 @@ defineEmits<{
     transition 0.2s
     pointer-events none
 </style>
+@/assets/scripts/image

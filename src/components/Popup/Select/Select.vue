@@ -1,72 +1,71 @@
 <template>
-  <window
-    :title="selectData.title"
-    width="65%"
-    confirm
-    :show="popup.select"
-    @close="popup.select = false"
-  >
-    <div class="select-list">
-      <div
-        class="select"
-        :class="{ highlight: item === selectData.select }"
-        v-for="item in selectData.list"
-        :key="item"
-        @click.stop="selectData.select = item"
-      >
-        <span>
-          {{ item }}
-        </span>
-        <div class="radio"></div>
+  <Popup :index="index">
+    <window
+      :title="selectData.title"
+      width="65%"
+      confirm
+      @close="close"
+    >
+      <div class="select-list">
+        <div
+          class="select"
+          :class="{ highlight: item === selectData.select }"
+          v-for="item in selectData.list"
+          :key="item"
+          @click.stop="selectData.select = item"
+        >
+          <span>
+            {{ item }}
+          </span>
+          <div class="radio"></div>
+        </div>
       </div>
-    </div>
-    <template #footer>
-      <Btn
-        class="win-btn"
-        name="取消"
-        type="wrong"
-        @click="popup.select = false"
-      />
-      <Btn
-        class="win-btn"
-        name="确认"
-        type="check"
-        :disable="!selectData.select"
-        @click="onConfirmlClick"
-      />
-    </template>
-  </window>
+      <template #footer>
+        <Btn
+          class="win-btn"
+          name="取消"
+          type="wrong"
+          @click="close"
+        />
+        <Btn
+          class="win-btn"
+          name="确认"
+          type="check"
+          :disable="!selectData.select"
+          @click="onConfirmlClick"
+        />
+      </template>
+    </window>
+  </Popup>
 </template>
 
 <script lang="ts" setup>
+import Popup from '@/components/Common/Popup.vue'
 import Window from '@/components/Common/Window.vue'
 import Btn from '@/components/Common/Btn.vue'
-import { popup, popupCallbalk, selectData } from '@/store/popup'
-import { watch } from 'vue'
+import { enterCallback } from '@/assets/scripts/popup'
+import { selectData } from './'
 
-watch(
-  () => popup.select,
-  () => {
-    if (!popup.select) {
-      reset()
-    }
-  }
-)
+const props = defineProps<{
+  name: string
+  index: number
+}>()
 
-const reset = () => {
-  selectData.title = ''
-  selectData.list = []
-  selectData.select = undefined
-  selectData.fn = undefined
+const emits = defineEmits<{
+  (event: 'close', name: string): void
+}>()
+
+const close = () => {
+  emits('close', props.name)
 }
 
 const onConfirmlClick = () => {
   selectData.fn?.()
-  popup.select = false
+  close()
   return true
 }
 
-popupCallbalk.select = onConfirmlClick
+enterCallback[props.name] = onConfirmlClick
 </script>
 
 <style lang="stylus" scoped>

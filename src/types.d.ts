@@ -1,3 +1,5 @@
+type Unpacked<T> = T extends Promise<infer U> ? U : T
+
 /** 命途列表 */
 type Fate =
   | '开拓'
@@ -20,4 +22,14 @@ interface LightCone {
   image?: string
   time: number
   new?: boolean
+}
+
+interface Log {
+  time: string
+  text: {
+    text: string
+    info?: string | string[]
+    author?: string
+    url?: string
+  }[]
 }

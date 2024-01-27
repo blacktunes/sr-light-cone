@@ -1,5 +1,5 @@
 <h1 align="center">流光忆庭</h1>
-<h3 align="center">崩坏:星穹铁道 - 光锥编辑器</h3>
+<h3 align="center">崩坏:星穹铁道光锥生成网站</h3>
 
 ![预览图](readme/screenshot.webp)
 
@@ -41,6 +41,16 @@
     </td>
   </tr>
 </table>
+
+## 相关项目
+- 崩坏:星穹铁道短信生成网站
+ https://github.com/blacktunes/sr-message-maker
+ https://sr.shenmedouyou.top/
+- 崩坏:星穹铁道罗浮杂俎生成网站
+ https://github.com/blacktunes/sr-ghostly-grove
+ https://ghostly.shenmedouyou.top/
+- 绝区零 - 绳网生成网站
+ https://github.com/blacktunes/interknot
 
 ## 支持
 如果你喜欢这个项目，可以给个⭐️或者[请我喝杯柠檬水](https://afdian.net/a/blacktune)
