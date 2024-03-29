@@ -6,28 +6,30 @@ body
   background-color #000
 
 *
+  user-select none
   -webkit-user-drag none
   user-drag none
-  user-select none
 
 ::-webkit-scrollbar
   width 7px
   height 7px
 
 ::-webkit-scrollbar-track
-  background #c6c6c6
   margin 20px 0
+  background #c6c6c6
 
 ::-webkit-scrollbar-thumb
   background #545454
 
 #app
-  overflow hidden
-  width 100vw
-  height 100vh
   display flex
   justify-content center
   align-items center
+  overflow hidden
+  width 100vw
+  width var(--window-w)
+  height 100vh
+  height var(--window-h)
 
 .win-btn
   width 600px
@@ -38,27 +40,34 @@ body
 .hide
   opacity 0
 
-.slide-top-enter-active, .slide-top-leave-active
+.slide-top-enter-active
+.slide-top-leave-active
   transition all 0.3s linear
 
-.slide-top-enter-from, .slide-top-leave-to
+.slide-top-enter-from
+.slide-top-leave-to
   opacity 0
   transform translateY(50%)
 
-.slide-left-enter-active, .slide-left-leave-active
+.slide-left-enter-active
+.slide-left-leave-active
   transition all 0.3s
   transition-delay 0.35s
 
-.slide-left-enter-from, .slide-left-leave-to
+.slide-left-enter-from
+.slide-left-leave-to
   transform translateX(100%)
 
-.fade-enter-active, .fade-leave-active
+.fade-enter-active
+.fade-leave-active
   transition all 0.2s
 
-.fade-enter-from, .fade-leave-to
+.fade-enter-from
+.fade-leave-to
   opacity 0
 
-.fade-enter-to, .fade-leave-from
+.fade-enter-to
+.fade-leave-from
   opacity 1
 
 .fade-delay-enter-active
@@ -73,11 +82,14 @@ body
 
 .test-enter-active
   transition all 0.2s
+
 .test-leave-active
   transition all 600s
 
-.test-enter-from, .test-leave-to
+.test-enter-from
+.test-leave-to
   opacity 0
 
-.test-enter-to, .test-leave-from
+.test-enter-to
+.test-leave-from
   opacity 1

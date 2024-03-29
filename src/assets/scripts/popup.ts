@@ -4,14 +4,16 @@ import { cropperClose, cropperOpen } from '@/components/Popup/Cropper'
 import ImageCropperVue from '@/components/Popup/Cropper/Cropper.vue'
 import { inputClose, inputOpen } from '@/components/Popup/Input'
 import InputVue from '@/components/Popup/Input/Input.vue'
+import LoadingVue from '@/components/Popup/Loading.vue'
 import LogVue from '@/components/Popup/Log.vue'
 import { selectClose, selectOpen } from '@/components/Popup/Select'
 import SelectVue from '@/components/Popup/Select/Select.vue'
 import ShowViewVue from '@/components/Popup/Show.vue'
 import { setting } from '@/store/data'
-import { computed, markRaw, reactive, ref, type Component, type ComputedRef } from 'vue'
+import type { Component, ComputedRef } from 'vue'
 
 const components = {
+  loading: LoadingVue,
   show: ShowViewVue,
   cropper: ImageCropperVue,
   confirm: ConfirmVue,
@@ -61,25 +63,30 @@ const _popup = computed(() => Array.from(popup.value))
 /** 是否有组件显示 */
 export const hasPopup = () => popup.value.size > 0
 
-/** 最后打开的组件 */
-export const currentComponent = computed<ComponentKeys | undefined>(
+const currentComponent = computed<ComponentKeys | undefined>(
   () => _popup.value[_popup.value.length - 1]
 )
+/** 是否在Loading状态 */
+export const isLoading = () => currentComponent.value === 'loading'
+
+/** 获取最后打开的组件 */
+export const getCurrentComponent = () => currentComponent.value
+
 /** 关闭最后打开的组件 */
-export const closeCurrentWindow = () => {
+export const closeCurrentComponent = () => {
   if (currentComponent.value) {
     closeWindow(currentComponent.value)
   }
 }
 
 /** 组件的确认事件 */
-export const enterCallback: Partial<
+export const confirmCallback: Partial<
   Record<ComponentKeys | string, () => (boolean | void) | Promise<boolean | void>>
 > = callbacks.enter
 /** 执行最后打开组件的确认事件 */
-export const currentCallback = () => {
-  if (currentComponent.value && enterCallback[currentComponent.value]) {
-    return enterCallback[currentComponent.value]?.()
+export const currentComponentCallback = () => {
+  if (currentComponent.value && confirmCallback[currentComponent.value]) {
+    return confirmCallback[currentComponent.value]?.()
   }
 }
 let i: ComponentKeys

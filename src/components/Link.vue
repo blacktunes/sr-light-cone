@@ -40,8 +40,8 @@ import { openWindow } from '@/assets/scripts/popup'
 <style lang="stylus" scoped>
 .link
   position absolute
-  bottom 110px
   right 130px
+  bottom 110px
   display flex
   flex-direction column
   justify-content flex-end
@@ -49,9 +49,9 @@ import { openWindow } from '@/assets/scripts/popup'
   box-sizing border-box
 
   .sep
+    margin 20px 0
     width 10px
     height 10px
-    margin 20px 0
     border-radius 50%
     background #666
 

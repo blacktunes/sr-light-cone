@@ -40,10 +40,9 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
 import GroupBtn from './Common/GroupBtn.vue'
 import Card from './Common/Card.vue'
-import { data, setting } from '@/store/data'
+import { data } from '@/store/data'
 import { fateList } from '@/assets/scripts/images'
 import { openWindow } from '@/assets/scripts/popup'
 
@@ -72,7 +71,7 @@ const addLightCone = () => {
       time: id,
       new: true
     })
-    setting.lightConeID = id
+    openWindow('show', id)
   })
 }
 
@@ -94,22 +93,21 @@ const handelDelete = (id: number) => {
 $top = 50px
 
 .index
-  display flex
-  box-sizing border-box
-  overflow hidden
   position absolute
+  display flex
+  overflow hidden
+  box-sizing border-box
+  padding 30px 60px
   width 100%
   height 100%
-  padding 30px 60px
   background #000
   background-image url('https://patchwiki.biligame.com/images/sr/2/29/tjd2rlq7gbac4k46mnum5fvtt1218r8.png')
-  background-repeat no-repeat
   background-position 100% 0
   background-size 103%
+  background-repeat no-repeat
   box-shadow 0 0 20px 20px rgba(0, 0, 0, 0.7) inset
 
   &:before
-    content ''
     position absolute
     top 20px
     right 50px
@@ -117,18 +115,19 @@ $top = 50px
     left 50px
     border 5px solid rgba(100, 100, 100, 0.3)
     border-radius 5px
+    content ''
     pointer-events none
 
   .left
     display flex
     flex-direction column
+    margin $top 150px $top 15px
     width 350px
     height s('calc(100% - %s)', $top * 2)
-    margin $top 150px $top 15px
 
     .group-list
-      flex 1
       display flex
+      flex 1
       flex-direction column
       overflow-x hidden
       overflow-y auto
@@ -142,18 +141,18 @@ $top = 50px
         height 0
 
   .right
-    box-sizing border-box
+    display flex
+    flex 1
+    flex-wrap wrap
+    align-content flex-start
     overflow-x hidden
     overflow-y auto
     overflow-y overlay
+    box-sizing border-box
+    margin $top 35px $top + 30px 0
+    height s('calc(100% - %s)', $top * 2 + 30px)
     scrollbar-gutter stable
     scrollbar-width none
-    flex 1
-    display flex
-    flex-wrap wrap
-    align-content flex-start
-    height s('calc(100% - %s)', $top * 2 + 30px)
-    margin $top 35px $top + 30px 0
     mask-image linear-gradient(to bottom, transparent, #000 30px, #000, #000 calc(100% - 30px), transparent), linear-gradient(to left, black, transparent 50px)
     mask-size 100% 100%
     mask-position 0 0, 100% 0
@@ -164,8 +163,8 @@ $top = 50px
       height 12px
 
     &::-webkit-scrollbar-track
-      background #545454
       margin 0
+      background #545454
 
     &::-webkit-scrollbar-thumb
       background #c1c8d2

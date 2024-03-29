@@ -70,55 +70,55 @@ defineEmits<{
 <style lang="stylus" scoped>
 .level-3
   &:before
-    z-index 1
-    content ''
-    box-sizing border-box
     position absolute
     top 0
     right 0
     bottom 0
     left 0
-    background linear-gradient(to top, #699ded94, transparent 30%)
+    z-index 1
+    box-sizing border-box
     border-bottom 15px solid #699ded
     border-top-right-radius 50px
+    background linear-gradient(to top, #699ded94, transparent 30%)
+    content ''
 
 .level-4
   &:before
-    z-index 1
-    content ''
-    box-sizing border-box
     position absolute
     top 0
     right 0
     bottom 0
     left 0
-    background linear-gradient(to top, #af86fe94, transparent 30%)
+    z-index 1
+    box-sizing border-box
     border-bottom 15px solid #af86fe
     border-top-right-radius 50px
+    background linear-gradient(to top, #af86fe94, transparent 30%)
+    content ''
 
 .level-5
   &:before
-    z-index 1
-    content ''
-    box-sizing border-box
     position absolute
     top 0
     right 0
     bottom 0
     left 0
-    background linear-gradient(to top, #ffcf7094, transparent 30%)
+    z-index 1
+    box-sizing border-box
     border-bottom 15px solid #ffcf70
     border-top-right-radius 50px
+    background linear-gradient(to top, #ffcf7094, transparent 30%)
+    content ''
 
 .card
-  box-sizing border-box
   position relative
-  margin 50px 20px 5px 20px
-  height 645px
+  box-sizing border-box
+  margin 50px 20px 5px
   width 360px
-  background-color rgba(100, 100, 100, 0.1)
-  border-top-right-radius 50px
+  height 645px
   border 5px solid transparent
+  border-top-right-radius 50px
+  background-color rgba(100, 100, 100, 0.1)
 
   &:nth-child(-n+6)
     margin-top 15px !important
@@ -131,76 +131,76 @@ defineEmits<{
       opacity 1
 
   .fate
-    z-index 2
     position absolute
     top 30px
     left 30px
+    z-index 2
     width 65px
 
   .light-cone
-    z-index 2
     position absolute
     top 43%
     left 50%
+    z-index 2
     transform translate(-50%, -50%) rotateX(5deg) rotateY(-5deg) rotate(15deg) scale(0.275)
 
   .info
+    position absolute
+    bottom 30px
+    left 50%
     z-index 2
     display flex
     flex-direction column
     justify-content center
     align-items center
-    position absolute
-    bottom 30px
-    left 50%
-    transform translateX(-50%)
     width 100%
+    transform translateX(-50%)
 
     .name
       overflow hidden
+      margin-bottom 20px
+      width 90%
+      color #fff
+      text-align center
       text-overflow ellipsis
       white-space nowrap
-      color #fff
-      width 90%
-      text-align center
       font-size 46px
-      margin-bottom 20px
 
     .level
       height 32px
 
   .figure
-    overflow hidden
     position absolute
     bottom 0
     left 0
+    overflow hidden
     width 100%
     height 100px
 
     .line-box
-      box-sizing border-box
       position absolute
       right -60px
       bottom 5px
+      box-sizing border-box
       width 200px
       height 40px
-      transform rotate(-45deg)
       border 4px solid rgba(255, 255, 255, 0.1)
-      border-left none
       border-right none
+      border-left none
+      transform rotate(-45deg)
 
       .line
         position absolute
         right 0
         bottom 12px
-        border-top 4px solid rgba(255, 255, 255, 0.1)
         width 100%
+        border-top 4px solid rgba(255, 255, 255, 0.1)
 
   .del
-    z-index 5
     position absolute
     top 25px
     right 20px
+    z-index 5
     color #ddd
     opacity 0
 
@@ -211,10 +211,10 @@ defineEmits<{
         opacity 0
 
   .new
-    z-index 9
     position absolute
     top -15px
     right -15px
+    z-index 9
     width 90px
     transition 0.2s
     pointer-events none

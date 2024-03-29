@@ -50,7 +50,7 @@ import Popup from '@/components/Common/Popup.vue'
 import Window from '@/components/Common/Window.vue'
 import Btn from '@/components/Common/Btn.vue'
 import { confirmData } from './'
-import { enterCallback } from '@/assets/scripts/popup'
+import { confirmCallback } from '@/assets/scripts/popup'
 
 const props = defineProps<{
   name: string
@@ -71,17 +71,17 @@ const onConfirml = async () => {
   return true
 }
 
-enterCallback[props.name] = onConfirml
+confirmCallback[props.name] = onConfirml
 </script>
 
 <style lang="stylus" scoped>
 .text
+  margin 50px auto 80px
   text-align center
   font-size 50px
-  margin 50px auto 80px auto
 
 .tip
-  text-align center
-  background #e4c680
   padding 10px
+  background #e4c680
+  text-align center
 </style>

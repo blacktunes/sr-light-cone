@@ -1,11 +1,7 @@
-import { computed, reactive } from 'vue'
-
 export const setting: {
-  loading: boolean
   lightConeID?: number
 } = reactive({
-  loading: true,
-  lightConeID: undefined,
+  lightConeID: undefined
 })
 
 export const currentLightCone = computed(() => {

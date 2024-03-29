@@ -32,20 +32,20 @@ defineProps<{
 
 <style lang="stylus" scoped>
 .group
-  box-sizing border-box
   display flex
   align-items center
-  height 150px
-  padding 10px 30px
+  box-sizing border-box
   margin 15px 0
+  padding 10px 30px
+  height 150px
   color #b4b5b9
   font-weight bold
   user-select none
 
   &:hover
     .icon
-      background-color #3d414d
       border-color #86888f
+      background-color #3d414d
 
     .name
       color #e6e6e8
@@ -53,8 +53,8 @@ defineProps<{
   &:active
     .icon
       margin-right 30px
-      background-color #030306
       border-color #fccf73
+      background-color #030306
 
     .name
       color #fccf73
@@ -62,22 +62,22 @@ defineProps<{
   .icon
     position relative
     display flex
-    align-items center
     justify-content center
+    align-items center
+    margin-right 25px
     width 110px
     height 110px
-    margin-right 25px
-    border-radius 50%
     border 3px solid transparent
+    border-radius 50%
 
     .img
       width 85px
       height 85px
 
     .svg
+      margin 5px 0 0 5px
       color #fff
       transform rotate(90deg)
-      margin 5px 0 0 5px
 
   .name
     font-size 44px
@@ -91,24 +91,25 @@ defineProps<{
       color #e6e6e8
 
   .icon
-    background-color #fff
     margin-right 30px
+    background-color #fff
 
     &:after
-      content ''
       position absolute
-      left 50%
       bottom 50%
-      height 140%
+      left 50%
       width 140%
+      height 140%
       border-radius 50%
-      transform translate(-50%, 50%)
       background url('@/assets/images/边框.webp')
-      background-size 100%
-      animation highlight-rotate 30s linear infinite
       filter invert(1)
+      background-size 100%
+      content ''
+      transform translate(-50%, 50%)
+      animation highlight-rotate 30s linear infinite
 
-    .img, .svg
+    .img
+    .svg
       filter invert(1)
 
   .name

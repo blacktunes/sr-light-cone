@@ -56,47 +56,47 @@ defineProps<{
   position relative
   width 850px
   height 1200px
-  transform-style preserve-3d
   transition 0.4s
+  transform-style preserve-3d
 
   .top
-    z-index 4
     top -20px
     left 15px
+    z-index 4
 
     [class^='border']
       background rgba(255, 255, 255, 0.5)
 
     .front
-      // background-color rgba(255, 255, 255, 0.1)
+      //background-color rgba(255, 255, 255, 0.1)
       position relative
 
       &:after
-        content ''
         position absolute
         top -100%
         left -100%
         width 200%
         height 200%
-        transition 0.3s
         background linear-gradient(-45deg, transparent, transparent, rgba(255, 255, 255, 0.2), transparent, transparent)
+        content ''
+        transition 0.3s
 
     .back
       position absolute
       top 50%
       left 50%
+      box-sizing border-box
       width 96%
       height 97%
-      transform translate(-50%, -50%)
       border 5px solid #786f57
       border-radius 15px
-      box-sizing border-box
+      transform translate(-50%, -50%)
       transform translate3d(calc(-50% - 50px), calc(-50% - 20px), 50px)
 
   .bottom
-    z-index 1
     top 70px
     left 75px
+    z-index 1
     transform translateZ(-150px) scaleX(0.95)
 
     [class^='border']
@@ -105,24 +105,26 @@ defineProps<{
     .front
       background-color rgba(0, 0, 0, 0.2)
 
-  .top, .bottom
+  .top
+  .bottom
     position absolute
     width 100%
     height 100%
-    transform-style preserve-3d
     pointer-events none
+    transform-style preserve-3d
 
     .front
       width 100%
       height 100%
       clip-path polygon(0% 2%, 2% 0%, 98% 0%, 100% 2%, 100% 98%, 98% 100%, 2% 100%, 0% 98%)
 
-    .front, [class^='border']
+    .front
+    [class^='border']
       position absolute
       top -20px
       left -50px
-      backface-visibility inherit
       box-sizing border-box
+      backface-visibility inherit
 
     .front
       position relative
@@ -173,30 +175,30 @@ defineProps<{
       transform-origin top
 
   .mask
+    position absolute
+    top 0
+    left 0
     z-index 2
     display flex
     justify-content center
     align-items center
-    position absolute
-    top 0
-    left 0
     width 100%
     height 100%
     background-color #000
-    transform-style preserve-3d
     transform translateZ(-50px)
+    transform-style preserve-3d
 
   .image
-    z-index 3
     position absolute
     top 0
     left 0
+    z-index 3
+    box-sizing border-box
     width 100%
     height 100%
     border 15px solid #d8cdd2
-    box-sizing border-box
-    transform translateZ(0)
     transition 0.4s
+    transform translateZ(0)
 
     img
       width 100%

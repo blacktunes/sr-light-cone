@@ -3,7 +3,7 @@
 </template>
 
 <script lang="tsx" setup>
-import { computed } from 'vue'
+import type { JSX } from 'vue/jsx-runtime'
 
 const props = defineProps<{
   name: string
