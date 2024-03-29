@@ -43,7 +43,7 @@
 import { computed, ref } from 'vue'
 import GroupBtn from './Common/GroupBtn.vue'
 import Card from './Common/Card.vue'
-import { data, setting } from '@/store/data'
+import { data } from '@/store/data'
 import { fateList } from '@/assets/scripts/images'
 import { openWindow } from '@/assets/scripts/popup'
 
@@ -72,7 +72,7 @@ const addLightCone = () => {
       time: id,
       new: true
     })
-    setting.lightConeID = id
+    openWindow('show', id)
   })
 }
 
