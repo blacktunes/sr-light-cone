@@ -1,7 +1,7 @@
 import './main.styl'
 
+import '@/assets/scripts/window'
 import './assets/scripts/analytics'
-import './assets/scripts/indexedDB'
 import './assets/scripts/setup'
 import './assets/scripts/keyboard'
 
