@@ -43,7 +43,7 @@
 import Popup from '@/components/Common/Popup.vue'
 import Window from '@/components/Common/Window.vue'
 import Btn from '@/components/Common/Btn.vue'
-import { enterCallback } from '@/assets/scripts/popup'
+import { confirmCallback } from '@/assets/scripts/popup'
 import { selectData } from './'
 
 const props = defineProps<{
@@ -65,7 +65,7 @@ const onConfirmlClick = () => {
   return true
 }
 
-enterCallback[props.name] = onConfirmlClick
+confirmCallback[props.name] = onConfirmlClick
 </script>
 
 <style lang="stylus" scoped>

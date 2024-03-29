@@ -46,7 +46,7 @@ import Window from '@/components/Common/Window.vue'
 import Btn from '@/components/Common/Btn.vue'
 import { nextTick, ref, watch } from 'vue'
 import { inputData } from './'
-import { enterCallback } from '@/assets/scripts/popup'
+import { confirmCallback } from '@/assets/scripts/popup'
 
 const inputDom = ref<HTMLInputElement | null>(null)
 
@@ -82,7 +82,7 @@ const onConfirmlClick = () => {
   return true
 }
 
-enterCallback[props.name] = onConfirmlClick
+confirmCallback[props.name] = onConfirmlClick
 </script>
 
 <style lang="stylus" scoped>
