@@ -92,7 +92,7 @@
         </div>
       </Transition>
       <div
-        v-show="!setting.loading"
+        v-show="!isLoading()"
         class="share"
         @click.stop="onShareClick"
       >
@@ -111,7 +111,7 @@
         :image="currentLightCone.image"
       />
       <div
-        v-show="!setting.loading"
+        v-show="!isLoading()"
         class="back"
         @click.stop="close"
       >
@@ -126,7 +126,7 @@ import Popup from '../Common/Popup.vue'
 import LightCone from '../Common/LightCone.vue'
 import Close from '../Common/Close.vue'
 import { computed, nextTick, reactive, ref, watch } from 'vue'
-import { currentLightCone, setting } from '@/store/data'
+import { currentLightCone } from '@/store/data'
 import { fateFullIcon, fateList } from '@/assets/scripts/images'
 import { screenshot } from '@/assets/scripts/screenshot'
 import r from '@/assets/images/r.webp'
@@ -134,7 +134,7 @@ import sr from '@/assets/images/sr.webp'
 import ssr from '@/assets/images/ssr.webp'
 import Icon from '../Common/Icon.vue'
 import { emitter } from '@/assets/scripts/event'
-import { openWindow } from '@/assets/scripts/popup'
+import { closeWindow, isLoading, openWindow } from '@/assets/scripts/popup'
 
 const props = defineProps<{
   name: string
@@ -326,17 +326,19 @@ const onImageClick = () => {
 }
 
 const onShareClick = () => {
-  if (setting.loading) return
+  if (isLoading()) return
 
-  setting.loading = true
+  openWindow('loading')
   nextTick(() => {
     if (viewDom.value) {
       if (!currentLightCone.value) return
 
       screenshot(viewDom.value, currentLightCone.value.name)
       setTimeout(() => {
-        setting.loading = false
-      }, 200)
+        nextTick(() => {
+          closeWindow('loading')
+        })
+      }, 500)
     }
   })
 }
