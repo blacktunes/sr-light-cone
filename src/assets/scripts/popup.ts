@@ -10,7 +10,7 @@ import { selectClose, selectOpen } from '@/components/Popup/Select'
 import SelectVue from '@/components/Popup/Select/Select.vue'
 import ShowViewVue from '@/components/Popup/Show.vue'
 import { setting } from '@/store/data'
-import { computed, markRaw, reactive, ref, type Component, type ComputedRef } from 'vue'
+import type { Component, ComputedRef } from 'vue'
 
 const components = {
   loading: LoadingVue,

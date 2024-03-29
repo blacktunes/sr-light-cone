@@ -76,12 +76,12 @@ confirmCallback[props.name] = onConfirml
 
 <style lang="stylus" scoped>
 .text
+  margin 50px auto 80px
   text-align center
   font-size 50px
-  margin 50px auto 80px auto
 
 .tip
-  text-align center
-  background #e4c680
   padding 10px
+  background #e4c680
+  text-align center
 </style>

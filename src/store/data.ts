@@ -1,9 +1,7 @@
-import { computed, reactive } from 'vue'
-
 export const setting: {
   lightConeID?: number
 } = reactive({
-  lightConeID: undefined,
+  lightConeID: undefined
 })
 
 export const currentLightCone = computed(() => {

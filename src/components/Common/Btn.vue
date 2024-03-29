@@ -31,42 +31,42 @@ defineProps<{
 
 <style lang="stylus" scoped>
 .disable
-  background transparent !important
   border 3px solid #afafaf !important
+  background transparent !important
   color #afafaf !important
 
   &:before
     display none
 
 .button
-  box-sizing border-box
   position relative
   display flex
   justify-content center
   align-items center
-  background rgba(240, 240, 240, 0.8)
-  height 90px
-  padding 10px 120px
+  box-sizing border-box
   margin 0 40px
-  border-radius 50px
-  font-size 40px
-  color #161616
-  user-select none
+  padding 10px 120px
+  height 90px
   border 5px solid #e0e0e0
+  border-radius 50px
+  background rgba(240, 240, 240, 0.8)
+  color #161616
+  font-size 40px
+  user-select none
 
   span
     margin-bottom 5px
 
   &:before
-    content ''
     position absolute
-    box-sizing border-box
     top 50%
     left 50%
+    box-sizing border-box
     width 98%
     height 90%
-    border-radius 50px
     border 5px solid rgba(180, 180, 180, 0.5)
+    border-radius 50px
+    content ''
     transform translate(-50%, -50%)
     pointer-events none
 
@@ -80,12 +80,11 @@ defineProps<{
     display flex
     justify-content center
     align-items center
+    margin-right 20px
     width 45px
     height 45px
-    margin-right 20px
+    border 5px solid #b4a177
     border-radius 50%
     background #0c0b07
-    border 5px solid #b4a177
     color #d2c2a0
-
 </style>

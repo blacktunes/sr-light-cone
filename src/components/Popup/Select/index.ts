@@ -1,5 +1,3 @@
-import { reactive } from 'vue'
-
 export const selectData = reactive<{
   title: string
   list: string[] | readonly string[]

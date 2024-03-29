@@ -70,55 +70,55 @@ confirmCallback[props.name] = onConfirmlClick
 
 <style lang="stylus" scoped>
 .select-list
-  flex 1
   display flex
+  flex 1
   flex-wrap wrap
   align-content flex-start
-  margin 30px 0 10px 0
+  margin 30px 0 10px
 
   .select
-    box-sizing border-box
     display flex
-    align-items center
     justify-content space-between
-    width 32%
-    height 90px
-    font-size 46px
+    align-items center
+    box-sizing border-box
     margin-bottom 30px
     padding 0 30px 0 20px
-    background #eee
+    width 32%
+    height 90px
     border 2px solid transparent
+    background #eee
     box-shadow 0px 0px 5px 0px rgba(0, 0, 0, 0.2)
+    font-size 46px
     user-select none
 
     &:hover
       border-color #aaa
 
     &:nth-child(3n+2)
-      margin-left 2%
       margin-right 2%
+      margin-left 2%
 
     .radio
       box-sizing border-box
       width 45px
       height 45px
-      background-color #d6d6d6
       border 2px solid #adadad
       border-radius 50%
+      background-color #d6d6d6
 
 .highlight
   .radio
     display flex
-    align-items center
     justify-content center
-    background-color #fff !important
+    align-items center
     border 5px solid #ec9a37 !important
+    background-color #fff !important
 
     &:after
-      content ''
       display block
       width 25px
       height 25px
       border-radius 50%
       background-color #ec9a37
+      content ''
 </style>

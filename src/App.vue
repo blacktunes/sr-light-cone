@@ -59,7 +59,7 @@ for (const i in modules) {
 #main
   #home
     position relative
-    height 100%
     width 100%
+    height 100%
     transform-origin left top
 </style>

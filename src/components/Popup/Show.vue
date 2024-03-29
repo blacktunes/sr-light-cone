@@ -125,7 +125,6 @@
 import Popup from '../Common/Popup.vue'
 import LightCone from '../Common/LightCone.vue'
 import Close from '../Common/Close.vue'
-import { computed, nextTick, reactive, ref, watch } from 'vue'
 import { currentLightCone } from '@/store/data'
 import { fateFullIcon, fateList } from '@/assets/scripts/images'
 import { screenshot } from '@/assets/scripts/screenshot'
@@ -349,14 +348,14 @@ emitter.on('screenshot', onShareClick)
 @import '../../assets/images/image.styl'
 
 .show-view
-  z-index 9
-  overflow hidden
   position relative
-  width 100%
-  height 100%
+  z-index 9
   display flex
   justify-content center
   align-items center
+  overflow hidden
+  width 100%
+  height 100%
   background rgb(0, 0, 15)
   box-shadow 0 0 20px 20px rgba(0, 0, 0, 0.7) inset
 
@@ -368,34 +367,34 @@ emitter.on('screenshot', onShareClick)
       opacity 0.9
 
   &:before
-    z-index 1
-    content ''
     position absolute
     top 0
     right 0
     bottom 0
     left 0
+    z-index 1
     background #000
     background-image $background
-    background-repeat no-repeat
     background-size cover
+    background-repeat no-repeat
+    content ''
     opacity 0.4
 
   .effects
-    z-index 2
     position absolute
     top 0
     right 0
     bottom 0
     left 0
+    z-index 2
 
     .star-view
       position absolute
       top 50%
       left 50%
+      padding-bottom 100%
       width 100%
       height 0
-      padding-bottom 100%
       animation view-rotate 300s linear infinite
 
     .mask-view
@@ -421,27 +420,27 @@ emitter.on('screenshot', onShareClick)
       opacity 0.5
 
   .info
-    z-index 3
-    display flex
-    flex-direction column
     position absolute
     top 45%
     left 280px
+    z-index 3
+    display flex
+    flex-direction column
 
     &:hover
       .new
         opacity 0.3
 
     .label
-      width 210px
       margin 0 0 5px 285px
+      width 210px
 
     .name-box
       display flex
       justify-content center
       align-items center
-      height 170px
       padding 5px 100px
+      height 170px
       background linear-gradient(to right, transparent 0%, #000, #000, transparent)
 
       .type
@@ -460,31 +459,31 @@ emitter.on('screenshot', onShareClick)
           user-select none
 
           span
-            height 85px
-            font-size 60px
+            overflow hidden
             min-width 30px
             max-width 550px
+            height 85px
             color #fff
-            overflow hidden
             text-overflow ellipsis
             white-space nowrap
+            font-size 60px
 
             &:hover
               color #fccf73
 
           .new
             width 100px
-            transform translate(10px, 5px)
             transition 0.2s
+            transform translate(10px, 5px)
 
         .level
-          margin 10px 0 5px 0
+          margin 10px 0 5px
 
   .extra
-    z-index 4
     position absolute
     right 0
     bottom 20%
+    z-index 4
 
     img
       transition 0.2s
@@ -495,17 +494,17 @@ emitter.on('screenshot', onShareClick)
 
   .share
     position relative
+    position absolute
+    right 5%
+    bottom 5%
     z-index 4
     display flex
     justify-content center
     align-items center
-    position absolute
-    right 5%
-    bottom 5%
-    border-radius 50%
-    background #f2f2f4
     width 90px
     height 90px
+    border-radius 50%
+    background #f2f2f4
     box-shadow 0 0 5px rgba(255, 255, 255, 0.8)
     opacity 0
     transition 0.2s
@@ -531,11 +530,11 @@ emitter.on('screenshot', onShareClick)
             left 0
 
   .back
-    z-index 9
     position absolute
-    color #eee
     top 30px
     right 50px
+    z-index 9
+    color #eee
     opacity 0
     transition 0.2s
 
@@ -552,10 +551,10 @@ emitter.on('screenshot', onShareClick)
   position absolute
   width 10px
   height 10px
-  background-color #fff
   border-radius 50%
-  opacity 0
+  background-color #fff
   box-shadow 0 0 5px 5px rgba(255, 255, 255, 0.7)
+  opacity 0
   animation flash linear infinite alternate
 
 .triangle
@@ -574,7 +573,7 @@ emitter.on('screenshot', onShareClick)
   bottom 0
   background linear-gradient(to top, rgba(255, 255, 255, 0.5) 50%, transparent)
   opacity 0
-  // animation-timing-function linear
+  //animation-timing-function linear
 
 @keyframes flash
   0%

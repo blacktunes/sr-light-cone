@@ -9,13 +9,14 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
-
-const props = withDefaults(defineProps<{
-  color?: string
-}>(), {
-  color: '#131313'
-})
+const props = withDefaults(
+  defineProps<{
+    color?: string
+  }>(),
+  {
+    color: '#131313'
+  }
+)
 
 const bgColor = computed(() => props.color)
 </script>
@@ -25,7 +26,7 @@ const bgColor = computed(() => props.color)
   position relative
   width 75px
   height 75px
-  
+
   div
     background v-bind(bgColor)
 
@@ -33,9 +34,9 @@ const bgColor = computed(() => props.color)
     position absolute
     width 45%
     height 8%
-    transform-origin center
-    transition all 0.2s
     border-radius 2px
+    transition all 0.2s
+    transform-origin center
 
   .line-1
     top 23%
@@ -53,8 +54,8 @@ const bgColor = computed(() => props.color)
     transform rotate(-45deg) translate(0, 60%)
 
   .line-4
-    bottom 23%
     right -2%
+    bottom 23%
     transform rotate(45deg) translate(0, 60%)
 
   .circle
@@ -64,8 +65,8 @@ const bgColor = computed(() => props.color)
     width 12%
     height 12%
     border-radius 50%
-    transform translate(-50%, -50%)
     transition all 0.2s
+    transform translate(-50%, -50%)
 
   &:hover
     div
@@ -87,8 +88,8 @@ const bgColor = computed(() => props.color)
       left -5%
 
     .line-4
-      bottom 20%
       right -5%
+      bottom 20%
 
     .circle
       width 18%
@@ -114,8 +115,8 @@ const bgColor = computed(() => props.color)
       left 8%
 
     .line-4
-      bottom 33%
       right 8%
+      bottom 33%
 
     .circle
       width 5%
