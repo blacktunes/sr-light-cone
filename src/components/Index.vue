@@ -45,6 +45,7 @@ import Card from './Common/Card.vue'
 import { data } from '@/store/data'
 import { fateList } from '@/assets/scripts/images'
 import { openWindow } from '@/assets/scripts/popup'
+import { getDetails } from '@/assets/scripts/lightcone'
 
 const select = ref<'全部' | Fate>('全部')
 
@@ -64,12 +65,13 @@ const addLightCone = () => {
     const id = Date.now()
     data.lightCone.push({
       id,
-      name: res.raw.name.split('.')[0] ?? '未知光锥' ?? '未知光锥',
+      name: res.raw.name.split('.')[0] ?? '未知光锥',
       image: res.base64,
       type: select.value === '全部' ? '开拓' : select.value,
       level: 5,
       time: id,
-      new: true
+      new: true,
+      details: getDetails()
     })
     openWindow('show', id)
   })

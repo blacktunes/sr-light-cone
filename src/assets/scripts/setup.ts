@@ -2,6 +2,7 @@ import log from '@/assets/data/log'
 import { data } from '@/store/data'
 import { IndexedDB } from './indexedDB'
 import { closeWindow, openWindow } from './popup'
+import { getDetails } from './lightcone'
 
 const timeout = setTimeout(() => {
   openWindow('confirm', {
@@ -17,6 +18,11 @@ const timeout = setTimeout(() => {
 }, 30 * 1000)
 
 const done = () => {
+  for (const i in data.lightCone) {
+    if (data.lightCone[i].details === undefined) {
+      data.lightCone[i].details = getDetails()
+    }
+  }
   closeWindow('loading')
   clearTimeout(timeout)
   closeWindow('confirm')

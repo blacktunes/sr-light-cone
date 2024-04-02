@@ -22,6 +22,20 @@ interface LightCone {
   image?: string
   time: number
   new?: boolean
+  details: LightConeDetails
+}
+
+interface LightConeDetails {
+  name: string
+  info: string
+  state: [LightConeState, LightConeState]
+}
+
+interface LightConeState {
+  hp: string
+  atk: string
+  def: string
+  skill: string
 }
 
 interface Log {

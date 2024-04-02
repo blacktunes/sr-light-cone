@@ -29,12 +29,35 @@
         name="log"
       />
     </div>
+    <div class="sep"></div>
+    <div>
+      <Icon
+        style="margin-top: 3px"
+        class="icon"
+        title="切换模式"
+        @click.stop="changeMode"
+        name="mode"
+      />
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
+import { setting } from '@/store/data'
 import Icon from './Common/Icon.vue'
 import { openWindow } from '@/assets/scripts/popup'
+
+const changeMode = () => {
+  setting
+  openWindow('confirm', {
+    title: '切换显示界面',
+    text: [`是否切换为${setting.details ? '跃迁' : '智库'}界面`],
+    fn: () => {
+      setting.details = !setting.details
+      localStorage.setItem('sr-light-cone-details', JSON.stringify(setting.details))
+    }
+  })
+}
 </script>
 
 <style lang="stylus" scoped>
