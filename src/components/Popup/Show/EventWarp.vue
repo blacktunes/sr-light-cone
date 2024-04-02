@@ -143,7 +143,7 @@ const triangleColor = computed(() => {
   }
 })
 
-watch(currentLightCone, async () => {
+onMounted(async () => {
   if (!currentLightCone.value) return
   await nextTick()
   if (effectsDOm.value) {
