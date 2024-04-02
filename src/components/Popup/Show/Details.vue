@@ -37,166 +37,190 @@
         </div>
       </div>
     </LightCone>
-    <div
-      class="name"
-      @click.stop="onNameClick"
+    <Transition
+      name="box-slide-bottom"
+      appear
     >
-      {{ currentLightCone.name }}
-    </div>
-    <div
-      class="type"
-      @click.stop="onTypeClick"
-    >
-      <img
-        :src="fateIcon[currentLightCone.type]"
-        alt=""
-      />
-      <span>{{ currentLightCone.type }}</span>
-    </div>
-    <div
-      class="stage"
-      :class="{ 'initial-stage': isInitial }"
-    >
-      <div
-        v-for="(_, index) in 6"
-        :key="index"
-      ></div>
-    </div>
-    <div class="level">
-      <span>等级 </span>
-      <span class="num">{{ isInitial ? 1 : 80 }}/</span>
-      <span
-        class="num"
-        style="color: #687993"
-        >{{ isInitial ? 20 : 80 }}</span
-      >
-    </div>
-    <div
-      class="state hp"
-      @click.stop="onStateClick('hp')"
-    >
-      <div class="label">
-        <div>
-          <img
-            src="@/assets/images/hp.webp"
-            alt=""
-          />
+      <div class="details-box">
+        <Icon
+          name="back"
+          class="back-btn"
+          @click.stop="$emit('close')"
+        />
+        <div
+          class="name"
+          @click.stop="onNameClick"
+        >
+          {{ currentLightCone.name }}
         </div>
-        <span>生命值</span>
-      </div>
-      <span class="num">{{ currentLightCone.details.state[isInitial ? 0 : 1].hp }}</span>
-    </div>
-    <div
-      class="state atk"
-      @click.stop="onStateClick('atk')"
-    >
-      <div class="label">
-        <div>
-          <img
-            src="@/assets/images/atk.webp"
-            alt=""
-          />
-        </div>
-        <span>攻击力</span>
-      </div>
-      <span class="num">{{ currentLightCone.details.state[isInitial ? 0 : 1].atk }}</span>
-    </div>
-    <div
-      class="state def"
-      @click.stop="onStateClick('def')"
-    >
-      <div class="label">
-        <div>
-          <img
-            src="@/assets/images/def.webp"
-            alt=""
-          />
-        </div>
-        <span>防御力</span>
-      </div>
-      <span class="num">{{ currentLightCone.details.state[isInitial ? 0 : 1].def }}</span>
-    </div>
-    <div class="tip">光锥技能</div>
-    <div class="info">
-      <div class="type-tip">
-        <div class="icon">
+        <div
+          class="type"
+          @click.stop="onTypeClick"
+        >
           <img
             :src="fateIcon[currentLightCone.type]"
             alt=""
           />
+          <span>{{ currentLightCone.type }}</span>
         </div>
-        <div>
-          <span>以下效果</span>
-          <span style="letter-spacing: -5px">对</span>
-          <span style="color: #ed9c38">【{{ currentLightCone.type }}</span>
-          <span style="color: #ed9c38; letter-spacing: -5px">】</span>
-          <span>命途角色生效</span>
+        <div
+          class="stage"
+          :class="{ 'initial-stage': isInitial }"
+        >
+          <div
+            v-for="(_, index) in 6"
+            :key="index"
+          ></div>
         </div>
+        <div class="level">
+          <span>等级 </span>
+          <span class="num">{{ isInitial ? 1 : 80 }}/</span>
+          <span
+            class="num"
+            style="color: #687993"
+            >{{ isInitial ? 20 : 80 }}</span
+          >
+        </div>
+        <div
+          class="state hp"
+          @click.stop="onStateClick('hp')"
+        >
+          <div class="label">
+            <div>
+              <img
+                src="@/assets/images/hp.webp"
+                alt=""
+              />
+            </div>
+            <span>生命值</span>
+          </div>
+          <span class="num">{{ currentLightCone.details.state[isInitial ? 0 : 1].hp }}</span>
+        </div>
+        <div
+          class="state atk"
+          @click.stop="onStateClick('atk')"
+        >
+          <div class="label">
+            <div>
+              <img
+                src="@/assets/images/atk.webp"
+                alt=""
+              />
+            </div>
+            <span>攻击力</span>
+          </div>
+          <span class="num">{{ currentLightCone.details.state[isInitial ? 0 : 1].atk }}</span>
+        </div>
+        <div
+          class="state def"
+          @click.stop="onStateClick('def')"
+        >
+          <div class="label">
+            <div>
+              <img
+                src="@/assets/images/def.webp"
+                alt=""
+              />
+            </div>
+            <span>防御力</span>
+          </div>
+          <span class="num">{{ currentLightCone.details.state[isInitial ? 0 : 1].def }}</span>
+        </div>
+        <div class="tip">光锥技能</div>
+        <div class="line"></div>
+        <div class="info">
+          <div class="type-tip">
+            <div class="icon">
+              <img
+                :src="fateIcon[currentLightCone.type]"
+                alt=""
+              />
+            </div>
+            <div>
+              <span>以下效果</span>
+              <span style="letter-spacing: -5px">对</span>
+              <span style="color: #ed9c38">【{{ currentLightCone.type }}</span>
+              <span style="color: #ed9c38; letter-spacing: -5px">】</span>
+              <span>命途角色生效</span>
+            </div>
+          </div>
+          <div
+            class="overlap"
+            :class="{ 'initial-overlap': isInitial }"
+          >
+            <div class="icon">{{ isInitial ? 'I' : 'V' }}</div>
+            <span>叠影{{ isInitial ? 1 : 5 }}阶</span>
+          </div>
+          <div
+            class="skill-name"
+            @click.stop="onSkillNameClick"
+          >
+            {{ currentLightCone.details.name || '光锥' }}
+          </div>
+          <div
+            class="skill"
+            @click.stop="onSkillClick"
+            v-dompurify-html="
+              processText(currentLightCone.details.state[isInitial ? 0 : 1].skill, true) ||
+              '没有效果'
+            "
+          ></div>
+          <div class="sep"></div>
+          <div
+            class="info-text"
+            @click.stop="onInfoClick"
+            v-dompurify-html="processText(currentLightCone.details.info) || '一张普通的光锥'"
+          ></div>
+        </div>
+        <div
+          class="change"
+          @click.stop="isInitial = !isInitial"
+        >
+          <Icon
+            name="loop"
+            :class="{ 'initial-icon': isInitial }"
+          />
+        </div>
+        <div class="change-bg">
+          <div class="ring-1"></div>
+          <div class="ring-2"></div>
+          <div class="ring-3"></div>
+          <div class="ring-4"></div>
+          <Icon
+            name="triangle"
+            class="triangle"
+          />
+        </div>
+        <div
+          class="change-flag"
+          :class="{ initial: isInitial }"
+        >
+          <div class="ring"></div>
+        </div>
+        <span
+          class="level-max"
+          :class="{ 'highlight-text': !isInitial }"
+          >满级</span
+        >
+        <span
+          class="level-initial"
+          :class="{ 'highlight-text': isInitial }"
+          >初始</span
+        >
       </div>
-      <div
-        class="overlap"
-        :class="{ 'initial-overlap': isInitial }"
-      >
-        <div class="icon">{{ isInitial ? 'I' : 'V' }}</div>
-        <span>叠影{{ isInitial ? 1 : 5 }}阶</span>
+    </Transition>
+    <Transition
+      name="share"
+      appear
+    >
+      <div class="share-btn">
+        <Share
+          v-show="!isLoading()"
+          @click.stop="onShareClick(viewDom)"
+        ></Share>
       </div>
-      <div
-        class="skill-name"
-        @click.stop="onSkillNameClick"
-      >
-        {{ currentLightCone.details.name || '光锥' }}
-      </div>
-      <div
-        class="skill"
-        @click.stop="onSkillClick"
-        v-dompurify-html="
-          processText(currentLightCone.details.state[isInitial ? 0 : 1].skill, true) || '没有效果'
-        "
-      ></div>
-      <div class="sep"></div>
-      <div
-        class="info-text"
-        @click.stop="onInfoClick"
-        v-dompurify-html="processText(currentLightCone.details.info) || '一张普通的光锥'"
-      ></div>
-    </div>
-    <div
-      class="change"
-      @click.stop="isInitial = !isInitial"
-    >
-      <Icon
-        name="loop"
-        :class="{ 'initial-icon': isInitial }"
-      />
-    </div>
-    <div
-      class="change-flag"
-      :class="{ initial: isInitial }"
-    >
-      <div class="ring"></div>
-    </div>
-    <span
-      class="level-max"
-      :class="{ 'highlight-text': !isInitial }"
-      >满级</span
-    >
-    <span
-      class="level-initial"
-      :class="{ 'highlight-text': isInitial }"
-      >初始</span
-    >
-    <Share
-      v-show="!isLoading()"
-      class="share-btn"
-      @click.stop="onShareClick(viewDom)"
-    />
-    <Icon
-      name="back"
-      class="back-btn"
-      @click.stop="$emit('close')"
-    />
+    </Transition>
   </div>
-  r=
 </template>
 
 <script lang="ts" setup>
@@ -277,12 +301,14 @@ const onSkillClick = async () => {
     placeholder: '',
     textarea: true
   })
-  if (
-    skill !== null &&
-    currentLightCone.value.details.state[isInitial.value ? 0 : 1].skill !== skill
-  ) {
-    currentLightCone.value.details.state[isInitial.value ? 0 : 1].skill = skill
-    updateTime()
+  if (skill !== null) {
+    if (currentLightCone.value.details.state[isInitial.value ? 0 : 1].skill !== skill) {
+      currentLightCone.value.details.state[isInitial.value ? 0 : 1].skill = skill
+      updateTime()
+    }
+    if (!currentLightCone.value.details.state[isInitial.value ? 1 : 0].skill) {
+      currentLightCone.value.details.state[isInitial.value ? 1 : 0].skill = skill
+    }
   }
 }
 
@@ -325,7 +351,8 @@ emitter.on('screenshot', () => onShareClick(viewDom.value))
 
   &:hover
     .share-btn
-      opacity 1
+      div
+        opacity 1
 
   .bg
     position absolute
@@ -404,300 +431,381 @@ emitter.on('screenshot', () => onShareClick(viewDom.value))
       :deep(path)
         fill #f9b83a
 
-  .name
-    position fixed
-    top 190px
-    left 2480px
-    overflow hidden
-    width 650px
-    color #fff
-    text-overflow ellipsis
-    white-space nowrap
-    font-size 56px
+  .details-box
+    position absolute
+    top 0
+    right 20px
+    width 700px
+    height 100%
 
-    &:hover
-      color #fccf73
+    .back-btn
+      position absolute
+      top 80px
+      right 40px
+      color #eee
+      transition 0.2s
 
-  .type
-    position fixed
-    top 282px
-    left 2480px
-    display flex
-    align-items center
-    width 650px
-    height 50px
+      &:hover
+        color #f19d38
 
-    &:hover
-      img
-        filter invert(10%) sepia(24%) saturate(1041%) hue-rotate(329deg) brightness(97%) contrast(103%)
+      &:active
+        transform scale(0.8)
 
-      span
-        color #fccf73
-
-    img
-      height 100%
-
-    span
-      margin-left 10px
+    .name
+      position absolute
+      top 190px
+      left 0
+      overflow hidden
+      width 650px
       color #fff
-      font-size 36px
+      text-overflow ellipsis
+      white-space nowrap
+      font-size 56px
 
-  .stage
-    position fixed
-    top 350px
-    left 2480px
-    display flex
-    gap 3px
-
-    div
-      width 40px
-      height 40px
-      background #ffdf99
-      transition background 0.2s
-      clip-path polygon(50% 0%, 80% 50%, 50% 100%, 20% 50%)
-
-  .level
-    position fixed
-    top 390px
-    left 2480px
-    font-size 40px
-
-    .num
-      font-size 46px
-
-  .state
-    position fixed
-    left 2500px
-    display flex
-    justify-content space-between
-    align-items center
-    width 630px
-    font-size 34px
-
-    &:hover
-      img
-        filter invert(10%) sepia(24%) saturate(1041%) hue-rotate(329deg) brightness(97%) contrast(103%)
-
-      span
-        color #fccf73
-
-    .label
-      display flex
-
-      div
-        display flex
-        justify-content center
-        align-items center
-        margin 5px 20px 0 0
-        width 40px
-
-        img
-          width 100%
-
-    .num
-      font-size 42px
-
-  .hp
-    top 470px
-
-  .atk
-    top 530px
-
-  .def
-    top 590px
-
-  .tip
-    position fixed
-    top 680px
-    left 2485px
-    color #ced2d8
-    font-size 40px
-
-  .info
-    position fixed
-    top 750px
-    left 2485px
-    overflow-x hidden
-    overflow-y auto
-    overflow-y overlay
-    box-sizing border-box
-    padding 0px 15px 30px 0
-    width 670px
-    height 720px
-    scrollbar-gutter stable
-    mask-image linear-gradient(to bottom, transparent, #000 20px, #000, #000 calc(100% - 50px), transparent)
-    mask-size 100%
-    mask-position 0 0
-    mask-repeat no-repeat
-
-    &::-webkit-scrollbar
-      width 8px
-      height 0
-
-    &::-webkit-scrollbar-track
-      margin 10px 0
-      background rgba(200, 200, 200, 0.3)
-
-    &::-webkit-scrollbar-thumb
-      background #c6c6c6
-
-    .type-tip
-      display flex
-      align-items flex-start
-      margin-bottom 20px
-      color #fff
-      font-size 42px
-
-      .icon
-        position relative
-        display flex
-        justify-content center
-        align-items center
-        margin 0 20px 10px 0
-        margin 5px 10px 0 5px
-        width 55px
-        height 55px
-        border-radius 50%
-        background #000
-
-        &:before
-          position absolute
-          top -5px
-          right -5px
-          bottom -5px
-          left -5px
-          border 3px solid #000
-          border-radius 50%
-          content ''
-
-        img
-          width 90%
-
-    .overlap
-      display flex
-      align-items center
-      margin-bottom 20px
-
-      .icon
-        display flex
-        justify-content center
-        align-items center
-        margin-right 10px
-        width 55px
-        height 55px
-        border-radius 50%
-        background #ffcf70
-        color #000
-        font-size 35px
-        font-family auto
-        transition 0.1s
-
-      span
-        color #d8c08f
-        font-size 42px
-
-    .skill-name
-    .skill
-    .info-text
       &:hover
         color #fccf73
 
-    .skill-name
-      color #fff
-      font-size 40px
-
-    .skill
-    .info-text
-      color #d0d3d8
-      font-size 40px
-
-    .sep
-      margin 20px 0 15px
-      width 100%
-      height 3px
-      background rgba(200, 200, 200, 0.2)
-
-  .change
-    position fixed
-    bottom 143px
-    left 2965px
-    display flex
-    justify-content center
-    align-items center
-    width 130px
-    height 130px
-    border-radius 50%
-    transition background 0.1s
-
-    &:hover
-      background rgba(200, 180, 140, 0.3)
-
-    svg
-      transition transform 0.5s
-      transform rotateY(180deg) rotate(0deg)
-
-  .change-flag
-    position fixed
-    bottom 120px
-    left 2945px
-    transition transform 0.2s
-    pointer-events none
-
-    &:after
+    .type
       position absolute
-      top 15px
-      left -5px
-      width 15px
-      height 15px
-      background-color #fff
-      content ''
-      transform rotate(-45deg)
-      clip-path polygon(50% 15%, 0% 100%, 100% 100%)
+      top 282px
+      left 0
+      display flex
+      align-items center
+      width 660px
+      height 50px
+      background rgba(200, 200, 200, 0.1)
 
-    .ring
+      &:hover
+        img
+          filter invert(10%) sepia(24%) saturate(1041%) hue-rotate(329deg) brightness(97%) contrast(103%)
+
+        span
+          color #fccf73
+
+      img
+        height 100%
+
+      span
+        margin-left 10px
+        color #fff
+        font-size 36px
+
+    .stage
+      position absolute
+      top 350px
+      left 0
+      display flex
+      gap 3px
+
+      div
+        width 40px
+        height 40px
+        background #ffdf99
+        transition background 0.2s
+        clip-path polygon(50% 0%, 80% 50%, 50% 100%, 20% 50%)
+
+    .level
+      position absolute
+      top 380px
+      left 0
+      font-size 38px
+
+      .num
+        font-size 46px
+
+    .state
+      position absolute
+      left 0
+      display flex
+      justify-content space-between
+      align-items center
       box-sizing border-box
-      width 172px
-      height 172px
-      border 5px solid #fff
+      padding-left 15px
+      width 660px
+      height 60px
+      font-size 34px
+
+      &:hover
+        img
+          filter invert(10%) sepia(24%) saturate(1041%) hue-rotate(329deg) brightness(97%) contrast(103%)
+
+        span
+          color #fccf73
+
+      .label
+        display flex
+
+        div
+          display flex
+          justify-content center
+          align-items center
+          margin 5px 20px 0 0
+          width 40px
+
+          img
+            width 100%
+
+      .num
+        margin-right 10px
+        font-size 42px
+
+    .hp
+    .def
+      background rgba(0, 0, 0, 0.15)
+
+    .hp
+      top 470px
+
+    .atk
+      top 530px
+
+    .def
+      top 590px
+
+    .tip
+      position absolute
+      top 680px
+      left 0
+      color #ced2d8
+      font-size 40px
+
+    .line
+      position absolute
+      top 710px
+      right 50px
+      width 470px
+      height 4px
+      background rgba(200, 200, 200, 0.3)
+
+      &:after
+        position absolute
+        top -2.5px
+        right -10px
+        width 10px
+        height 10px
+        border-radius 50%
+        background rgba(200, 200, 200, 0.3)
+        content ''
+
+    .info
+      position absolute
+      top 750px
+      left 0
+      overflow-x hidden
+      overflow-y auto
+      overflow-y overlay
+      box-sizing border-box
+      padding 0px 15px 30px 0
+      width 670px
+      height 720px
+      scrollbar-gutter stable
+      mask-image linear-gradient(to bottom, transparent, #000 10px, #000, #000 calc(100% - 50px), transparent)
+      mask-size 100%
+      mask-position 0 0
+      mask-repeat no-repeat
+
+      &::-webkit-scrollbar
+        width 8px
+        height 0
+
+      &::-webkit-scrollbar-track
+        margin 10px 0
+        background rgba(200, 200, 200, 0.3)
+
+      &::-webkit-scrollbar-thumb
+        background #c6c6c6
+
+      .type-tip
+        display flex
+        align-items flex-start
+        margin-bottom 20px
+        color #fff
+        font-size 40px
+
+        .icon
+          position relative
+          display flex
+          justify-content center
+          align-items center
+          margin 0 20px 10px 0
+          margin 5px 10px 0 5px
+          width 55px
+          height 55px
+          border-radius 50%
+          background #000
+
+          &:before
+            position absolute
+            top -5px
+            right -5px
+            bottom -5px
+            left -5px
+            border 3px solid #000
+            border-radius 50%
+            content ''
+
+          img
+            width 90%
+
+      .overlap
+        display flex
+        align-items center
+        margin-bottom 20px
+
+        .icon
+          display flex
+          justify-content center
+          align-items center
+          margin-right 10px
+          margin-left 5px
+          width 55px
+          height 55px
+          border-radius 50%
+          background #ffcf70
+          color #000
+          font-size 35px
+          font-family auto
+          transition 0.1s
+
+        span
+          color #d8c08f
+          font-size 42px
+
+      .skill-name
+      .skill
+      .info-text
+        &:hover
+          color #fccf73
+
+      .skill-name
+        color #fff
+        font-size 40px
+
+      .skill
+      .info-text
+        color #d0d3d8
+        font-size 40px
+
+      .sep
+        margin 20px 0 15px
+        width 100%
+        height 3px
+        background rgba(200, 200, 200, 0.2)
+
+    .change
+      position absolute
+      right 85px
+      bottom 140px
+      display flex
+      justify-content center
+      align-items center
+      width 130px
+      height 130px
       border-radius 50%
-      clip-path polygon(50% 50%, 25% 0, -150% 0)
+      transition background 0.1s
 
-  .level-max
-  .level-initial
-    position fixed
-    color #4c4d62
-    font-size 40px
-    transition color 0.2s
+      &:hover
+        background rgba(200, 180, 140, 0.3)
 
-  .level-max
-    bottom 250px
-    left 2850px
+      svg
+        transition transform 0.5s
+        transform rotateY(180deg) rotate(0deg)
 
-  .level-initial
-    bottom 160px
-    left 2830px
+    .change-bg
+      position absolute
+      right 60px
+      bottom 115px
+      width 170px
+      height 170px
+      border 5px solid rgba(200, 200, 200, 0.1)
+      border-radius 50%
+      pointer-events none
+
+      .ring-1
+      .ring-2
+      .ring-3
+      .ring-4
+      .triangle
+        position absolute
+        top 50%
+        left 50%
+        border-radius 50%
+        transform translate(-50%, -50%)
+
+      .ring-1
+        width 135px
+        height 135px
+        border 5px solid rgba(200, 200, 200, 0.1)
+
+      .ring-2
+        width 120px
+        height 120px
+        border 3px solid rgba(200, 200, 200, 0.1)
+
+      .ring-3
+        width 80px
+        height 80px
+        border 3px solid rgba(200, 200, 200, 0.1)
+
+      .ring-4
+        width 45px
+        height 45px
+        border 3px solid rgba(200, 200, 200, 0.1)
+
+      .triangle
+        padding-bottom 10px
+        color rgba(200, 200, 200, 0.1)
+
+    .change-flag
+      position absolute
+      right 65px
+      bottom 120px
+      transition transform 0.2s
+      pointer-events none
+
+      &:after
+        position absolute
+        top 15px
+        left -5px
+        width 15px
+        height 15px
+        background-color #fff
+        content ''
+        transform rotate(-54deg)
+        clip-path polygon(50% 15%, 0% 100%, 100% 100%)
+
+      .ring
+        box-sizing border-box
+        width 172px
+        height 172px
+        border 5px solid #fff
+        border-radius 50%
+        clip-path polygon(50% 50%, 25% 0, -150% 0)
+
+    .level-max
+    .level-initial
+      position absolute
+      color #4c4d62
+      font-size 40px
+      transition color 0.2s
+
+    .level-max
+      right 250px
+      bottom 250px
+
+    .level-initial
+      right 270px
+      bottom 160px
 
   .share-btn
     position absolute
     bottom 5%
     left 80px
-    width 80px
-    height 80px
-    opacity 0
 
-  .back-btn
-    position absolute
-    top 80px
-    right 60px
-    z-index 9
-    color #eee
-    transition 0.2s
-
-    &:hover
-      color #f19d38
-
-    &:active
-      transform scale(0.8)
+    div
+      width 80px
+      height 80px
+      opacity 0
 
 .highlight-text
   color #fff !important
@@ -716,4 +824,13 @@ emitter.on('screenshot', () => onShareClick(viewDom.value))
 
 .initial-icon
   transform rotateY(180deg) rotate(360deg) !important
+
+.share-enter-active
+.share-leave-active
+  transition all 0.5s
+
+.share-enter-from
+.share-leave-to
+  opacity 0
+  transform translateY(-50%)
 </style>

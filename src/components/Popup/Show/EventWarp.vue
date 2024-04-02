@@ -10,17 +10,16 @@
       ref="effectsDOm"
     >
       <div class="star-view"></div>
-      <Transition name="slide-top">
+      <Transition name="mask">
         <div
           class="mask-view"
           v-show="currentLightCone.image && elementShow.mask"
         ></div>
       </Transition>
-      <div class="light-view">\</div>
+      <div class="light-view"></div>
       <Transition
+        name="rainbow"
         appear
-        appearActiveClass="fade-delay-enter-active"
-        appearFromClass="fade-delay-enter-from"
       >
         <img
           src="@/assets/images/彩虹.webp"
@@ -30,7 +29,7 @@
       </Transition>
     </div>
     <Transition
-      name="fade"
+      name="info"
       appear
     >
       <div
@@ -78,7 +77,7 @@
       </div>
     </Transition>
     <Transition
-      name="slide-left"
+      name="extra"
       appear
     >
       <div class="extra">
@@ -90,11 +89,18 @@
         />
       </div>
     </Transition>
-    <LightCone
-      class="light-cone"
-      @click.stop="onImageClick"
-      :image="currentLightCone.image"
-    />
+    <Transition
+      name="light-cone"
+      appear
+    >
+      <div class="light-cone-box">
+        <LightCone
+          class="light-cone"
+          @click.stop="onImageClick"
+          :image="currentLightCone.image"
+        />
+      </div>
+    </Transition>
     <Share
       v-show="!isLoading()"
       class="share-btn"
@@ -391,18 +397,20 @@ emitter.on('screenshot', () => onShareClick(viewDom.value))
       img
         opacity 0.3
 
-  .light-cone
+  .light-cone-box
     z-index 4
-    transform rotate3d(1, -1, 1, 15deg) scale(0.7)
 
-    &:hover
-      transform rotate3d(1, -1, 1, 10deg) scale(0.7)
+    .light-cone
+      transform rotate3d(1, -1, 1, 15deg) scale(0.7)
 
-      :deep(.top)
-        .front
-          &:after
-            top 0
-            left 0
+      &:hover
+        transform rotate3d(1, -1, 1, 10deg) scale(0.7)
+
+        :deep(.top)
+          .front
+            &:after
+              top 0
+              left 0
 
   .share-btn
     position absolute
@@ -456,6 +464,44 @@ emitter.on('screenshot', () => onShareClick(viewDom.value))
   background linear-gradient(to top, rgba(255, 255, 255, 0.5) 50%, transparent)
   opacity 0
   //animation-timing-function linear
+
+.light-cone-enter-active
+  transition opacity 0.5s, transform 0.35s
+
+.light-cone-enter-from
+  opacity 0
+  transform scale(3)
+
+.rainbow-enter-active
+  transition opacity 1s
+  transition-delay 0.2s
+
+.rainbow-enter-from
+  opacity 0 !important
+
+.info-enter-active
+  transition opacity 0.5s, transform 0.35s
+  transition-delay 0.5s
+
+.info-enter-from
+  opacity 0
+  transform translateX(30%)
+
+.extra-enter-active
+  transition all 0.3s
+  transition-delay 0.5s
+
+.extra-enter-from
+  transform translateX(100%)
+
+.mask-enter-active
+.mask-leave-active
+  transition all 0.3s linear
+
+.mask-enter-from
+.mask-leave-to
+  opacity 0
+  transform translateY(50%)
 
 @keyframes flash
   0%

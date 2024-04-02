@@ -3,46 +3,62 @@
     class="index"
     @click.stop
   >
-    <div class="left">
-      <GroupBtn
-        type="全部"
-        :highlight="select === '全部'"
-        @click="select = '全部'"
-      />
-      <div class="group-list">
+    <Transition
+      name="box-slide-bottom"
+      appear
+    >
+      <div
+        class="left"
+        v-show="!currentLightCone"
+      >
         <GroupBtn
-          v-for="name in fateList"
-          :key="name"
-          :type="name"
-          :highlight="select === name"
-          @click="select = name"
+          type="全部"
+          :highlight="select === '全部'"
+          @click="select = '全部'"
+        />
+        <div class="group-list">
+          <GroupBtn
+            v-for="name in fateList"
+            :key="name"
+            :type="name"
+            :highlight="select === name"
+            @click="select = name"
+          />
+        </div>
+      </div>
+    </Transition>
+    <Transition
+      name="box-slide-bottom"
+      appear
+    >
+      <div
+        class="right"
+        v-show="!currentLightCone"
+      >
+        <Card
+          v-for="card in lightConeList"
+          :key="card.id"
+          :name="card.name || '未知光锥'"
+          :image="card.image || ''"
+          :level="card.level"
+          :type="card.type"
+          :viewed="!card.new"
+          @click="openWindow('show', card.id)"
+          @delete="handelDelete(card.id)"
+        />
+        <Card
+          name="添加光锥"
+          @click="addLightCone"
         />
       </div>
-    </div>
-    <div class="right">
-      <Card
-        v-for="card in lightConeList"
-        :key="card.id"
-        :name="card.name || '未知光锥'"
-        :image="card.image || ''"
-        :level="card.level"
-        :type="card.type"
-        :viewed="!card.new"
-        @click="openWindow('show', card.id)"
-        @delete="handelDelete(card.id)"
-      />
-      <Card
-        name="添加光锥"
-        @click="addLightCone"
-      />
-    </div>
+    </Transition>
   </div>
 </template>
 
 <script lang="ts" setup>
 import GroupBtn from './Common/GroupBtn.vue'
 import Card from './Common/Card.vue'
-import { data } from '@/store/data'
+import { currentLightCone, data } from '@/store/data'
 import { fateList } from '@/assets/scripts/images'
 import { openWindow } from '@/assets/scripts/popup'
 import { getDetails } from '@/assets/scripts/lightcone'

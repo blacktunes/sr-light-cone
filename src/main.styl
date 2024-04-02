@@ -44,24 +44,6 @@ body
 .hide
   opacity 0
 
-.slide-top-enter-active
-.slide-top-leave-active
-  transition all 0.3s linear
-
-.slide-top-enter-from
-.slide-top-leave-to
-  opacity 0
-  transform translateY(50%)
-
-.slide-left-enter-active
-.slide-left-leave-active
-  transition all 0.3s
-  transition-delay 0.35s
-
-.slide-left-enter-from
-.slide-left-leave-to
-  transform translateX(100%)
-
 .fade-enter-active
 .fade-leave-active
   transition all 0.2s
@@ -74,26 +56,11 @@ body
 .fade-leave-from
   opacity 1
 
-.fade-delay-enter-active
-  transition all 0.2s
-  transition-delay 0.35s
+.box-slide-bottom-enter-active
+.box-slide-bottom-leave-active
+  transition opacity 1s, transform 0.35s ease-out
 
-.fade-delay-enter-from
+.box-slide-bottom-enter-from
+.box-slide-bottom-leave-to
   opacity 0
-
-.fade-delay-enter-to
-  opacity 1
-
-.test-enter-active
-  transition all 0.2s
-
-.test-leave-active
-  transition all 600s
-
-.test-enter-from
-.test-leave-to
-  opacity 0
-
-.test-enter-to
-.test-leave-from
-  opacity 1
+  transform translateY(-5%)

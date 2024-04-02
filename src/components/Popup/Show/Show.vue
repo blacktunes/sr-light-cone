@@ -1,6 +1,12 @@
 <template>
-  <Popup :index="index">
-    <Component :is="setting.details ? Details : EventWarp" @close="close" />
+  <Popup
+    :index="index"
+    transition="show-transition"
+  >
+    <Component
+      :is="setting.details ? Details : EventWarp"
+      @close="close"
+    />
   </Popup>
 </template>
 
@@ -23,3 +29,20 @@ const close = () => {
   emits('close', props.name)
 }
 </script>
+
+<style lang="stylus">
+.show-transition-enter-active
+.show-transition-leave-active
+  transition all 0.2s
+
+.show-transition-enter-from
+.show-transition-leave-to
+  opacity 0
+
+.show-transition-leave-active .details-box
+  transition opacity 0.5s ease-in, transform 0.35s ease-out
+
+.show-transition-leave-to .details-box
+  opacity 0
+  transform translateY(-5%)
+</style>
