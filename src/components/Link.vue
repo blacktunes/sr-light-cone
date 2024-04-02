@@ -50,7 +50,7 @@ import { openWindow } from '@/assets/scripts/popup'
 const changeMode = () => {
   setting
   openWindow('confirm', {
-    title: '切换显示界面',
+    title: '切换展示界面',
     text: [`是否切换为${setting.details ? '跃迁' : '智库'}界面`],
     fn: () => {
       setting.details = !setting.details

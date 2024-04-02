@@ -18,7 +18,6 @@ import Icon from './Icon.vue'
 
 <style lang="stylus" scoped>
 .share
-  z-index 5
   display flex
   justify-content center
   align-items center
@@ -30,9 +29,10 @@ import Icon from './Icon.vue'
   transition 0.2s
 
   .ring
+    z-index 1
     position absolute
-    z-index -1
 
   .icon
+    z-index 2
     margin 5px 5px 0 0
 </style>
