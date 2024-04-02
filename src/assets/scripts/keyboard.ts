@@ -10,7 +10,7 @@ import {
 document.addEventListener('click', (e) => {
   if (isLoading()) return
   if ((e.target as HTMLElement).tagName.toLowerCase() === 'a') return
-  closeCurrentComponent()
+  if (getCurrentComponent() !== 'show') closeCurrentComponent()
 })
 
 document.addEventListener('keydown', async (e) => {
