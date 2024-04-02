@@ -17,6 +17,7 @@
     "mitt": "^3.0.1",
     "super-image-cropper": "^1.0.18",
     "vue": "^3.4.21",
+    "vue-dompurify-html": "^5.0.1",
     "vue-picture-cropper": "^0.7.0"
   },
   "devDependencies": {

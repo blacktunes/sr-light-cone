@@ -6,7 +6,21 @@
       confirm
       @close="close"
     >
-      <div class="text">
+      <div
+        class="textarea"
+        v-if="inputData.textarea"
+      >
+        <textarea
+          ref="inputDom"
+          v-model="inputData.text"
+          :placeholder="inputData.placeholder"
+          @keydown.enter.stop="onTextareaEnter"
+        ></textarea>
+      </div>
+      <div
+        class="input"
+        v-else
+      >
         <input
           type="text"
           ref="inputDom"
@@ -73,6 +87,10 @@ watch(
   }
 )
 
+const onTextareaEnter = (e: KeyboardEvent) => {
+  if (inputData.textarea && e.ctrlKey) onConfirmlClick()
+}
+
 const onConfirmlClick = () => {
   if (inputData.required && inputData.text.length < 1) return false
 
@@ -85,7 +103,7 @@ confirmCallback[props.name] = onConfirmlClick
 </script>
 
 <style lang="stylus" scoped>
-.text
+.input
   display flex
   flex 1
   justify-content center
@@ -102,6 +120,26 @@ confirmCallback[props.name] = onConfirmlClick
     border-radius 45px
     background #c7c7c7
     font-size 50px
+
+.textarea
+  display flex
+  flex 1
+  justify-content center
+  align-items center
+  margin 40px 0px
+
+  textarea
+    box-sizing border-box
+    padding 15px 50px
+    width 100%
+    height 600px
+    outline none
+    border 2px solid #666
+    border-radius 19px
+    border-radius 45px
+    background #c7c7c7
+    font-size 50px
+    resize none
 
 .tip
   padding 10px
