@@ -244,10 +244,6 @@ defineEmits<{
   (event: 'close'): void
 }>()
 
-onMounted(() => {
-  if (currentLightCone.value) currentLightCone.value.new = false
-})
-
 const viewDom = ref<HTMLElement | null>(null)
 
 const isInitial = ref(true)

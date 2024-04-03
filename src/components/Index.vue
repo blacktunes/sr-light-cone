@@ -43,8 +43,8 @@
           :level="card.level"
           :type="card.type"
           :viewed="!card.new"
-          @click="openWindow('show', card.id)"
-          @delete="handelDelete(card.id)"
+          @click="handleClick(card.id)"
+          @delete="handleDelete(card.id)"
         />
         <Card
           name="添加光锥"
@@ -58,7 +58,7 @@
 <script lang="ts" setup>
 import GroupBtn from './Common/GroupBtn.vue'
 import Card from './Common/Card.vue'
-import { currentLightCone, data } from '@/store/data'
+import { currentLightCone, data, setting } from '@/store/data'
 import { fateList } from '@/assets/scripts/images'
 import { openWindow } from '@/assets/scripts/popup'
 import { getDetails } from '@/assets/scripts/lightcone'
@@ -93,7 +93,12 @@ const addLightCone = () => {
   })
 }
 
-const handelDelete = (id: number) => {
+const handleClick = (id: number) => {
+  openWindow('show', id)
+  if (setting.details && currentLightCone.value) currentLightCone.value.new = false
+}
+
+const handleDelete = (id: number) => {
   const index = data.lightCone.findIndex((item) => item.id === id)
   if (id !== -1) {
     openWindow('confirm', {
