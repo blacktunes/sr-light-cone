@@ -336,7 +336,13 @@ const processText = (text: string, color?: boolean) => {
   return text.replace(/\n/g, '<br>')
 }
 
-emitter.on('screenshot', () => onShareClick(viewDom.value))
+onMounted(() => {
+  emitter.on('screenshot', () => onShareClick(viewDom.value))
+})
+
+onUnmounted(() => {
+  emitter.off('screenshot')
+})
 </script>
 
 <style lang="stylus" scoped>

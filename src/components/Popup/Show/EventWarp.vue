@@ -248,7 +248,13 @@ const onNewFlagClick = () => {
   }
 }
 
-emitter.on('screenshot', () => onShareClick(viewDom.value))
+onMounted(() => {
+  emitter.on('screenshot', () => onShareClick(viewDom.value))
+})
+
+onUnmounted(() => {
+  emitter.off('screenshot')
+})
 </script>
 
 <style lang="stylus" scoped>
