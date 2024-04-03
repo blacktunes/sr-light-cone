@@ -101,9 +101,10 @@
         />
       </div>
     </Transition>
-    <Share
+    <MenuBtn
       v-show="!isLoading()"
       class="share-btn"
+      name="share"
       @click.stop="onShareClick(viewDom)"
     />
     <Close
@@ -118,7 +119,7 @@
 <script lang="ts" setup>
 import LightCone from '@/components/Common/LightCone.vue'
 import Icon from '@/components/Common/Icon.vue'
-import Share from '@/components/Common/Share.vue'
+import MenuBtn from '@/components/Common/MenuBtn.vue'
 import Close from '@/components/Common/Close.vue'
 import { currentLightCone } from '@/store/data'
 import { fateFullIcon } from '@/assets/scripts/images'
@@ -358,6 +359,9 @@ onUnmounted(() => {
         width 170px
         height 170px
         filter invert(1)
+
+        &:hover
+          filter invert(90%) sepia(24%) saturate(1041%) hue-rotate(329deg) brightness(97%) contrast(103%)
 
       .name-content
         display flex

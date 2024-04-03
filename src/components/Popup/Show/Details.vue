@@ -214,10 +214,11 @@
       appear
     >
       <div class="share-btn">
-        <Share
+        <MenuBtn
           v-show="!isLoading()"
+          name="share"
           @click.stop="onShareClick(viewDom)"
-        ></Share>
+        />
       </div>
     </Transition>
   </div>
@@ -225,7 +226,7 @@
 
 <script lang="ts" setup>
 import LightCone from '@/components/Common/LightCone.vue'
-import Share from '@/components/Common/Share.vue'
+import MenuBtn from '@/components/Common/MenuBtn.vue'
 import Icon from '@/components/Common/Icon.vue'
 import { emitter } from '@/assets/scripts/event'
 import { openWindow, isLoading } from '@/assets/scripts/popup'

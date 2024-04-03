@@ -19,3 +19,8 @@ export const data = reactive<{
 })
 
 setting.details = JSON.parse(localStorage.getItem('sr-light-cone-details') || 'true')
+
+export const setShowMode = () => {
+  setting.details = !setting.details
+  localStorage.setItem('sr-light-cone-details', JSON.stringify(setting.details))
+}

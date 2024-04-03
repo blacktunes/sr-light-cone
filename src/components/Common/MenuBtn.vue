@@ -1,11 +1,11 @@
 <template>
-  <div class="share">
+  <div class="menu-btn">
     <Icon
       name="ring"
       class="ring"
     />
     <Icon
-      name="share"
+      :name="name"
       class="icon"
       color="#000"
     />
@@ -14,10 +14,14 @@
 
 <script lang="ts" setup>
 import Icon from './Icon.vue'
+
+defineProps<{
+  name: string
+}>()
 </script>
 
 <style lang="stylus" scoped>
-.share
+.menu-btn
   display flex
   justify-content center
   align-items center
@@ -25,12 +29,14 @@ import Icon from './Icon.vue'
   height 90px
   border-radius 50%
   background #f2f2f4
-  box-shadow 0 0 5px rgba(255, 255, 255, 0.8)
   transition 0.2s
 
+  &:hover
+    box-shadow 0 0 0px 5px rgba(255, 255, 255, 0.5)
+
   .ring
-    z-index 1
     position absolute
+    z-index 1
 
   .icon
     z-index 2
