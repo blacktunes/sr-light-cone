@@ -438,43 +438,6 @@ onUnmounted(() => {
     opacity 0
     transition 0.2s
 
-@keyframes view-rotate
-  0%
-    transform translate(-50%, -50%) rotate(0deg)
-
-  100%
-    transform translate(-50%, -50%) rotate(360deg)
-</style>
-
-<style lang="stylus">
-.star
-  position absolute
-  width 10px
-  height 10px
-  border-radius 50%
-  background-color #fff
-  box-shadow 0 0 5px 5px rgba(255, 255, 255, 0.7)
-  opacity 0
-  animation flash linear infinite alternate
-
-.triangle
-  position absolute
-
-  div
-    width 70px
-    height 70px
-    background-color v-bind(triangleColor)
-    opacity 0
-    animation triangle linear infinite alternate
-    clip-path polygon(50% 50%, 0% 100%, 100% 100%)
-
-.light
-  position absolute
-  bottom 0
-  background linear-gradient(to top, rgba(255, 255, 255, 0.5) 50%, transparent)
-  opacity 0
-  //animation-timing-function linear
-
 .light-cone-enter-active
   transition opacity 0.5s, transform 0.35s
 
@@ -512,6 +475,43 @@ onUnmounted(() => {
 .mask-leave-to
   opacity 0
   transform translateY(50%)
+
+@keyframes view-rotate
+  0%
+    transform translate(-50%, -50%) rotate(0deg)
+
+  100%
+    transform translate(-50%, -50%) rotate(360deg)
+</style>
+
+<style lang="stylus">
+.star
+  position absolute
+  width 10px
+  height 10px
+  border-radius 50%
+  background-color #fff
+  box-shadow 0 0 5px 5px rgba(255, 255, 255, 0.7)
+  opacity 0
+  animation flash linear infinite alternate
+
+.triangle
+  position absolute
+
+  div
+    width 70px
+    height 70px
+    background-color v-bind(triangleColor)
+    opacity 0
+    animation triangle linear infinite alternate
+    clip-path polygon(50% 50%, 0% 100%, 100% 100%)
+
+.light
+  position absolute
+  bottom 0
+  background linear-gradient(to top, rgba(255, 255, 255, 0.5) 50%, transparent)
+  opacity 0
+  //animation-timing-function linear
 
 @keyframes flash
   0%

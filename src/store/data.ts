@@ -1,9 +1,11 @@
 export const setting: {
   lightConeID?: number
   details: boolean
+  screenshot: boolean
 } = reactive({
   lightConeID: undefined,
-  details: false
+  details: false,
+  screenshot: false
 })
 
 export const currentLightCone = computed(() => {

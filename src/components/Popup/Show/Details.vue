@@ -128,7 +128,10 @@
         </div>
         <div class="tip">光锥技能</div>
         <div class="line"></div>
-        <div class="info">
+        <div
+          class="info"
+          :class="{ hidden: setting.screenshot }"
+        >
           <div class="type-tip">
             <div class="icon">
               <img
@@ -231,7 +234,7 @@ import Icon from '@/components/Common/Icon.vue'
 import { emitter } from '@/assets/scripts/event'
 import { openWindow, isLoading } from '@/assets/scripts/popup'
 import { fateIcon } from '@/assets/scripts/images'
-import { currentLightCone } from '@/store/data'
+import { currentLightCone, setting } from '@/store/data'
 import {
   updateTime,
   onNameClick,

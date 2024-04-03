@@ -1,7 +1,7 @@
 import { fateList } from '@/assets/scripts/images'
 import { closeWindow, isLoading, openWindow } from '@/assets/scripts/popup'
 import { screenshot } from '@/assets/scripts/screenshot'
-import { currentLightCone } from '@/store/data'
+import { currentLightCone, setting } from '@/store/data'
 
 export const updateTime = () => {
   if (!currentLightCone.value) return
@@ -56,6 +56,7 @@ export const onImageClick = () => {
 export const onShareClick = (dom?: HTMLElement | null) => {
   if (isLoading()) return
 
+  setting.screenshot = true
   openWindow('loading')
   nextTick(() => {
     if (dom) {
@@ -64,10 +65,12 @@ export const onShareClick = (dom?: HTMLElement | null) => {
       screenshot(dom, currentLightCone.value.name)
       setTimeout(() => {
         nextTick(() => {
+          setting.screenshot = false
           closeWindow('loading')
         })
       }, 500)
     } else {
+      setting.screenshot = false
       closeWindow('loading')
     }
   })
