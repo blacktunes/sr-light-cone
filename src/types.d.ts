@@ -13,6 +13,10 @@ type Fate =
   | '欢愉'
   | '记忆'
   | '繁育'
+  | '贪饕'
+  | '秩序'
+  | '均衡'
+  | '迷思'
 
 interface LightCone {
   id: number
