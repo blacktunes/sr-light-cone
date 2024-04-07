@@ -17,6 +17,7 @@
     "mitt": "^3.0.1",
     "super-image-cropper": "^1.0.18",
     "vue": "^3.4.21",
+    "vue-dompurify-html": "^5.0.1",
     "vue-picture-cropper": "^0.7.0"
   },
   "devDependencies": {
@@ -37,6 +38,7 @@
     "typescript": "^5.4.3",
     "unplugin-auto-import": "^0.17.5",
     "vite": "^5.2.6",
+    "vite-plugin-pwa": "^0.19.8",
     "vue-tsc": "^2.0.7"
   }
 }

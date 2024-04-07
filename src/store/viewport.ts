@@ -1,6 +1,6 @@
 const width = 3200
 const height = (width / 16) * 9
-const bottom = 100
+const bottom = 0
 
 export const viewport = reactive<{
   readonly width: number

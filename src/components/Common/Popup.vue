@@ -1,5 +1,5 @@
 <template>
-  <Transition name="fade">
+  <Transition :name="transition">
     <template v-if="props.show">
       <div
         class="popup"
@@ -27,9 +27,11 @@ const props = withDefaults(
     index: number
     baseIndex?: number
     show?: boolean
+    transition?: string
   }>(),
   {
-    baseIndex: 20
+    baseIndex: 20,
+    transition: 'fade'
   }
 )
 </script>

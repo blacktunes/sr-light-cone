@@ -1,7 +1,5 @@
-import 开拓 from '@/assets/images/开拓.webp'
-import 欢愉 from '@/assets/images/欢愉.webp'
-import 记忆 from '@/assets/images/记忆.webp'
-import 繁育 from '@/assets/images/繁育.webp'
+const getImage = (name: string, full?: boolean) =>
+  new URL(`../images/fate${full ? '_full' : ''}/${name}.webp`, import.meta.url).href
 
 export const fateList = <const>[
   '开拓',
@@ -14,13 +12,17 @@ export const fateList = <const>[
   '丰饶',
   '欢愉',
   '记忆',
-  '繁育'
+  '繁育',
+  '贪饕',
+  '秩序',
+  '均衡',
+  '迷思'
 ]
 
 type FateIcon = Partial<Record<(typeof fateList)[number], string>>
 
 export const fateIcon: FateIcon = {
-  开拓,
+  开拓: getImage('开拓'),
   毁灭: 'https://patchwiki.biligame.com/images/sr/5/52/irtwtwwukfi8thb62po3xrhn10vvbnj.png',
   巡猎: 'https://patchwiki.biligame.com/images/sr/f/f4/2t0cqahe051lv3g7yl0i7si4dzwzol8.png',
   智识: 'https://patchwiki.biligame.com/images/sr/4/45/0afzd3seodfwyuj2uo4riz7kblernsh.png',
@@ -30,7 +32,11 @@ export const fateIcon: FateIcon = {
   丰饶: 'https://patchwiki.biligame.com/images/sr/d/d7/ha9pgzf4yzeqccoah30ig1ayr5oedgo.png',
   欢愉: 'https://patchwiki.biligame.com/images/sr/c/c0/d51ukip8mywhkebtmyg1jnq64jjqg7b.png',
   记忆: 'https://patchwiki.biligame.com/images/sr/0/05/ox6lz0ednjkh355n5lurjoda85zff7m.png',
-  繁育: 'https://patchwiki.biligame.com/images/sr/6/6a/klt1z9rywqk66mu9y7q7crxi0iz21p8.png'
+  繁育: getImage('繁育'),
+  贪饕: getImage('贪饕'),
+  秩序: getImage('秩序'),
+  均衡: getImage('均衡'),
+  迷思: getImage('迷思'),
 }
 
 export const fateFullIcon: FateIcon = {
@@ -42,9 +48,13 @@ export const fateFullIcon: FateIcon = {
   虚无: 'https://patchwiki.biligame.com/images/sr/5/54/oi1xyd1qyboiwrjjr405xfk0eyc3tox.png',
   存护: 'https://patchwiki.biligame.com/images/sr/e/ee/poj7ygfrfv3ncutemra1g1md892p78r.png',
   丰饶: 'https://patchwiki.biligame.com/images/sr/5/53/1okpzbf8i1jh38zh61oupczeytz45rg.png',
-  欢愉,
-  记忆,
-  繁育
+  欢愉: getImage('欢愉', true),
+  记忆: getImage('记忆', true),
+  繁育: getImage('繁育', true),
+  贪饕: getImage('贪饕', true),
+  秩序: getImage('秩序', true),
+  均衡: getImage('均衡', true),
+  迷思: getImage('迷思', true),
 }
 
 export const imageCompress = (file: File | Blob, maxWidth?: number) => {

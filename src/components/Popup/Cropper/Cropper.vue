@@ -1,48 +1,46 @@
 <template>
-  <div>
-    <Teleport to="body">
-      <Transition name="fade">
+  <Teleport to="body">
+    <Transition name="fade">
+      <div
+        class="cropper"
+        v-if="props.index !== -1 && cropperSetting.img"
+        :style="{ zIndex: 10 + index }"
+        @click.stop
+      >
+        <VuePictureCropper
+          :img="cropperSetting.img"
+          :options="{
+            viewMode: 1,
+            movable: false,
+            scalable: false,
+            zoomOnWheel: false,
+            autoCrop: cropperSetting.aspectRatio !== undefined,
+            autoCropArea: 1,
+            aspectRatio: cropperSetting.aspectRatio
+          }"
+        />
         <div
-          class="cropper"
-          v-if="props.index !== -1 && cropperSetting.img"
-          :style="{ zIndex: 10 + index }"
-          @click.stop
+          class="btn-list"
+          :style="{
+            transform: `scale(${viewport.scale}) translateX(-50%)`
+          }"
         >
-          <VuePictureCropper
-            :img="cropperSetting.img"
-            :options="{
-              viewMode: 1,
-              movable: false,
-              scalable: false,
-              zoomOnWheel: false,
-              autoCrop: cropperSetting.aspectRatio !== undefined,
-              autoCropArea: 1,
-              aspectRatio: cropperSetting.aspectRatio
-            }"
+          <Btn
+            class="btn"
+            name="取消"
+            type="wrong"
+            @click.stop="close"
           />
-          <div
-            class="btn-list"
-            :style="{
-              transform: `scale(${viewport.scale}) translateX(-50%)`
-            }"
-          >
-            <Btn
-              class="btn"
-              name="取消"
-              type="wrong"
-              @click.stop="close"
-            />
-            <Btn
-              class="btn"
-              name="确认"
-              type="check"
-              @click.stop="onCropper"
-            />
-          </div>
+          <Btn
+            class="btn"
+            name="确认"
+            type="check"
+            @click.stop="onCropper"
+          />
         </div>
-      </Transition>
-    </Teleport>
-  </div>
+      </div>
+    </Transition>
+  </Teleport>
 </template>
 
 <script lang="ts" setup>
@@ -108,4 +106,3 @@ confirmCallback[props.name] = onCropper
     width 600px
     height 100px
 </style>
-.

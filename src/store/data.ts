@@ -1,7 +1,11 @@
 export const setting: {
   lightConeID?: number
+  details: boolean
+  screenshot: boolean
 } = reactive({
-  lightConeID: undefined
+  lightConeID: undefined,
+  details: false,
+  screenshot: false
 })
 
 export const currentLightCone = computed(() => {
@@ -15,3 +19,10 @@ export const data = reactive<{
 }>({
   lightCone: []
 })
+
+setting.details = JSON.parse(localStorage.getItem('sr-light-cone-details') || 'true')
+
+export const setShowMode = () => {
+  setting.details = !setting.details
+  localStorage.setItem('sr-light-cone-details', JSON.stringify(setting.details))
+}

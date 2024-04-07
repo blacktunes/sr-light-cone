@@ -106,7 +106,7 @@ defineProps<{
       background-size 100%
       content ''
       transform translate(-50%, 50%)
-      animation highlight-rotate 30s linear infinite
+      animation highlight-enter-rotate 1s, highlight-rotate 30s linear 1s infinite
 
     .img
     .svg
@@ -115,6 +115,13 @@ defineProps<{
   .name
     color #fff
 
+@keyframes highlight-enter-rotate
+  0%
+    transform translate(-50%, 50%) rotate(0deg)
+
+  100%
+    transform translate(-50%, 50%) rotate(360deg)
+
 @keyframes highlight-rotate
   from
     transform translate(-50%, 50%) rotate(0deg)
@@ -122,4 +129,3 @@ defineProps<{
   to
     transform translate(-50%, 50%) rotate(360deg)
 </style>
-@/assets/scripts/image

@@ -1,7 +1,9 @@
 <template>
   <div class="light-cone">
     <div class="top">
-      <div class="front"></div>
+      <div class="front">
+        <slot></slot>
+      </div>
       <div class="back"></div>
       <div class="border-1"></div>
       <div class="border-2"></div>
@@ -88,7 +90,7 @@ defineProps<{
       box-sizing border-box
       width 96%
       height 97%
-      border 5px solid #786f57
+      border 8px solid #cec7b2
       border-radius 15px
       transform translate(-50%, -50%)
       transform translate3d(calc(-50% - 50px), calc(-50% - 20px), 50px)
