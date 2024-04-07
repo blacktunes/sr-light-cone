@@ -439,7 +439,7 @@ onUnmounted(() => {
     transition 0.2s
 
 .light-cone-enter-active
-  transition opacity 0.5s, transform 0.35s
+  transition opacity 0.7s, transform 0.35s
 
 .light-cone-enter-from
   opacity 0

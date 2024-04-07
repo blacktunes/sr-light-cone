@@ -6,37 +6,44 @@
     ref="viewDom"
   >
     <div class="bg"></div>
-    <LightCone
-      class="light-cone"
-      :image="currentLightCone.image"
-      @click.stop="onImageClick"
+    <Transition
+      name="light-cone"
+      appear
     >
-      <div class="card-info">
-        <div
-          class="card-type"
-          @click.stop="onTypeClick"
+      <div class="light-cone-box">
+        <LightCone
+          class="light-cone"
+          :image="currentLightCone.image"
+          @click.stop="onImageClick"
         >
-          <img
-            :src="fateIcon[currentLightCone.type]"
-            alt=""
-          />
-        </div>
-        <div
-          class="card-level"
-          @click.stop="onLevelClick"
-        >
-          <Icon
-            v-for="(_, index) in currentLightCone.level"
-            :key="index"
-            name="star"
-            width="100"
-            height="100"
-            stroke="#825b2c"
-            stroke-width="5"
-          />
-        </div>
+          <div class="card-info">
+            <div
+              class="card-type"
+              @click.stop="onTypeClick"
+            >
+              <img
+                :src="fateIcon[currentLightCone.type]"
+                alt=""
+              />
+            </div>
+            <div
+              class="card-level"
+              @click.stop="onLevelClick"
+            >
+              <Icon
+                v-for="(_, index) in currentLightCone.level"
+                :key="index"
+                name="star"
+                width="100"
+                height="100"
+                stroke="#825b2c"
+                stroke-width="5"
+              />
+            </div>
+          </div>
+        </LightCone>
       </div>
-    </LightCone>
+    </Transition>
     <Transition
       name="box-slide-bottom"
       appear
@@ -370,72 +377,74 @@ onUnmounted(() => {
     background-size contain
     background-repeat no-repeat
 
-  .light-cone
+  .light-cone-box
     position absolute
     top 17%
     left 38%
-    transform rotateX(5deg) rotateY(-5deg) rotate(8deg) scale(0.8)
 
-    &:hover
-      transform rotateX(1deg) rotateY(-1deg) rotate(8deg) scale(0.8)
+    .light-cone
+      transform rotateX(5deg) rotateY(-5deg) rotate(8deg) scale(0.8)
+
+      &:hover
+        transform rotateX(1deg) rotateY(-1deg) rotate(8deg) scale(0.8)
+
+        :deep(.top)
+          .front
+            &:after
+              top 0
+              left 0
 
       :deep(.top)
-        .front
-          &:after
-            top 0
-            left 0
+        top -20px
+        left -10px
 
-    :deep(.top)
-      top -20px
-      left -10px
-
-      .back
-        width 90%
-        height 95%
-
-    :deep(.bottom)
-      top 80px
-      left 85px
-
-    .card-info
-      position absolute
-      bottom 0
-      display flex
-      align-items center
-      padding 0 80px 35px
-      width 700px
-      pointer-events auto
-
-      .card-type
-        position relative
-        display flex
-        justify-content center
-        align-items center
-        margin 0 20px 10px 0
-        width 100px
-        height 100px
-        border 5px solid #b4b1a4
-        border-radius 50%
-        background #4b4945
-
-        &:before
-          position absolute
-          top -15px
-          right -15px
-          bottom -15px
-          left -15px
-          border 10px solid rgba(182, 177, 165, 0.5)
-          border-radius 50%
-          content ''
-
-        img
+        .back
           width 90%
+          height 95%
 
-      .card-level
-        flex 1
+      :deep(.bottom)
+        top 80px
+        left 85px
 
-      :deep(path)
-        fill #f9b83a
+      .card-info
+        position absolute
+        bottom 0
+        display flex
+        align-items center
+        padding 0 80px 35px
+        width 700px
+        pointer-events auto
+
+        .card-type
+          position relative
+          display flex
+          justify-content center
+          align-items center
+          margin 0 20px 10px 0
+          width 100px
+          height 100px
+          border 5px solid #b4b1a4
+          border-radius 50%
+          background #4b4945
+
+          &:before
+            position absolute
+            top -15px
+            right -15px
+            bottom -15px
+            left -15px
+            border 10px solid rgba(182, 177, 165, 0.5)
+            border-radius 50%
+            content ''
+
+          img
+            width 90%
+
+        .card-level
+          flex 1
+
+        :deep(path)
+          fill #f9b83a
 
   .details-box
     position absolute
@@ -709,6 +718,8 @@ onUnmounted(() => {
       height 130px
       border-radius 50%
       transition background 0.1s
+      animation change-rotate 1s
+      animation-delay 0.1s
 
       &:hover
         background rgba(200, 180, 140, 0.3)
@@ -831,6 +842,13 @@ onUnmounted(() => {
 .initial-icon
   transform rotateY(180deg) rotate(360deg) !important
 
+.light-cone-enter-active
+  transition opacity 0.7s, transform 0.35s
+
+.light-cone-enter-from
+  opacity 0
+  transform rotateX(5deg) rotateY(-5deg) rotate(5deg) scale(0.9)
+
 .share-enter-active
 .share-leave-active
   transition all 0.5s
@@ -839,4 +857,11 @@ onUnmounted(() => {
 .share-leave-to
   opacity 0
   transform translateY(-50%)
+
+@keyframes change-rotate
+  0%
+    transform rotate(0deg)
+
+  100%
+    transform rotate(-360deg)
 </style>

@@ -192,4 +192,3 @@ $top = 50px
     &::-webkit-scrollbar-thumb
       background #c1c8d2
 </style>
-@/assets/scripts/image
