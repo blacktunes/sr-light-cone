@@ -5,6 +5,7 @@
     @click.stop="elementShow.mask = !elementShow.mask"
     ref="viewDom"
   >
+    <div class="bg"></div>
     <div
       class="effects"
       ref="effectsDOm"
@@ -278,7 +279,7 @@ onUnmounted(() => {
     .close-btn
       opacity 0.9
 
-  &:before
+  .bg
     position absolute
     top 0
     right 0
@@ -289,7 +290,6 @@ onUnmounted(() => {
     background-image url('@/assets/images/背景.webp')
     background-size cover
     background-repeat no-repeat
-    content ''
     opacity 0.4
 
   .effects
