@@ -5,18 +5,68 @@
     @click.stop="elementShow.mask = !elementShow.mask"
     ref="viewDom"
   >
+    <div class="bg"></div>
     <div
       class="effects"
       ref="effectsDOm"
     >
-      <div class="star-view"></div>
-      <Transition name="mask">
+      <div class="star-view">
         <div
-          class="mask-view"
+          class="star"
+          v-for="(_, index) in 30"
+          :key="`star-${index}`"
+          :style="getStarStyle()"
+        ></div>
+        <div
+          class="triangle"
+          v-for="(_, index) in 10"
+          :key="`triangle-${index}`"
+          :style="getTrianglePos()"
+        >
+          <div :style="getTriangleStyle()"></div>
+        </div>
+      </div>
+      <Transition
+        name="mask"
+        appear-active-class="mask-appear-active"
+        appear
+      >
+        <div
+          class="mask"
           v-show="currentLightCone.image && elementShow.mask"
         ></div>
       </Transition>
-      <div class="light-view"></div>
+      <div class="light-view">
+        <div
+          class="linght"
+          v-for="(_, index) in 3"
+          :key="`linght-${index}`"
+          :style="getLightStyle(index)"
+        ></div>
+      </div>
+      <Transition name="ray">
+        <div
+          class="ray-view"
+          v-if="isRayShow"
+        >
+          <img
+            class="figure"
+            src="@/assets/images/figure.webp"
+            alt=""
+          />
+          <div class="ring"></div>
+          <img
+            class="ray_1"
+            src="@/assets/images/ray.webp"
+            alt=""
+          />
+          <img
+            class="ray_2"
+            src="@/assets/images/ray.webp"
+            alt=""
+          />
+        </div>
+      </Transition>
       <Transition
         name="rainbow"
         appear
@@ -150,73 +200,46 @@ const triangleColor = computed(() => {
   }
 })
 
-onMounted(async () => {
-  if (!currentLightCone.value) return
-  await nextTick()
-  if (effectsDOm.value) {
-    const starView = effectsDOm.value.querySelector('.star-view')
-    if (starView) {
-      for (let i = 0; i < 30; i++) {
-        const star = document.createElement('div')
-        star.className = 'star'
-        star.style.left = `${getRandom(5, 90)}%`
-        star.style.top = `${getRandom(5, 90)}%`
-        star.style.transform = `scale(${Math.random()})`
-        star.style.animationDelay = `${Math.random() * 3}s`
-        star.style.animationDuration = `${getRandom(2, 5)}s`
-        starView.appendChild(star)
-      }
-    }
-
-    if (starView) {
-      for (let i = 0; i < 10; i++) {
-        const triangleBox = document.createElement('div')
-        triangleBox.className = 'triangle'
-        triangleBox.style.left =
-          Math.random() > 0.5 ? `${getRandom(10, 40)}%` : `${getRandom(60, 90)}%`
-        triangleBox.style.top =
-          Math.random() > 0.5 ? `${getRandom(10, 40)}%` : `${getRandom(60, 90)}%`
-        triangleBox.style.transform = `scale(${Math.random()}) rotate(${getRandom(0, 90)}deg)`
-
-        const triangle = document.createElement('div')
-        triangle.style.animationDelay = `${Math.random() * 2}s`
-        triangle.style.animationDuration = `${getRandom(6, 10)}s`
-
-        triangleBox.appendChild(triangle)
-        starView.appendChild(triangleBox)
-      }
-    }
-
-    // TODO 随机光效
-    // const lightView = effectsDOm.value.querySelector('.light-view')
-    // if (lightView) {
-    //   let first = true
-    //   for (let i = 0; i < 5; i++) {
-    //     const light = document.createElement('div')
-    //     light.className = 'light'
-    //     const setLight = () => {
-    //       const delay = first ? getRandom(1000, 2000) : getRandom(2000, 5000)
-    //       first = false
-    //       const duration = getRandom(3000, 4000)
-    //       light.style.width = `${getRandom(50, 90)}px`
-    //       light.style.height = `${getRandom(40, 70)}%`
-    //       light.style.left = `${getRandom(5, 95)}%`
-    //       if (light.style.animationName === 'flash') {
-    //         light.style.animationName = 'flash-2'
-    //       } else {
-    //         light.style.animationName = 'flash'
-    //       }
-    //       light.style.animationDelay = `${delay}ms`
-    //       light.style.animationDuration = `${duration}ms`
-    //       setTimeout(() => {
-    //         setLight()
-    //       }, delay + duration)
-    //     }
-    //     setLight()
-    //     lightView.appendChild(light)
-    //   }
-    // }
+const rayColor = computed(() => {
+  switch (currentLightCone.value?.level) {
+    case 4:
+      return '#cc00ff'
+    case 5:
+      return '#ffa900'
+    default:
+      return '#004eff'
   }
+})
+
+const getStarStyle = () => ({
+  left: `${getRandom(5, 90)}%`,
+  top: `${getRandom(5, 90)}%`,
+  transform: `scale(${Math.random()})`,
+  animationDelay: `${Math.random() * 3}s`,
+  animationDuration: `${getRandom(2, 5)}s`
+})
+
+const getTrianglePos = () => ({
+  left: Math.random() > 0.5 ? `${getRandom(10, 40)}%` : `${getRandom(60, 90)}%`,
+  top: Math.random() > 0.5 ? `${getRandom(10, 40)}%` : `${getRandom(60, 90)}%`,
+  transform: `scale(${Math.random()}) rotate(${getRandom(0, 90)}deg)`
+})
+
+const getTriangleStyle = () => ({
+  animationDelay: `${Math.random() * 2}s`,
+  animationDuration: `${getRandom(6, 10)}s`
+})
+
+const getLightStyle = (i: number) => ({
+  left: `${getRandom((i + 1) * 20, (i + 1) * 30)}%`,
+  width: `${getRandom(45, 90)}px`,
+  height: `${getRandom(50, 60)}%`,
+  animationDuration: `${getRandom(4, 8)}s`
+})
+
+const isRayShow = ref(true)
+onMounted(() => {
+  isRayShow.value = false
 })
 
 const extraImage = computed(() => {
@@ -278,7 +301,7 @@ onUnmounted(() => {
     .close-btn
       opacity 0.9
 
-  &:before
+  .bg
     position absolute
     top 0
     right 0
@@ -289,7 +312,6 @@ onUnmounted(() => {
     background-image url('@/assets/images/背景.webp')
     background-size cover
     background-repeat no-repeat
-    content ''
     opacity 0.4
 
   .effects
@@ -308,14 +330,15 @@ onUnmounted(() => {
       width 100%
       height 0
       animation view-rotate 300s linear infinite
+      pointer-events none
 
-    .mask-view
+    .mask
       position absolute
       bottom 0
       left 0
       width 100%
-      height 35%
-      background linear-gradient(to top, #d7e1ed, #596688, transparent)
+      height 40%
+      background linear-gradient(to top, rgba(215, 225, 230, 0.7), rgba(90, 100, 135, 0.9) 45%, transparent)
 
     .light-view
       position absolute
@@ -323,6 +346,54 @@ onUnmounted(() => {
       right 0
       bottom 0
       left 0
+      filter drop-shadow(0 0px 10px #fff)
+      pointer-events none
+
+    .ray-view
+      position absolute
+      top 0
+      right 0
+      bottom 0
+      left 0
+      filter drop-shadow(0 0px 10px v-bind(rayColor))
+      pointer-events none
+
+      .figure
+        position absolute
+        top 50%
+        left 50%
+        width 3200px
+        height 3200px
+        transform translate(-50%, -50%) scale(0)
+        animation figure 1.5s forwards
+
+      .ring
+        position absolute
+        top 50%
+        left 50%
+        width 0
+        height 0
+        border 0 solid rgba(255, 255, 255, 0.1)
+        border-radius 50%
+        transform translate(-50%, -50%)
+        animation ring 1.5s forwards
+
+      .ray_1
+      .ray_2
+        position absolute
+        top 0
+        left 0
+        width 3200px
+        height: (3200 / 16 * 9)px
+        filter blur(10px)
+        opacity 0
+        animation ray 0.7s ease-out forwards
+
+      .ray_1
+        animation-delay 0.1s
+
+      .ray_2
+        transform rotateY(180deg)
 
     .rainbow
       position absolute
@@ -384,7 +455,7 @@ onUnmounted(() => {
             font-size 60px
 
             &:hover
-              color #fccf73
+              color var(--text-highlight-color)
 
           .new
             width 100px
@@ -438,11 +509,119 @@ onUnmounted(() => {
     opacity 0
     transition 0.2s
 
+.star
+  position absolute
+  width 10px
+  height 10px
+  border-radius 50%
+  background-color #fff
+  box-shadow 0 0 5px 5px rgba(255, 255, 255, 0.7)
+  opacity 0
+  animation flash linear infinite alternate
+
+.triangle
+  position absolute
+
+  div
+    width 70px
+    height 70px
+    background-color v-bind(triangleColor)
+    opacity 0
+    animation triangle linear infinite alternate
+    clip-path polygon(50% 50%, 0% 100%, 100% 100%)
+
+.linght
+  position absolute
+  bottom 0
+  //background radial-gradient(ellipse at bottom, #fff, transparent)
+  background linear-gradient(to top, rgba(255, 255, 255, 0.05) calc(100% - 100px), transparent)
+  opacity 1
+  animation light linear infinite alternate
+
+@keyframes view-rotate
+  0%
+    transform translate(-50%, -50%) rotate(0deg)
+
+  100%
+    transform translate(-50%, -50%) rotate(360deg)
+
+@keyframes light
+  0%
+    opacity 1
+
+  50%
+    opacity 0
+
+  100%
+    opacity 0
+
+@keyframes triangle
+  0%
+    opacity 0
+    transform rotate(0deg) rotateY(0deg)
+
+  50%
+    opacity 0.5
+
+  100%
+    opacity 0
+    transform rotate(90deg) rotateY(180deg)
+
+@keyframes figure
+  0%
+    opacity 1
+    transform translate(-50%, -50%) scale(0) rotate(0deg)
+
+  15%
+    opacity 1
+    transform translate(-50%, -50%) scale(0.5) rotate(10deg)
+
+  30%
+    opacity 0.5
+    transform translate(-50%, -50%) scale(0.9) rotate(20deg)
+
+  80%
+    opacity 0.1
+    transform translate(-50%, -50%) scale(2.5) rotate(45deg)
+
+  100%
+    opacity 0
+    transform translate(-50%, -50%) scale(2.5) rotate(45deg)
+
+@keyframes ring
+  0%
+    width 0px
+    height 0px
+
+  30%
+    width 1200px
+    height 1200px
+    border 800px solid rgba(255, 255, 255, 0.1)
+
+  80%
+    width 3000px
+    height 3000px
+
+  100%
+    width 3000px
+    height 3000px
+    border 800px solid rgba(255, 255, 255, 0.1)
+    opacity 0
+
+@keyframes ray
+  0%
+    opacity 0
+
+  50%
+    opacity 0.5
+
+  100%
+    opacity 0
+
 .light-cone-enter-active
   transition opacity 0.7s, transform 0.35s
 
 .light-cone-enter-from
-  opacity 0
   transform scale(3)
 
 .rainbow-enter-active
@@ -467,6 +646,10 @@ onUnmounted(() => {
 .extra-enter-from
   transform translateX(100%)
 
+.mask-appear-active
+  transition all 0.3s linear
+  transition-delay 0.25s
+
 .mask-enter-active
 .mask-leave-active
   transition all 0.3s linear
@@ -476,72 +659,9 @@ onUnmounted(() => {
   opacity 0
   transform translateY(50%)
 
-@keyframes view-rotate
-  0%
-    transform translate(-50%, -50%) rotate(0deg)
+.ray-leave-active
+  transition-delay 2s
 
-  100%
-    transform translate(-50%, -50%) rotate(360deg)
-</style>
-
-<style lang="stylus">
-.star
-  position absolute
-  width 10px
-  height 10px
-  border-radius 50%
-  background-color #fff
-  box-shadow 0 0 5px 5px rgba(255, 255, 255, 0.7)
+.ray-leave-to
   opacity 0
-  animation flash linear infinite alternate
-
-.triangle
-  position absolute
-
-  div
-    width 70px
-    height 70px
-    background-color v-bind(triangleColor)
-    opacity 0
-    animation triangle linear infinite alternate
-    clip-path polygon(50% 50%, 0% 100%, 100% 100%)
-
-.light
-  position absolute
-  bottom 0
-  background linear-gradient(to top, rgba(255, 255, 255, 0.5) 50%, transparent)
-  opacity 0
-  //animation-timing-function linear
-
-@keyframes flash
-  0%
-    opacity 0
-
-  50%
-    opacity 1
-
-  100%
-    opacity 0
-
-@keyframes flash-2
-  0%
-    opacity 0
-
-  50%
-    opacity 1
-
-  100%
-    opacity 0
-
-@keyframes triangle
-  0%
-    opacity 0
-    transform rotate(0deg)
-
-  50%
-    opacity 0.5
-
-  100%
-    opacity 0
-    transform rotate(90deg)
 </style>

@@ -16,7 +16,7 @@ type Fate =
   | '贪饕'
   | '秩序'
   | '均衡'
-  | '迷思'
+  | '神秘'
 
 interface LightCone {
   id: number

@@ -338,7 +338,7 @@ const onInfoClick = async () => {
 const processText = (text: string, color?: boolean) => {
   if (!text) return
   if (color) {
-    text = text.replace(/<(\S+)>/g, '<span style="color: #ed9c38">$1</span>')
+    text = text.replace(/<(\S+?)>/g, '<span style="color: #ed9c38">$1</span>')
   }
   return text.replace(/\n/g, '<br>')
 }
@@ -478,7 +478,7 @@ onUnmounted(() => {
       font-size 56px
 
       &:hover
-        color #fccf73
+        color var(--text-highlight-color)
 
     .type
       position absolute
@@ -495,7 +495,7 @@ onUnmounted(() => {
           filter invert(10%) sepia(24%) saturate(1041%) hue-rotate(329deg) brightness(97%) contrast(103%)
 
         span
-          color #fccf73
+          color var(--text-highlight-color)
 
       img
         height 100%
@@ -545,7 +545,7 @@ onUnmounted(() => {
           filter invert(10%) sepia(24%) saturate(1041%) hue-rotate(329deg) brightness(97%) contrast(103%)
 
         span
-          color #fccf73
+          color var(--text-highlight-color)
 
       .label
         display flex
@@ -690,7 +690,10 @@ onUnmounted(() => {
       .skill
       .info-text
         &:hover
-          color #fccf73
+          color var(--text-highlight-color)
+
+          :deep(span)
+            color var(--text-highlight-color) !important
 
       .skill-name
         color #fff
@@ -847,7 +850,7 @@ onUnmounted(() => {
 
 .light-cone-enter-from
   opacity 0
-  transform rotateX(5deg) rotateY(-5deg) rotate(5deg) scale(0.9)
+  transform scale(0.9)
 
 .share-enter-active
 .share-leave-active

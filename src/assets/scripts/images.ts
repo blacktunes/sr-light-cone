@@ -16,7 +16,7 @@ export const fateList = <const>[
   '贪饕',
   '秩序',
   '均衡',
-  '迷思'
+  '神秘'
 ]
 
 type FateIcon = Partial<Record<(typeof fateList)[number], string>>
@@ -36,7 +36,7 @@ export const fateIcon: FateIcon = {
   贪饕: getImage('贪饕'),
   秩序: getImage('秩序'),
   均衡: getImage('均衡'),
-  迷思: getImage('迷思'),
+  神秘: getImage('神秘'),
 }
 
 export const fateFullIcon: FateIcon = {
@@ -54,7 +54,7 @@ export const fateFullIcon: FateIcon = {
   贪饕: getImage('贪饕', true),
   秩序: getImage('秩序', true),
   均衡: getImage('均衡', true),
-  迷思: getImage('迷思', true),
+  神秘: getImage('神秘', true),
 }
 
 export const imageCompress = (file: File | Blob, maxWidth?: number) => {

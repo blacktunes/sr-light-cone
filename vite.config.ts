@@ -46,11 +46,11 @@ export default defineConfig({
         screenshots: [
           {
             src: 'preview.webp',
-            sizes: '1018x500'
+            sizes: '1000x565'
           },
           {
             src: 'preview.webp',
-            sizes: '1018x500',
+            sizes: '1000x565',
             form_factor: 'wide'
           }
         ]
