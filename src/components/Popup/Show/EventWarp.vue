@@ -384,7 +384,7 @@ onUnmounted(() => {
             font-size 60px
 
             &:hover
-              color #fccf73
+              color var(--text-highlight-color)
 
           .new
             width 100px
