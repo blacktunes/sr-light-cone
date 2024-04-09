@@ -338,7 +338,7 @@ const onInfoClick = async () => {
 const processText = (text: string, color?: boolean) => {
   if (!text) return
   if (color) {
-    text = text.replace(/<(\S+)>/g, '<span style="color: #ed9c38">$1</span>')
+    text = text.replace(/<(\S+?)>/g, '<span style="color: #ed9c38">$1</span>')
   }
   return text.replace(/\n/g, '<br>')
 }
