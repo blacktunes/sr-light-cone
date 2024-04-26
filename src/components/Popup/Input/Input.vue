@@ -145,4 +145,5 @@ confirmCallback[props.name] = onConfirmlClick
   padding 10px
   background #b4b4b4
   text-align center
+  font-size 40px
 </style>

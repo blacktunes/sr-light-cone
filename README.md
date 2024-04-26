@@ -1,7 +1,11 @@
 <h1 align="center">流光忆庭</h1>
 <h3 align="center">崩坏:星穹铁道光锥生成网站</h3>
 
-![预览图](public/screenshot.webp)
+![预览图](public/preview.webp)
+
+![跃迁界面](readme/preview_1.webp)
+
+![智库界面](readme/preview_2.webp)
 
 <h4 align="center">
   <a href="https://light.shenmedouyou.top/">https://light.shenmedouyou.top/</a>
@@ -29,7 +33,7 @@
     <td>
       <a href="https://www.iconfont.cn/">Iconfont</a> / <a href="https://xicons.org/#/">xicons</a>
     </td>
-    <td>部分</td>
+    <td>部分为自己绘制</td>
   </tr>
   <tr>
     <td>字体</td>
@@ -51,10 +55,12 @@
   - https://ghostly.shenmedouyou.top/
 - 绝区零 - 绳网生成网站
   - https://github.com/blacktunes/interknot
+  - https://interknot.shenmedouyou.top/
 
 ## TODO
 
 - [ ] 使用Safari访问时会导致崩溃，原因未知
+  - 因为我没有苹果设备暂时无法解决
 
 ## 支持
 如果你喜欢这个项目，可以给个⭐️或者[请我喝杯柠檬水](https://afdian.net/a/blacktune)
