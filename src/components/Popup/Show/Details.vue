@@ -302,7 +302,8 @@ const onSkillClick = async () => {
   if (!currentLightCone.value) return
 
   const skill = await openWindow('input', {
-    title: '修改光锥技能',
+    title: '修改光锥技能说明',
+    tip: '<尖括号>里的内容会被高亮',
     required: false,
     defaultText: currentLightCone.value.details.state[isInitial.value ? 0 : 1].skill,
     placeholder: '',
