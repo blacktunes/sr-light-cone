@@ -2,7 +2,7 @@ import './main.styl'
 
 import VueDOMPurifyHTML from 'vue-dompurify-html'
 import App from './App.vue'
-import { loadDatabase } from './assets/scripts/IndexedDB'
+import { loadDatabase } from './assets/scripts/database'
 import { hotkey } from './assets/scripts/hotkey'
 import { logCheck } from './assets/scripts/log'
 import { analytics } from './utils/scripts/analytics'
