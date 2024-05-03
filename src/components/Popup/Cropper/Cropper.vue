@@ -22,7 +22,7 @@
         <div
           class="btn-list"
           :style="{
-            transform: `scale(${viewport.scale}) translateX(-50%)`
+            transform: `scale(${scale ?? 1}) translateX(-50%)`
           }"
         >
           <Btn
@@ -44,11 +44,11 @@
 </template>
 
 <script lang="ts" setup>
-import { viewport } from '@/store/viewport'
 import Btn from '@/components/Common/Btn.vue'
 import VuePictureCropper, { cropper } from 'vue-picture-cropper'
-import { confirmCallback } from '@/assets/scripts/popup'
-import { imageCropper, cropperSetting } from './'
+import { imageCropper, cropperSetting, cropperCallback } from './'
+
+const scale = inject<ComputedRef<number> | undefined>('scale')
 
 const props = defineProps<{
   name: string
@@ -77,7 +77,22 @@ const onCropper = async () => {
   return true
 }
 
-confirmCallback[props.name] = onCropper
+const reset = () => {
+  cropper?.reset()
+}
+
+watch(
+  () => props.index,
+  () => {
+    if (props.index === -1) {
+      window.removeEventListener('resize', reset)
+    } else {
+      window.addEventListener('resize', reset)
+    }
+  }
+)
+
+cropperCallback.confirm = onCropper
 </script>
 
 <style lang="stylus" scoped>
@@ -105,4 +120,20 @@ confirmCallback[props.name] = onCropper
   .btn
     width 600px
     height 100px
+
+  .default-btn
+    display flex
+    justify-content center
+    align-items center
+    box-sizing border-box
+    width 400px
+    height 100px
+    border 5px solid #e0e0e0
+    border-radius 50px
+    background rgba(240, 240, 240, 0.8)
+    font-size 40px
+    cursor pointer
+
+    &:hover
+      background #ffffff
 </style>

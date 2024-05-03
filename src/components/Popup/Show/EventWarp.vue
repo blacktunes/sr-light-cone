@@ -155,13 +155,13 @@
       </div>
     </Transition>
     <MenuBtn
-      :style="{ opacity: isLoading() || animation ? 0 : 1 }"
+      :style="{ opacity: popup.isLoading() || animation ? 0 : undefined }"
       class="share-btn"
       name="share"
       @click.stop="onShareClick(viewDom)"
     />
     <Close
-      :style="{ opacity: isLoading() || animation ? 0 : 1 }"
+      :style="{ opacity: popup.isLoading() || animation ? 0 : undefined }"
       class="close-btn"
       @click.stop="$emit('close')"
       color="#fff"
@@ -180,7 +180,7 @@ import r from '@/assets/images/r.webp'
 import sr from '@/assets/images/sr.webp'
 import ssr from '@/assets/images/ssr.webp'
 import { emitter } from '@/assets/scripts/event'
-import { isLoading } from '@/assets/scripts/popup'
+import { popup } from '@/assets/scripts/popup'
 import { onNameClick, onTypeClick, onLevelClick, onImageClick, onShareClick } from './utils'
 
 defineEmits<{
@@ -214,16 +214,13 @@ const rayColor = computed(() => {
   }
 })
 
-const getStarStyle = () => {
-  console.log(1)
-  return {
-    left: `${getRandom(5, 90)}%`,
-    top: `${getRandom(5, 90)}%`,
-    transform: `scale(${Math.random()})`,
-    animationDelay: `${Math.random() * 3}s`,
-    animationDuration: `${getRandom(2, 5)}s`
-  }
-}
+const getStarStyle = () => ({
+  left: `${getRandom(5, 90)}%`,
+  top: `${getRandom(5, 90)}%`,
+  transform: `scale(${Math.random()})`,
+  animationDelay: `${Math.random() * 3}s`,
+  animationDuration: `${getRandom(2, 5)}s`
+})
 const star: ReturnType<typeof getStarStyle>[] = []
 for (let i = 0; i < 30; i++) {
   star.push(getStarStyle())

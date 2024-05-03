@@ -1,146 +1,75 @@
-const isEmpty = (value: any) => {
-  if (value === null || value === undefined) {
-    return true
-  }
+import { data } from '@/store/data'
+import { IndexedDB } from '@/utils/scripts/indexedDB'
+import { useRegisterSW } from 'virtual:pwa-register/vue'
+import type { WatchStopHandle } from 'vue'
+import { getDetails } from './lightcone'
+import { popup } from './popup'
 
-  if (Array.isArray(value) && value.length === 0) {
-    return true
+const done = () => {
+  for (const i in data.lightCone) {
+    if (data.lightCone[i].details === undefined) {
+      data.lightCone[i].details = getDetails()
+    }
   }
-
-  if (typeof value === 'object' && Object.keys(value).length === 0) {
-    return true
-  }
-
-  return false
+  popup.close('loading')
+  clearTimeout(timeout)
+  popup.close('confirm')
+  updateCheck()
 }
 
-export class IndexedDB {
-  constructor(
-    public readonly name: string,
-    public readonly alias = ''
-  ) {}
-  private DBList: Record<
-    string,
-    {
-      data: Record<string, any>
-      key: string
-      cb?: () => void
+// 数据库加载超时
+const timeout = setTimeout(() => {
+  popup.open('confirm', {
+    title: '数据库加载异常',
+    text: [
+      '加载时间过长，可能是数据损坏',
+      '点击<span style="color:red">确认</span>可以继续使用，但是可能出现功能异常'
+    ],
+    fn: () => {
+      popup.close('loading')
+      updateCheck()
     }
-  > = {}
-  private hasDB = true
-  db?: IDBDatabase
+  })
+}, 30 * 1000)
 
-  private index = 0
-  private doneList: Record<string, boolean> = {}
-  private doneCheck = (key: string) => {
-    this.doneList[key] = true
-    for (const i in this.DBList) {
-      if (!this.doneList[i]) return
-    }
-    this.cb?.()
-  }
-  private cb: ((value: void | PromiseLike<void>) => void) | undefined
-
-  private setWatch = (key: string) => {
-    this.doneCheck(key)
-    this.DBList[key]?.cb?.()
-    watch(
-      this.DBList[key].data[this.DBList[key].key],
-      () => {
-        nextTick(() => {
-          this.updateDB(key)
-        })
-      },
-      {
-        immediate: true
-      }
-    )
-  }
-
-  private updateDB = (key: string) => {
-    if (this.db) {
-      this.db
-        .transaction('data', 'readwrite')
-        .objectStore('data')
-        .put(JSON.parse(JSON.stringify(toRaw(this.DBList[key].data[this.DBList[key].key]))), key)
-    }
-  }
-
-  add = <T extends { [name: string]: any }, K extends keyof T & string>(data: {
-    data: T
-    key: K
-    name?: string
-    cb?: () => void
-  }) => {
-    let has = false
-    for (const i in this.DBList) {
-      if (this.DBList[i].data === data.data && this.DBList[i].key === data.key) {
-        has = true
-        break
-      }
-    }
-    if (has) return this
-    if (data.name) {
-      if (data.name in this.DBList) {
-        throw new Error('数据库key重复')
-      } else {
-        this.DBList[data.name] = {
-          data: data.data,
-          key: data.key,
-          cb: data.cb
-        }
-      }
-    } else {
-      this.DBList[this.index++] = {
-        data: data.data,
-        key: data.key,
-        cb: data.cb
-      }
-    }
-    return this
-  }
-
-  next = () => {
-    console.log(`正在加${this.alias}数据库...`)
-
-    return new Promise<void>((resolve, reject) => {
-      this.cb = () => resolve()
-      try {
-        const _db = window.indexedDB.open(this.name)
-        _db.onsuccess = (event) => {
-          this.db = (event.target as IDBOpenDBRequest).result
-          if (this.hasDB) {
-            for (const key in this.DBList) {
-              this.db.transaction('data', 'readonly').objectStore('data').get(key).onsuccess = (
-                res
-              ) => {
-                const data = (res.target as IDBRequest).result
-                if (!isEmpty(data)) {
-                  this.DBList[key].data[this.DBList[key].key] = data
-                }
-                this.setWatch(key)
-              }
+const { needRefresh, updateServiceWorker } = useRegisterSW()
+let updateWatcher: WatchStopHandle
+const updateCheck = () => {
+  nextTick(() => {
+    if (!updateWatcher) {
+      updateWatcher = watchEffect(() => {
+        if (needRefresh.value) {
+          popup.open('confirm', {
+            title: '发现新版本',
+            text: ['是否立刻更新？'],
+            tip: '如果选择不更新将会在下次启动时自动更新',
+            fn: () => {
+              updateWatcher()
+              popup.open('loading')
+              updateServiceWorker(true)
             }
-          } else {
-            for (const key in this.DBList) {
-              this.updateDB(key)
-              this.setWatch(key)
-            }
-          }
+          })
         }
+      })
+    }
+  })
+}
 
-        _db.onupgradeneeded = (event) => {
-          this.db = (event.target as IDBOpenDBRequest).result
-          if (!this.db.objectStoreNames.contains('data')) {
-            this.hasDB = false
-            this.db.createObjectStore('data')
-          }
-        }
-      } catch (err) {
-        reject(err)
-      } finally {
-        this.next = async () => {}
-      }
+export const loadDatabase = () => {
+  new IndexedDB('sr-light-cone', '光锥')
+    .add({
+      data: data,
+      key: 'lightCone',
+      name: 'lightCone'
     })
-  }
+    .next()
+    .then(done)
+    .catch((err) => {
+      console.error(err)
+
+      popup.open('confirm', {
+        title: '数据库初始化失败',
+        text: ['光锥编辑器可以正常使用', '但是数据可能丢失且不会被保存']
+      })
+    })
 }

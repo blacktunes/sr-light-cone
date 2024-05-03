@@ -10,21 +10,18 @@ export const confirmData = reactive<{
   fn: undefined
 })
 
-export const confirmOpen = (config: {
-  title: string
-  tip?: string
-  text: string[]
-  fn?: () => void
-}) => {
-  confirmData.title = config.title
-  confirmData.tip = config.tip
-  confirmData.text = config.text
-  confirmData.fn = config.fn
-}
-
-export const confirmClose = () => {
-  confirmData.title = ''
-  confirmData.tip = undefined
-  confirmData.text = []
-  confirmData.fn = undefined
+export const confirmCallback = {
+  open: (config: { title: string; tip?: string; text: string[]; fn?: () => void }) => {
+    confirmData.title = config.title
+    confirmData.tip = config.tip
+    confirmData.text = config.text
+    confirmData.fn = config.fn
+  },
+  close: () => {
+    confirmData.title = ''
+    confirmData.tip = undefined
+    confirmData.text = []
+    confirmData.fn = undefined
+  },
+  confirm: () => {}
 }

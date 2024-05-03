@@ -1,6 +1,6 @@
 import { fateList } from '@/assets/scripts/images'
-import { closeWindow, isLoading, openWindow } from '@/assets/scripts/popup'
-import { screenshot } from '@/assets/scripts/screenshot'
+import { popup } from '@/assets/scripts/popup'
+import { screenshot } from '@/utils/scripts/screenshot'
 import { currentLightCone, setting } from '@/store/data'
 
 export const updateTime = () => {
@@ -12,7 +12,7 @@ export const updateTime = () => {
 export const onNameClick = async () => {
   if (!currentLightCone.value) return
 
-  const name = await openWindow('input', {
+  const name = await popup.open('input', {
     title: '修改光锥名',
     required: false,
     defaultText: currentLightCone.value.name,
@@ -27,7 +27,7 @@ export const onNameClick = async () => {
 export const onTypeClick = async () => {
   if (!currentLightCone.value) return
 
-  const type = await openWindow('select', '修改命途', fateList, currentLightCone.value.type)
+  const type = await popup.open('select', '修改命途', fateList, currentLightCone.value.type)
   if (type) {
     currentLightCone.value.type = type as Fate
     updateTime()
@@ -45,7 +45,7 @@ export const onLevelClick = () => {
 }
 
 export const onImageClick = () => {
-  openWindow('cropper', { aspectRatio: 0.7, maxWidth: 1280 }).then((res) => {
+  popup.open('cropper', { aspectRatio: 0.7, maxWidth: 1280 }).then((res) => {
     if (!currentLightCone.value) return
 
     currentLightCone.value.image = res.base64
@@ -54,10 +54,10 @@ export const onImageClick = () => {
 }
 
 export const onShareClick = (dom?: HTMLElement | null) => {
-  if (isLoading()) return
+  if (popup.isLoading()) return
 
   setting.screenshot = true
-  openWindow('loading')
+  popup.open('loading')
   nextTick(() => {
     if (dom) {
       if (!currentLightCone.value) return
@@ -66,12 +66,12 @@ export const onShareClick = (dom?: HTMLElement | null) => {
       setTimeout(() => {
         nextTick(() => {
           setting.screenshot = false
-          closeWindow('loading')
+          popup.close('loading')
         })
       }, 500)
     } else {
       setting.screenshot = false
-      closeWindow('loading')
+      popup.close('loading')
     }
   })
 }

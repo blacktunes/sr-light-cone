@@ -25,7 +25,7 @@
         style="margin-top: 5px"
         class="icon"
         title="更新记录"
-        @click.stop="openWindow('log')"
+        @click.stop="popup.open('log')"
         name="log"
       />
     </div>
@@ -45,10 +45,10 @@
 <script lang="ts" setup>
 import { setting, setShowMode } from '@/store/data'
 import Icon from './Common/Icon.vue'
-import { openWindow } from '@/assets/scripts/popup'
+import { popup } from '@/assets/scripts/popup'
 
 const changeMode = () => {
-  openWindow('confirm', {
+  popup.open('confirm', {
     title: '切换展示界面',
     text: [`是否切换为${setting.details ? '跃迁' : '智库'}界面`],
     fn: () => {
