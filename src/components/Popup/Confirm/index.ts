@@ -10,6 +10,7 @@ export const confirmData = reactive<{
   fn: undefined
 })
 
+let confirm = () => {}
 export const confirmCallback = {
   open: (config: { title: string; tip?: string; text: string[]; fn?: () => void }) => {
     confirmData.title = config.title
@@ -23,5 +24,12 @@ export const confirmCallback = {
     confirmData.text = []
     confirmData.fn = undefined
   },
-  confirm: () => {}
+  set confirm(fn: () => any) {
+    confirm = fn
+  },
+  get confirm() {
+    return () => {
+      confirm()
+    }
+  }
 }

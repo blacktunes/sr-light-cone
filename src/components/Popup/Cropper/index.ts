@@ -19,6 +19,7 @@ const cropperOpen = (img: string, aspectRatio?: number) => {
   })
 }
 
+let confirm = () => {}
 export const cropperCallback = {
   open: (config?: { aspectRatio?: number; maxWidth?: number }) => {
     return new Promise<{ base64: string; raw: File }>((resolve) => {
@@ -44,5 +45,12 @@ export const cropperCallback = {
     cropperSetting.aspectRatio = undefined
     cropperSetting.fn = undefined
   },
-  confirm: () => {}
+  set confirm(fn: () => any) {
+    confirm = fn
+  },
+  get confirm() {
+    return () => {
+      confirm()
+    }
+  }
 }

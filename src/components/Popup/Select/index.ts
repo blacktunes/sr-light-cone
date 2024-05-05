@@ -10,6 +10,7 @@ export const selectData = reactive<{
   fn: undefined
 })
 
+let confirm = () => {}
 export const selectCallback = {
   open: <T extends string[] | readonly string[]>(title: string, list: T, defaultText?: string) => {
     return new Promise<T[number] | undefined>((resolve) => {
@@ -27,5 +28,12 @@ export const selectCallback = {
     selectData.select = undefined
     selectData.fn = undefined
   },
-  confirm: () => {}
+  set confirm(fn: () => any) {
+    confirm = fn
+  },
+  get confirm() {
+    return () => {
+      confirm()
+    }
+  }
 }

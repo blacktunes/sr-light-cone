@@ -16,6 +16,7 @@ export const inputData = reactive<{
   fn: undefined
 })
 
+let confirm = () => {}
 export const inputCallback = {
   open: (config: {
     title: string
@@ -49,5 +50,12 @@ export const inputCallback = {
     inputData.textarea = undefined
     inputData.fn = undefined
   },
-  confirm: () => {}
+  set confirm(fn: () => any) {
+    confirm = fn
+  },
+  get confirm() {
+    return () => {
+      confirm()
+    }
+  }
 }
