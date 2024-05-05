@@ -8,6 +8,7 @@ import LoadingVue from '@/components/Popup/Loading.vue'
 import LogVue from '@/components/Popup/Log.vue'
 import { selectCallback } from '@/components/Popup/Select'
 import SelectVue from '@/components/Popup/Select/Select.vue'
+import SettingVue from '@/components/Popup/Setting.vue'
 import ShowViewVue from '@/components/Popup/Show/Show.vue'
 import { setting } from '@/store/data'
 import { Popup } from '../../utils/scripts/popup'
@@ -20,7 +21,8 @@ export const popup = new Popup(
     confirm: ConfirmVue,
     select: SelectVue,
     input: InputVue,
-    log: LogVue
+    log: LogVue,
+    setting: SettingVue
   },
   {
     show: (id: number) => {

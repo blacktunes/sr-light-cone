@@ -1,4 +1,4 @@
-import { currentLightCone, setShowMode } from '@/store/data'
+import { currentLightCone, showModeChange } from '@/store/data'
 import { emitter } from './event'
 import { popup } from './popup'
 
@@ -26,9 +26,9 @@ export const hotkey = () => {
         }
         return
       case 'Tab':
+        e.preventDefault()
         if (currentLightCone.value && popup.currentComponent === 'show') {
-          e.preventDefault()
-          setShowMode()
+          showModeChange()
         }
         return
       case 'Enter':
