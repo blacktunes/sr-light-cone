@@ -125,6 +125,7 @@ message()
   background rgba(0, 0, 0, 0.2)
   backdrop-filter blur(10px)
   -webkit-backdrop-filter blur(10px)
+  animation backdrop-filter 0.9s
 
   .box
     position relative
@@ -267,4 +268,10 @@ message()
 
 .window-leave-to .btn-list
   opacity 0
+
+@keyframes backdrop-filter
+  from
+    backdrop-filter blur(0px)
+  to
+    backdrop-filter blur(10px)
 </style>
