@@ -17,15 +17,15 @@
           :key="`star-${index}`"
           :style="item"
         ></div>
-        <div class="triangle-view">
-          <div
-            class="triangle"
-            v-for="(item, index) in triangle"
-            :key="`triangle-${index}`"
-            :style="item.pos"
-          >
-            <div :style="item.style"></div>
-          </div>
+      </div>
+      <div class="triangle-view">
+        <div
+          class="triangle"
+          v-for="(item, index) in triangle"
+          :key="`triangle-${index}`"
+          :style="item.pos"
+        >
+          <div :style="item.style"></div>
         </div>
       </div>
       <Transition
@@ -252,7 +252,8 @@ const getLightStyle = (i: number) => ({
   left: `${getRandom((i + 1) * 20, (i + 1) * 30)}%`,
   width: `${getRandom(45, 90)}px`,
   height: `${getRandom(50, 60)}%`,
-  animationDuration: `${getRandom(4, 8)}s`
+  animationDuration: `${getRandom(4, 8)}s`,
+  animationDelay: `${getRandom(10, 30) / 10}s`
 })
 const light: ReturnType<typeof getLightStyle>[] = []
 for (let i = 0; i < 3; i++) {
@@ -560,7 +561,7 @@ onUnmounted(() => {
   bottom 0
   //background radial-gradient(ellipse at bottom, #fff, transparent)
   background linear-gradient(to top, rgba(255, 255, 255, 0.05) calc(100% - 100px), transparent)
-  opacity 1
+  opacity 0
   animation light linear infinite alternate
 
 @keyframes view-rotate
@@ -582,9 +583,12 @@ onUnmounted(() => {
 
 @keyframes light
   0%
-    opacity 1
+    opacity 0
 
   50%
+    opacity 1
+
+  75%
     opacity 0
 
   100%
