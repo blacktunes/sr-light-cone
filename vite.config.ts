@@ -87,6 +87,7 @@ export default defineConfig({
     }
   },
   build: {
-    assetsInlineLimit: 0
+    assetsInlineLimit: 1024 * 200,
+    chunkSizeWarningLimit: 1024
   }
 })

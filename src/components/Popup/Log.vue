@@ -61,7 +61,7 @@
 </template>
 
 <script lang="ts" setup>
-import Popup from '@/components/Common/Popup.vue'
+import Popup from '@/utils/components/Popup.vue'
 import Window from '@/components/Common/Window.vue'
 import log from '@/assets/data/log'
 

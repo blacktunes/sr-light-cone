@@ -13,17 +13,19 @@
       <div class="star-view">
         <div
           class="star"
-          v-for="(_, index) in 30"
+          v-for="(item, index) in star"
           :key="`star-${index}`"
-          :style="getStarStyle()"
+          :style="item"
         ></div>
+      </div>
+      <div class="triangle-view">
         <div
           class="triangle"
-          v-for="(_, index) in 10"
+          v-for="(item, index) in triangle"
           :key="`triangle-${index}`"
-          :style="getTrianglePos()"
+          :style="item.pos"
         >
-          <div :style="getTriangleStyle()"></div>
+          <div :style="item.style"></div>
         </div>
       </div>
       <Transition
@@ -38,16 +40,16 @@
       </Transition>
       <div class="light-view">
         <div
-          class="linght"
-          v-for="(_, index) in 3"
-          :key="`linght-${index}`"
-          :style="getLightStyle(index)"
+          class="light"
+          v-for="(item, index) in light"
+          :key="`light-${index}`"
+          :style="item"
         ></div>
       </div>
       <Transition name="ray">
         <div
           class="ray-view"
-          v-if="isRayShow"
+          v-if="animation"
         >
           <img
             class="figure"
@@ -81,6 +83,7 @@
     <Transition
       name="info"
       appear
+      @after-appear="animation = false"
     >
       <div
         class="info"
@@ -152,13 +155,13 @@
       </div>
     </Transition>
     <MenuBtn
-      v-show="!isLoading()"
+      :style="{ opacity: popup.isLoading() || animation ? 0 : undefined }"
       class="share-btn"
       name="share"
       @click.stop="onShareClick(viewDom)"
     />
     <Close
-      v-show="!isLoading()"
+      :style="{ opacity: popup.isLoading() || animation ? 0 : undefined }"
       class="close-btn"
       @click.stop="$emit('close')"
       color="#fff"
@@ -177,7 +180,7 @@ import r from '@/assets/images/r.webp'
 import sr from '@/assets/images/sr.webp'
 import ssr from '@/assets/images/ssr.webp'
 import { emitter } from '@/assets/scripts/event'
-import { isLoading } from '@/assets/scripts/popup'
+import { popup } from '@/assets/scripts/popup'
 import { onNameClick, onTypeClick, onLevelClick, onImageClick, onShareClick } from './utils'
 
 defineEmits<{
@@ -218,29 +221,46 @@ const getStarStyle = () => ({
   animationDelay: `${Math.random() * 3}s`,
   animationDuration: `${getRandom(2, 5)}s`
 })
+const star: ReturnType<typeof getStarStyle>[] = []
+for (let i = 0; i < 30; i++) {
+  star.push(getStarStyle())
+}
 
 const getTrianglePos = () => ({
   left: Math.random() > 0.5 ? `${getRandom(10, 40)}%` : `${getRandom(60, 90)}%`,
   top: Math.random() > 0.5 ? `${getRandom(10, 40)}%` : `${getRandom(60, 90)}%`,
   transform: `scale(${Math.random()}) rotate(${getRandom(0, 90)}deg)`
 })
-
-const getTriangleStyle = () => ({
-  animationDelay: `${Math.random() * 2}s`,
-  animationDuration: `${getRandom(6, 10)}s`
-})
+const getTriangleStyle = () => {
+  return {
+    animationDelay: `${Math.random() * 2}s`,
+    animationDuration: `${getRandom(6, 10)}s`
+  }
+}
+const triangle: {
+  pos: ReturnType<typeof getTrianglePos>
+  style: ReturnType<typeof getTriangleStyle>
+}[] = []
+for (let i = 0; i < 10; i++) {
+  triangle.push({
+    pos: getTrianglePos(),
+    style: getTriangleStyle()
+  })
+}
 
 const getLightStyle = (i: number) => ({
   left: `${getRandom((i + 1) * 20, (i + 1) * 30)}%`,
   width: `${getRandom(45, 90)}px`,
   height: `${getRandom(50, 60)}%`,
-  animationDuration: `${getRandom(4, 8)}s`
+  animationDuration: `${getRandom(4, 8)}s`,
+  animationDelay: `${getRandom(10, 30) / 10}s`
 })
+const light: ReturnType<typeof getLightStyle>[] = []
+for (let i = 0; i < 3; i++) {
+  light.push(getLightStyle(i))
+}
 
-const isRayShow = ref(true)
-onMounted(() => {
-  isRayShow.value = false
-})
+const animation = ref(true)
 
 const extraImage = computed(() => {
   if (!currentLightCone.value) return ''
@@ -323,14 +343,20 @@ onUnmounted(() => {
     z-index 2
 
     .star-view
+    .triangle-view
       position absolute
       top 50%
       left 50%
       padding-bottom 100%
       width 100%
       height 0
-      animation view-rotate 300s linear infinite
       pointer-events none
+
+    .star-view
+      animation view-rotate 300s linear infinite
+
+    .triangle-view
+      animation view-rotate 360s linear infinite
 
     .mask
       position absolute
@@ -530,12 +556,12 @@ onUnmounted(() => {
     animation triangle linear infinite alternate
     clip-path polygon(50% 50%, 0% 100%, 100% 100%)
 
-.linght
+.light
   position absolute
   bottom 0
   //background radial-gradient(ellipse at bottom, #fff, transparent)
   background linear-gradient(to top, rgba(255, 255, 255, 0.05) calc(100% - 100px), transparent)
-  opacity 1
+  opacity 0
   animation light linear infinite alternate
 
 @keyframes view-rotate
@@ -545,11 +571,24 @@ onUnmounted(() => {
   100%
     transform translate(-50%, -50%) rotate(360deg)
 
-@keyframes light
+@keyframes flash
   0%
-    opacity 1
+    opacity 0
 
   50%
+    opacity 0.5
+
+  100%
+    opacity 0
+
+@keyframes light
+  0%
+    opacity 0
+
+  50%
+    opacity 1
+
+  75%
     opacity 0
 
   100%

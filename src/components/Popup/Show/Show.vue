@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts" setup>
-import Popup from '@/components/Common/Popup.vue'
+import Popup from '@/utils/components/Popup.vue'
 import Details from './Details.vue'
 import EventWarp from './EventWarp.vue'
 import { setting } from '@/store/data'

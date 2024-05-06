@@ -1,5 +1,18 @@
 const log: Log[] = [
   {
+    time: '2024-05-06',
+    text: [
+      {
+        text: '重构了亿点点代码',
+        info: '有问题请及时联系我修复',
+        highlight: true
+      },
+      {
+        text: '修复了部分显示异常'
+      }
+    ]
+  },
+  {
     time: '2024-04-09',
     text: [
       {

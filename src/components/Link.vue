@@ -20,42 +20,30 @@
       />
     </a>
     <div class="sep"></div>
-    <div>
+    <a
+      href="https://space.bilibili.com/1384118"
+      target="_blank"
+      title="短信编辑器"
+    >
       <Icon
-        style="margin-top: 5px"
         class="icon"
-        title="更新记录"
-        @click.stop="openWindow('log')"
-        name="log"
+        name="message"
       />
-    </div>
+    </a>
     <div class="sep"></div>
     <div>
       <Icon
-        style="margin-top: 3px"
-        class="icon"
-        title="切换模式"
-        @click.stop="changeMode"
-        name="mode"
+        class="icon setting"
+        name="setting"
+        @click.stop="popup.open('setting')"
       />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { setting, setShowMode } from '@/store/data'
 import Icon from './Common/Icon.vue'
-import { openWindow } from '@/assets/scripts/popup'
-
-const changeMode = () => {
-  openWindow('confirm', {
-    title: '切换展示界面',
-    text: [`是否切换为${setting.details ? '跃迁' : '智库'}界面`],
-    fn: () => {
-      setShowMode()
-    }
-  })
-}
+import { popup } from '@/assets/scripts/popup'
 </script>
 
 <style lang="stylus" scoped>
@@ -83,4 +71,15 @@ const changeMode = () => {
 
     &:hover
       opacity 1
+
+  .setting
+    &:hover
+      animation enter-rotate 1s
+
+@keyframes enter-rotate
+  0%
+    transform rotate(0deg)
+
+  100%
+    transform rotate(120deg)
 </style>

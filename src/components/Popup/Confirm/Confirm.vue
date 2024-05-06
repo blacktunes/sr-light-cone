@@ -46,11 +46,10 @@
 </template>
 
 <script lang="ts" setup>
-import Popup from '@/components/Common/Popup.vue'
+import Popup from '@/utils/components/Popup.vue'
 import Window from '@/components/Common/Window.vue'
 import Btn from '@/components/Common/Btn.vue'
-import { confirmData } from './'
-import { confirmCallback } from '@/assets/scripts/popup'
+import { confirmData, confirmCallback } from './'
 
 const props = defineProps<{
   name: string
@@ -71,7 +70,7 @@ const onConfirml = async () => {
   return true
 }
 
-confirmCallback[props.name] = onConfirml
+confirmCallback.confirm = onConfirml
 </script>
 
 <style lang="stylus" scoped>

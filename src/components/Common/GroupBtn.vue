@@ -120,11 +120,11 @@ defineProps<{
     transform translate(-50%, 50%) rotate(0deg)
 
   100%
-    transform translate(-50%, 50%) rotate(360deg)
+    transform translate(-50%, 50%) rotate(340deg)
 
 @keyframes highlight-rotate
   from
-    transform translate(-50%, 50%) rotate(0deg)
+    transform translate(-50%, 50%) rotate(-20deg)
 
   to
     transform translate(-50%, 50%) rotate(360deg)

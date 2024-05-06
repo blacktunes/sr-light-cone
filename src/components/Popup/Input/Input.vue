@@ -55,11 +55,10 @@
 </template>
 
 <script lang="ts" setup>
-import Popup from '@/components/Common/Popup.vue'
+import Popup from '@/utils/components/Popup.vue'
 import Window from '@/components/Common/Window.vue'
 import Btn from '@/components/Common/Btn.vue'
-import { inputData } from './'
-import { confirmCallback } from '@/assets/scripts/popup'
+import { inputData, inputCallback } from './'
 
 const inputDom = ref<HTMLInputElement | null>(null)
 
@@ -99,7 +98,7 @@ const onConfirmlClick = () => {
   return true
 }
 
-confirmCallback[props.name] = onConfirmlClick
+inputCallback.confirm = onConfirmlClick
 </script>
 
 <style lang="stylus" scoped>
