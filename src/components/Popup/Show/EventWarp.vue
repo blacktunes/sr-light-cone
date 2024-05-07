@@ -229,7 +229,7 @@ for (let i = 0; i < 30; i++) {
 const getTrianglePos = () => ({
   left: Math.random() > 0.5 ? `${getRandom(10, 40)}%` : `${getRandom(60, 90)}%`,
   top: Math.random() > 0.5 ? `${getRandom(10, 40)}%` : `${getRandom(60, 90)}%`,
-  transform: `scale(${Math.random()}) rotate(${getRandom(0, 90)}deg)`
+  transform: `scale(${getRandom(50, 130) / 100}) rotate(${getRandom(0, 90)}deg)`
 })
 const getTriangleStyle = () => {
   return {
@@ -241,7 +241,7 @@ const triangle: {
   pos: ReturnType<typeof getTrianglePos>
   style: ReturnType<typeof getTriangleStyle>
 }[] = []
-for (let i = 0; i < 10; i++) {
+for (let i = 0; i < 7; i++) {
   triangle.push({
     pos: getTrianglePos(),
     style: getTriangleStyle()
@@ -256,7 +256,8 @@ const getLightStyle = (i: number) => ({
   animationDelay: `${getRandom(10, 30) / 10}s`
 })
 const light: ReturnType<typeof getLightStyle>[] = []
-for (let i = 0; i < 3; i++) {
+const lightNum = getRandom(3, 5)
+for (let i = 0; i < lightNum; i++) {
   light.push(getLightStyle(i))
 }
 
@@ -353,7 +354,7 @@ onUnmounted(() => {
       pointer-events none
 
     .star-view
-      animation view-rotate 300s linear infinite
+      animation view-rotate 720s linear infinite
 
     .triangle-view
       animation view-rotate 360s linear infinite
@@ -540,8 +541,8 @@ onUnmounted(() => {
   width 10px
   height 10px
   border-radius 50%
-  background-color #fff
-  box-shadow 0 0 5px 5px rgba(255, 255, 255, 0.7)
+  background-color #ffcf70
+  box-shadow 0 0 5px 5px rgba(255, 207, 112, 0.7)
   opacity 0
   animation flash linear infinite alternate
 
@@ -554,7 +555,7 @@ onUnmounted(() => {
     background-color v-bind(triangleColor)
     opacity 0
     animation triangle linear infinite alternate
-    clip-path polygon(50% 50%, 0% 100%, 100% 100%)
+    clip-path polygon(50% 50%, 20% 100%, 80% 100%)
 
 .light
   position absolute
@@ -562,7 +563,7 @@ onUnmounted(() => {
   //background radial-gradient(ellipse at bottom, #fff, transparent)
   background linear-gradient(to top, rgba(255, 255, 255, 0.05) calc(100% - 100px), transparent)
   opacity 0
-  animation light linear infinite alternate
+  animation light linear infinite
 
 @keyframes view-rotate
   0%
@@ -584,15 +585,19 @@ onUnmounted(() => {
 @keyframes light
   0%
     opacity 0
+    transform scaleX(1)
 
   50%
     opacity 1
+    transform scaleX(1)
 
-  75%
+  65%
     opacity 0
+    transform scaleX(0.5)
 
   100%
     opacity 0
+    transform scaleX(1)
 
 @keyframes triangle
   0%
