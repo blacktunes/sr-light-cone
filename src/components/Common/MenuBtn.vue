@@ -40,5 +40,4 @@ defineProps<{
 
   .icon
     z-index 2
-    margin 5px 5px 0 0
 </style>

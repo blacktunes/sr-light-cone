@@ -60,7 +60,7 @@ import GroupBtn from './Common/GroupBtn.vue'
 import Card from './Common/Card.vue'
 import { currentLightCone, data, setting } from '@/store/data'
 import { fateList } from '@/assets/scripts/images'
-import { popup } from '@/assets/scripts/popup'
+import { popupManager } from '@/assets/scripts/popup'
 import { getDetails } from '@/assets/scripts/lightcone'
 
 const select = ref<'全部' | Fate>('全部')
@@ -77,7 +77,7 @@ const lightConeList = computed(() => {
 })
 
 const addLightCone = () => {
-  popup.open('cropper', { aspectRatio: 0.7, maxWidth: 1280 }).then((res) => {
+  popupManager.open('cropper', { aspectRatio: 0.7, maxWidth: 1280 }).then((res) => {
     const id = Date.now()
     data.lightCone.push({
       id,
@@ -89,19 +89,19 @@ const addLightCone = () => {
       new: true,
       details: getDetails()
     })
-    popup.open('show', id)
+    popupManager.open('show', id)
   })
 }
 
 const handleClick = (id: number) => {
-  popup.open('show', id)
+  popupManager.open('show', id)
   if (setting.details && currentLightCone.value) currentLightCone.value.new = false
 }
 
 const handleDelete = (id: number) => {
   const index = data.lightCone.findIndex((item) => item.id === id)
   if (id !== -1) {
-    popup.open('confirm', {
+    popupManager.open('confirm', {
       title: '删除光锥',
       text: ['是否删除该光锥？'],
       fn: () => {

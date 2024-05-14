@@ -2,7 +2,7 @@
   <div
     class="show-view"
     v-if="currentLightCone"
-    @click.stop="elementShow.mask = !elementShow.mask"
+    @click.stop="elementShow.effects = !elementShow.effects"
     ref="viewDom"
   >
     <div class="bg"></div>
@@ -10,24 +10,34 @@
       class="effects"
       ref="effectsDOm"
     >
-      <div class="star-view">
+      <Transition name="fade">
         <div
-          class="star"
-          v-for="(item, index) in star"
-          :key="`star-${index}`"
-          :style="item"
-        ></div>
-      </div>
-      <div class="triangle-view">
-        <div
-          class="triangle"
-          v-for="(item, index) in triangle"
-          :key="`triangle-${index}`"
-          :style="item.pos"
+          class="star-view"
+          v-show="currentLightCone.image && elementShow.effects"
         >
-          <div :style="item.style"></div>
+          <div
+            class="star"
+            v-for="(item, index) in star"
+            :key="`star-${index}`"
+            :style="item"
+          ></div>
         </div>
-      </div>
+      </Transition>
+      <Transition name="fade">
+        <div
+          class="triangle-view"
+          v-show="currentLightCone.image && elementShow.effects"
+        >
+          <div
+            class="triangle"
+            v-for="(item, index) in triangle"
+            :key="`triangle-${index}`"
+            :style="item.pos"
+          >
+            <div :style="item.style"></div>
+          </div>
+        </div>
+      </Transition>
       <Transition
         name="mask"
         appear-active-class="mask-appear-active"
@@ -35,17 +45,22 @@
       >
         <div
           class="mask"
-          v-show="currentLightCone.image && elementShow.mask"
+          v-show="currentLightCone.image && elementShow.effects"
         ></div>
       </Transition>
-      <div class="light-view">
+      <Transition name="fade">
         <div
-          class="light"
-          v-for="(item, index) in light"
-          :key="`light-${index}`"
-          :style="item"
-        ></div>
-      </div>
+          class="light-view"
+          v-show="currentLightCone.image && elementShow.effects"
+        >
+          <div
+            class="light"
+            v-for="(item, index) in light"
+            :key="`light-${index}`"
+            :style="item"
+          ></div>
+        </div>
+      </Transition>
       <Transition name="ray">
         <div
           class="ray-view"
@@ -155,13 +170,13 @@
       </div>
     </Transition>
     <MenuBtn
-      :style="{ opacity: popup.isLoading() || animation ? 0 : undefined }"
+      :style="{ opacity: popupManager.isLoading() || animation ? 0 : undefined }"
       class="share-btn"
       name="share"
       @click.stop="onShareClick(viewDom)"
     />
     <Close
-      :style="{ opacity: popup.isLoading() || animation ? 0 : undefined }"
+      :style="{ opacity: popupManager.isLoading() || animation ? 0 : undefined }"
       class="close-btn"
       @click.stop="$emit('close')"
       color="#fff"
@@ -170,18 +185,18 @@
 </template>
 
 <script lang="ts" setup>
-import LightCone from '@/components/Common/LightCone.vue'
-import Icon from '@/components/Common/Icon.vue'
-import MenuBtn from '@/components/Common/MenuBtn.vue'
-import Close from '@/components/Common/Close.vue'
-import { currentLightCone } from '@/store/data'
-import { fateFullIcon } from '@/assets/scripts/images'
 import r from '@/assets/images/r.webp'
 import sr from '@/assets/images/sr.webp'
 import ssr from '@/assets/images/ssr.webp'
 import { emitter } from '@/assets/scripts/event'
-import { popup } from '@/assets/scripts/popup'
-import { onNameClick, onTypeClick, onLevelClick, onImageClick, onShareClick } from './utils'
+import { fateFullIcon } from '@/assets/scripts/images'
+import { popupManager } from '@/assets/scripts/popup'
+import Icon from '@/components/Common/Icon.vue'
+import LightCone from '@/components/Common/LightCone.vue'
+import MenuBtn from '@/components/Common/MenuBtn.vue'
+import { currentLightCone } from '@/store/data'
+import { Close } from 'star-rail-vue'
+import { onImageClick, onLevelClick, onNameClick, onShareClick, onTypeClick } from './utils'
 
 defineEmits<{
   (event: 'close'): void
@@ -279,7 +294,7 @@ const extraImage = computed(() => {
 })
 
 const elementShow = reactive({
-  mask: true,
+  effects: true,
   extra: true
 })
 
@@ -351,6 +366,7 @@ onUnmounted(() => {
       padding-bottom 100%
       width 100%
       height 0
+      filter drop-shadow(0 0px 10px #fff)
       pointer-events none
 
     .star-view
@@ -542,7 +558,6 @@ onUnmounted(() => {
   height 10px
   border-radius 50%
   background-color #ffcf70
-  box-shadow 0 0 5px 5px rgba(255, 207, 112, 0.7)
   opacity 0
   animation flash linear infinite alternate
 
@@ -560,7 +575,7 @@ onUnmounted(() => {
 .light
   position absolute
   bottom 0
-  //background radial-gradient(ellipse at bottom, #fff, transparent)
+  // background radial-gradient(ellipse at bottom, #fff, transparent)
   background linear-gradient(to top, rgba(255, 255, 255, 0.05) calc(100% - 100px), transparent)
   opacity 0
   animation light linear infinite
@@ -577,7 +592,7 @@ onUnmounted(() => {
     opacity 0
 
   50%
-    opacity 0.5
+    opacity 0.7
 
   100%
     opacity 0

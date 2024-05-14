@@ -1,5 +1,5 @@
 import log from '@/assets/data/log'
-import { popup } from './popup'
+import { popupManager } from './popup'
 
 // 检查更新日志
 export const logCheck = (key: string) => {
@@ -7,7 +7,7 @@ export const logCheck = (key: string) => {
   const localLastUpdate = Number(localStorage.getItem(key))
   if (lastUpdate) {
     if (lastUpdate > localLastUpdate) {
-      popup.open('log')
+      popupManager.open('log')
       localStorage.setItem(key, JSON.stringify(lastUpdate))
     }
   }

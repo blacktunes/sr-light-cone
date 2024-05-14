@@ -5,26 +5,60 @@
       @close="close"
     >
       <div class="data">
-        <div class="info">
-          <div>当前模式: {{ setting.details ? '跃迁' : '智库' }}</div>
-          <div style="margin-top: 20px">光锥数量: {{ data.lightCone.length }}{{ dataUsage }}</div>
+        <div
+          class="info"
+          title="切换显示模式"
+          @click="setting.details = !setting.details"
+        >
+          <div class="text">
+            <span class="label">显示模式</span>
+            <span class="value">{{ setting.details ? '智库界面' : '跃迁界面' }}</span>
+          </div>
+          <Icon
+            name="change"
+            class="icon"
+          />
         </div>
-        <div class="box">
-          <Btn
-            class="btn"
-            name="切换显示模式"
-            @click="showModeChange"
+        <div
+          class="info"
+          title="切换下载模式"
+          @click="setting.download = !setting.download"
+        >
+          <div class="text">
+            <span class="label">下载模式</span>
+            <span class="value">{{ setting.download ? '下载图片' : '打开新窗口' }}</span>
+          </div>
+          <Icon
+            name="change"
+            class="icon"
           />
-          <Btn
-            class="btn"
-            name="查看更新日志"
-            @click="popup.open('log')"
+        </div>
+        <div
+          class="info"
+          title="重置数据库"
+          @click="reserDatabase"
+        >
+          <div class="text">
+            <span class="label">光锥数量</span>
+            <span class="value">{{ data.lightCone.length }}{{ dataUsage }} </span>
+          </div>
+          <Icon
+            name="trash"
+            class="icon"
           />
-          <div class="line"></div>
-          <Btn
-            class="btn"
-            name="重置数据库"
-            @click="reserDatabase"
+        </div>
+        <div
+          class="info"
+          title="查看更新日志"
+          @click="popupManager.open('log')"
+        >
+          <div class="text">
+            <span class="label">最后更新</span>
+            <span class="value">{{ Log[0]?.time || '-' }}</span>
+          </div>
+          <Icon
+            name="note"
+            class="icon"
           />
         </div>
       </div>
@@ -33,11 +67,11 @@
 </template>
 
 <script lang="ts" setup>
-import { popup } from '@/assets/scripts/popup'
-import Btn from '@/components/Common/Btn.vue'
-import Popup from '@/utils/components/Popup.vue'
-import Window from '@/components/Common/Window.vue'
-import { setting, data, showModeChange } from '@/store/data'
+import { popupManager } from '@/assets/scripts/popup'
+import { data, setting } from '@/store/data'
+import { Popup, Window } from 'star-rail-vue'
+import Icon from '../Common/Icon.vue'
+import Log from '@/assets/data/log'
 
 const props = defineProps<{
   name: string
@@ -69,12 +103,12 @@ const countStrToSize = (str: string) => {
 const dataUsage = computed(() => ` (${countStrToSize(JSON.stringify(data.lightCone))})`)
 
 const reserDatabase = () => {
-  popup.open('confirm', {
+  popupManager.open('confirm', {
     title: '重置数据库',
     tip: '该操作会清除所有光锥',
     text: ['确定重置数据库吗？'],
     fn: () => {
-      popup.open('loading')
+      popupManager.open('loading')
       const request = indexedDB.deleteDatabase('sr-light-cone')
       request.onblocked = () => {
         location.reload()
@@ -88,33 +122,45 @@ const reserDatabase = () => {
 </script>
 
 <style lang="stylus" scoped>
+$margin = 40px
+
 .data
   margin 40px 0
   width 1000px
 
   .info
-    margin-bottom 40px
-    padding 30px 50px
+    display flex
+    justify-content space-between
+    align-items center
+    margin-bottom 20px
     border 2px solid rgba(0, 0, 0, 0.2)
     border-radius 10px
     font-size 36px
 
-  .box
-    width 100%
+    &:hover
+      background #ddd
 
-    .btn
-      margin 10px 0 0
+      .icon
+        color #333
+
+    .text
+      display flex
+      align-items center
       height 100px
-      font-size 42px
 
-    .line
-      margin 20px 0
-      width 100%
-      border-bottom 5px solid rgba(150, 150, 150, 0.5)
+      .label
+        display flex
+        align-items center
+        padding 0 $margin
+        width 150px
+        height 100%
+        border-right 2px solid rgba(0, 0, 0, 0.2)
 
-    :deep(.disable)
-      border none !important
+      .value
+        margin 0 $margin
+        color #333
 
-      &:before
-        display block !important
+    .icon
+      margin-right $margin
+      color #aaa
 </style>

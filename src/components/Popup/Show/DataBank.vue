@@ -225,7 +225,7 @@
     >
       <div class="share-btn">
         <MenuBtn
-          v-show="!popup.isLoading()"
+          v-show="!popupManager.isLoading()"
           name="share"
           @click.stop="onShareClick(viewDom)"
         />
@@ -239,7 +239,7 @@ import LightCone from '@/components/Common/LightCone.vue'
 import MenuBtn from '@/components/Common/MenuBtn.vue'
 import Icon from '@/components/Common/Icon.vue'
 import { emitter } from '@/assets/scripts/event'
-import { popup } from '@/assets/scripts/popup'
+import { popupManager } from '@/assets/scripts/popup'
 import { fateIcon } from '@/assets/scripts/images'
 import { currentLightCone, setting } from '@/store/data'
 import {
@@ -272,7 +272,7 @@ const onStateClick = async (type: 'hp' | 'atk' | 'def') => {
   } else {
     title += '属性'
   }
-  const str = await popup.open('input', {
+  const str = await popupManager.open('input', {
     title,
     required: true,
     defaultText: currentLightCone.value.details.state[isInitial.value ? 0 : 1][type]
@@ -286,7 +286,7 @@ const onStateClick = async (type: 'hp' | 'atk' | 'def') => {
 const onSkillNameClick = async () => {
   if (!currentLightCone.value) return
 
-  const name = await popup.open('input', {
+  const name = await popupManager.open('input', {
     title: '修改光锥技能名',
     required: false,
     defaultText: currentLightCone.value.details.name,
@@ -301,7 +301,7 @@ const onSkillNameClick = async () => {
 const onSkillClick = async () => {
   if (!currentLightCone.value) return
 
-  const skill = await popup.open('input', {
+  const skill = await popupManager.open('input', {
     title: '修改光锥技能说明',
     tip: '<尖括号>里的内容会被高亮',
     required: false,
@@ -323,7 +323,7 @@ const onSkillClick = async () => {
 const onInfoClick = async () => {
   if (!currentLightCone.value) return
 
-  const info = await popup.open('input', {
+  const info = await popupManager.open('input', {
     title: '修改光锥介绍',
     required: false,
     defaultText: currentLightCone.value.details.info,

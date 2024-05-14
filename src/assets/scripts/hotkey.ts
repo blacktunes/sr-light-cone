@@ -1,6 +1,6 @@
-import { currentLightCone, showModeChange } from '@/store/data'
+import { currentLightCone, setting } from '@/store/data'
 import { emitter } from './event'
-import { popup } from './popup'
+import { popupManager } from './popup'
 
 let flag = false
 
@@ -9,33 +9,33 @@ export const hotkey = () => {
   flag = true
 
   document.addEventListener('click', (e) => {
-    if (popup.isLoading()) return
+    if (popupManager.isLoading()) return
     if ((e.target as HTMLElement).tagName.toLowerCase() === 'a') return
-    if (popup.currentComponent !== 'show') popup.closeCurrentComponent()
+    if (popupManager.currentComponent !== 'show') popupManager.closeCurrentComponent()
   })
 
   document.addEventListener('keydown', async (e) => {
-    if (popup.isLoading()) return
+    if (popupManager.isLoading()) return
     switch (e.key) {
       // 保存截图
       case 's':
         if (!e.ctrlKey) return
         e.preventDefault()
-        if (currentLightCone.value && popup.currentComponent === 'show') {
+        if (currentLightCone.value && popupManager.currentComponent === 'show') {
           emitter.emit('screenshot')
         }
         return
       case 'Tab':
         e.preventDefault()
-        if (currentLightCone.value && popup.currentComponent === 'show') {
-          showModeChange()
+        if (currentLightCone.value && popupManager.currentComponent === 'show') {
+          setting.details = !setting.details
         }
         return
       case 'Enter':
-        popup.currentComponentConfirm()
+        popupManager.currentComponentConfirm()
         return
       case 'Escape':
-        popup.closeCurrentComponent()
+        popupManager.closeCurrentComponent()
         return
     }
   })

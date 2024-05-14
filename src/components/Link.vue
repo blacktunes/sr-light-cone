@@ -35,7 +35,7 @@
       <Icon
         class="icon setting"
         name="setting"
-        @click.stop="popup.open('setting')"
+        @click.stop="popupManager.open('setting')"
       />
     </div>
   </div>
@@ -43,7 +43,7 @@
 
 <script lang="ts" setup>
 import Icon from './Common/Icon.vue'
-import { popup } from '@/assets/scripts/popup'
+import { popupManager } from '@/assets/scripts/popup'
 </script>
 
 <style lang="stylus" scoped>

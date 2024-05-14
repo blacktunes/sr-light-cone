@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts" setup>
-import Popup from '@/utils/components/Popup.vue'
+import { Popup } from 'star-rail-vue'
 
 const props = defineProps<{
   name: string
