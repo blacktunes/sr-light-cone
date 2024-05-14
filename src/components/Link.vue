@@ -21,7 +21,7 @@
     </a>
     <div class="sep"></div>
     <a
-      href="https://space.bilibili.com/1384118"
+      href="https://sr.shenmedouyou.top/"
       target="_blank"
       title="短信编辑器"
     >
