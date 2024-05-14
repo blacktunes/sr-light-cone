@@ -1,6 +1,6 @@
 import { fateList } from '@/assets/scripts/images'
-import { popup } from '@/assets/scripts/popup'
-import { screenshot } from '@/utils/scripts/screenshot'
+import { popupManager } from '@/assets/scripts/popup'
+import { screenshot } from 'star-rail-vue'
 import { currentLightCone, setting } from '@/store/data'
 
 export const updateTime = () => {
@@ -12,7 +12,7 @@ export const updateTime = () => {
 export const onNameClick = async () => {
   if (!currentLightCone.value) return
 
-  const name = await popup.open('input', {
+  const name = await popupManager.open('input', {
     title: '修改光锥名',
     required: false,
     defaultText: currentLightCone.value.name,
@@ -27,7 +27,7 @@ export const onNameClick = async () => {
 export const onTypeClick = async () => {
   if (!currentLightCone.value) return
 
-  const type = await popup.open('select', '修改命途', fateList, currentLightCone.value.type)
+  const type = await popupManager.open('select', '修改命途', fateList, currentLightCone.value.type)
   if (type) {
     currentLightCone.value.type = type as Fate
     updateTime()
@@ -45,7 +45,7 @@ export const onLevelClick = () => {
 }
 
 export const onImageClick = () => {
-  popup.open('cropper', { aspectRatio: 0.7, maxWidth: 1280 }).then((res) => {
+  popupManager.open('cropper', { aspectRatio: 0.7, maxWidth: 1280 }).then((res) => {
     if (!currentLightCone.value) return
 
     currentLightCone.value.image = res.base64
@@ -54,24 +54,32 @@ export const onImageClick = () => {
 }
 
 export const onShareClick = (dom?: HTMLElement | null) => {
-  if (popup.isLoading()) return
+  if (popupManager.isLoading()) return
 
   setting.screenshot = true
-  popup.open('loading')
+  popupManager.open('loading')
   nextTick(() => {
     if (dom) {
       if (!currentLightCone.value) return
 
-      screenshot(dom, currentLightCone.value.name)
-      setTimeout(() => {
-        nextTick(() => {
-          setting.screenshot = false
-          popup.close('loading')
+      screenshot(dom, { name: currentLightCone.value.name, download: setting.download })
+        .catch(() => {
+          console.log(1)
+          popupManager.open('confirm', {
+            title: '图片保存异常',
+            text: ['可能是浏览器拦截了新窗口'],
+            tip: '请尝试在设置中切换下载模式'
+          })
         })
-      }, 500)
+        .finally(() => {
+          setTimeout(() => {
+            setting.screenshot = false
+            popupManager.close('loading')
+          }, 1000)
+        })
     } else {
       setting.screenshot = false
-      popup.close('loading')
+      popupManager.close('loading')
     }
   })
 }

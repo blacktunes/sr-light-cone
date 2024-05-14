@@ -4,17 +4,17 @@
     transition="show-transition"
   >
     <Component
-      :is="setting.details ? Details : EventWarp"
+      :is="setting.details ? DataBank : EventWarp"
       @close="close"
     />
   </Popup>
 </template>
 
 <script lang="ts" setup>
-import Popup from '@/utils/components/Popup.vue'
-import Details from './Details.vue'
-import EventWarp from './EventWarp.vue'
 import { setting } from '@/store/data'
+import { Popup } from 'star-rail-vue'
+import DataBank from './DataBank.vue'
+import EventWarp from './EventWarp.vue'
 
 const props = defineProps<{
   name: string

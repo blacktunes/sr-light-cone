@@ -4,6 +4,7 @@ import { defineConfig, splitVendorChunkPlugin } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import AutoImport from 'unplugin-auto-import/vite'
+import VueDevTools from 'vite-plugin-vue-devtools'
 import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vitejs.dev/config/
@@ -22,6 +23,7 @@ export default defineConfig({
       imports: ['vue']
     }),
     splitVendorChunkPlugin(),
+    VueDevTools(),
     VitePWA({
       mode: 'production',
       injectRegister: 'auto',

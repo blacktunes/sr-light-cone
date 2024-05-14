@@ -1,10 +1,12 @@
 export const setting: {
   lightConeID?: number
   details: boolean
+  download: boolean
   screenshot: boolean
 } = reactive({
   lightConeID: undefined,
   details: false,
+  download: true,
   screenshot: false
 })
 
@@ -20,9 +22,22 @@ export const data = reactive<{
   lightCone: []
 })
 
-setting.details = JSON.parse(localStorage.getItem('sr-light-cone-details') || 'true')
-
-export const showModeChange = () => {
-  setting.details = !setting.details
-  localStorage.setItem('sr-light-cone-details', JSON.stringify(setting.details))
+try {
+  const _setting = JSON.parse(localStorage.getItem('sr-light-cone-setting') || '{}')
+  if (_setting.details !== undefined) {
+    setting.details = _setting.details
+  }
+  if (_setting.download !== undefined) {
+    setting.download = _setting.download
+  }
+} finally {
+  watch([() => setting.details, () => setting.download], () => {
+    localStorage.setItem(
+      'sr-light-cone-setting',
+      JSON.stringify({
+        details: setting.details,
+        download: setting.download
+      })
+    )
+  })
 }

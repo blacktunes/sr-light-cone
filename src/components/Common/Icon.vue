@@ -11,32 +11,6 @@ const props = defineProps<{
 
 const Icon = computed<JSX.Element>(() => {
   switch (props.name) {
-    case 'check':
-      return (
-        <svg
-          viewBox="0 0 1024 1024"
-          version="1.1"
-          xmlns="http://www.w3.org/2000/svg"
-          width="50"
-          height="50"
-          fill="currentColor"
-        >
-          <path d="M392.533333 806.4L85.333333 503.466667l59.733334-59.733334 247.466666 247.466667L866.133333 213.333333l59.733334 59.733334L392.533333 806.4z"></path>
-        </svg>
-      )
-    case 'wrong':
-      return (
-        <svg
-          viewBox="0 0 1024 1024"
-          version="1.1"
-          xmlns="http://www.w3.org/2000/svg"
-          width="50"
-          height="50"
-          fill="currentColor"
-        >
-          <path d="M801.62816 222.37184a30.72 30.72 0 0 1 0 43.43808L555.43808 512l246.19008 246.21056a30.72 30.72 0 1 1-43.43808 43.43808L512 555.43808 265.8304 801.62816a30.72 30.72 0 1 1-43.45856-43.43808L468.54144 512l-246.1696-246.1696a30.72 30.72 0 1 1 43.43808-43.45856L512 468.54144l246.21056-246.1696a30.72 30.72 0 0 1 43.43808 0z"></path>
-        </svg>
-      )
     case 'share':
       return (
         <svg
@@ -45,6 +19,7 @@ const Icon = computed<JSX.Element>(() => {
           xmlns="http://www.w3.org/2000/svg"
           width="90"
           height="90"
+          style="margin: 5px 5px 0 0"
           fill="currentColor"
         >
           <path d="M753.607 584.7c-48.519 0-91.596 23.298-118.66 59.315l-233.123-116.96c3.684-12.936 5.657-26.591 5.657-40.71 0-15.465-2.369-30.374-6.76-44.391l232.241-116.52c26.916 37.549 70.919 62.017 120.644 62.017 81.926 0 148.34-66.412 148.34-148.34 0-81.926-66.413-148.34-148.34-148.34-81.927 0-148.34 66.413-148.34 148.34 0 5.668 0.33 11.258 0.948 16.762l-244.945 122.892c-26.598-25.259-62.553-40.762-102.129-40.762-81.926 0-148.34 66.412-148.34 148.34s66.413 148.34 148.34 148.34c41.018 0 78.144-16.648 104.997-43.555l242.509 121.668c-0.904 6.621-1.382 13.374-1.382 20.242 0 81.927 66.412 148.34 148.34 148.34s148.34-66.413 148.34-148.34c-0.001-81.925-66.409-148.339-148.336-148.339l0 0z"></path>
@@ -179,29 +154,6 @@ const Icon = computed<JSX.Element>(() => {
           <path d="M179.3 706.9c6.7-11.6 7.2-25.8 1.5-37.9-9.3-19.6-16.9-40.1-22.7-61.4-12.5-45.9-15.9-92.9-10.3-139.9 5.9-48.5 21.3-94.9 45.8-137.8s56.7-79.6 95.6-109.2c37.6-28.6 79.9-49.5 125.8-61.9s93-15.9 140-10.3c43.3 5.2 84.8 18.1 123.7 38.2l-11.2 19.6c-8.7 15.1 4.8 35.4 24.3 36.5l71.9 4 71.9 4c18.1 1 29.5-19 19.5-34.1l-39.9-60-39.9-60c-10.8-16.2-35.1-17.6-43.8-2.5l-12 21c-212.3-111.6-476.8-35.9-597 174C46.7 421.5 45.8 576.1 106.6 704c14.2 30 56.2 31.7 72.7 2.9zM843.4 316.5c-6.7 11.6-7.2 25.8-1.5 37.9 9.3 19.6 16.9 40.1 22.7 61.4 12.5 45.9 15.9 92.9 10.3 139.9-5.9 48.5-21.3 94.9-45.8 137.8-24.6 42.9-56.7 79.6-95.6 109.2-37.6 28.6-79.9 49.5-125.8 61.9-45.9 12.5-92.9 15.9-139.9 10.3-43.3-5.2-84.8-18.1-123.7-38.2l11.2-19.6c8.7-15.1-4.8-35.4-24.3-36.5l-71.9-4-71.9-4c-18.1-1-29.5 19-19.5 34.1l39.9 60 39.9 60c10.8 16.2 35.1 17.6 43.8 2.5l12-21c212.3 111.9 476.8 36.2 597-173.7 75.8-132.3 76.7-286.9 15.9-414.8-14.3-30.3-56.3-32-72.8-3.2z"></path>
         </svg>
       )
-    case 'mode':
-      return (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 32 32"
-          width="70"
-          height="70"
-          fill="currentColor"
-        >
-          <path
-            d="M25 23v3H7v-9.17l3.59 3.58L12 19l-6-6l-6 6l1.41 1.41L5 16.83V26a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2v-3z"
-            fill="currentColor"
-          ></path>
-          <path
-            d="M27 7v9.17l3.59-3.58L32 14l-6 6l-6-6l1.41-1.41L25 16.17V7H13V5h12a2 2 0 0 1 2 2z"
-            fill="currentColor"
-          ></path>
-          <path
-            d="M8 10H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2zM4 4v4h4V4z"
-            fill="currentColor"
-          ></path>
-        </svg>
-      )
     case 'back':
       return (
         <svg
@@ -246,6 +198,82 @@ const Icon = computed<JSX.Element>(() => {
             <path d="M12 20l-3-3H7a3 3 0 0 1-3-3V8a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3h-2l-3 3"></path>
             <path d="M8 9h8"></path>
             <path d="M8 13h6"></path>
+          </g>
+        </svg>
+      )
+    case 'change':
+      return (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          width="60"
+          height="60"
+          fill="currentColor"
+        >
+          <g
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M16 3l4 4l-4 4"></path>
+            <path d="M10 7h10"></path>
+            <path d="M8 13l-4 4l4 4"></path>
+            <path d="M4 17h9"></path>
+          </g>
+        </svg>
+      )
+    case 'trash':
+      return (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          width="60"
+          height="60"
+          fill="currentColor"
+        >
+          <g
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M4 7h16"></path>
+            <path d="M10 11v6"></path>
+            <path d="M14 11v6"></path>
+            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-12"></path>
+            <path d="M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"></path>
+          </g>
+        </svg>
+      )
+    case 'note':
+      return (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          width="60"
+          height="60"
+          fill="currentColor"
+        >
+          <g
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect
+              x="5"
+              y="3"
+              width="14"
+              height="18"
+              rx="2"
+            ></rect>
+            <path d="M9 7h6"></path>
+            <path d="M9 11h6"></path>
+            <path d="M9 15h4"></path>
           </g>
         </svg>
       )
