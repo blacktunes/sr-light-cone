@@ -64,7 +64,6 @@ export const onShareClick = (dom?: HTMLElement | null) => {
 
       screenshot(dom, { name: currentLightCone.value.name, download: setting.download })
         .catch(() => {
-          console.log(1)
           popupManager.open('confirm', {
             title: '图片保存异常',
             text: ['可能是浏览器拦截了新窗口'],
