@@ -1,11 +1,12 @@
 import './main.styl'
 
+import { analytics } from 'star-rail-vue'
 import VueDOMPurifyHTML from 'vue-dompurify-html'
 import App from './App.vue'
 import { loadDatabase } from './assets/scripts/database'
 import { hotkey } from './assets/scripts/hotkey'
 import { logCheck } from './assets/scripts/log'
-import { analytics } from 'star-rail-vue'
+import { updateCheck } from './assets/scripts/update'
 
 window.BUILD_TIME = new Date(BUILD_TIME)
 
@@ -22,4 +23,4 @@ createApp(App)
 
 hotkey()
 logCheck('sr-light-cone-time')
-loadDatabase()
+loadDatabase().then(updateCheck)

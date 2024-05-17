@@ -1,12 +1,10 @@
-import Loading from '@/components/Popup/Loading.vue'
-import Log from '@/components/Popup/Log.vue'
 import Setting from '@/components/Popup/Setting.vue'
 import Show from '@/components/Popup/Show/Show.vue'
 import { setting } from '@/store/data'
-import { confirm, createPopupManager, cropper, input, select } from 'star-rail-vue'
+import { loading, confirm, createPopupManager, cropper, input, select, log } from 'star-rail-vue'
 
 export const popupManager = createPopupManager({
-  loading: { component: Loading },
+  loading,
   show: {
     component: Show,
     open: (id: number) => {
@@ -16,7 +14,7 @@ export const popupManager = createPopupManager({
       setting.lightConeID = undefined
     }
   },
-  log: { component: Log },
+  log,
   setting: { component: Setting },
   cropper,
   confirm,
