@@ -1,15 +1,21 @@
 const log: Log[] = [
   {
-    time: '2024-05-14',
+    time: '2024-05-17',
     text: [
       {
-        text: '再次重构了亿点点代码',
-        info: '有问题请及时联系我修复',
+        text: '重构框架',
+        info: [
+          '将大部分通用组件拆分到npm包<a href="https://www.npmjs.com/package/star-rail-vue" trage="_blank">star-rail-vue</a>',
+          '如出现功能异常请及时联系修复'
+        ],
         highlight: true
       },
       {
         text: '重做设置窗口',
         info: '增加了下载模式选项，可以选择直接下载截图或者打开新窗口显示'
+      },
+      {
+        text: '优化部分动画效果'
       }
     ]
   },
