@@ -470,7 +470,7 @@ onUnmounted(() => {
         width 3200px
         height 3200px
         transform translate(-50%, -50%) scale(0)
-        animation figure 1.5s forwards
+        animation figure 1.4s forwards
 
     .ray-view
       position absolute
@@ -502,7 +502,7 @@ onUnmounted(() => {
         height: (3200 / 16 * 9)px
         filter blur(10px)
         opacity 0
-        animation ray 0.7s ease-out forwards
+        animation ray 0.6s ease-out forwards
 
       .ray_1
         animation-delay 0.1s
@@ -867,10 +867,10 @@ onUnmounted(() => {
     opacity 0
 
 .light-cone-enter-active
-  transition opacity 0.7s, transform 0.35s
+  transition transform 0.1s
 
 .light-cone-enter-from
-  transform scale(3)
+  transform scale(2)
 
 @keyframes animation-star
   0%
