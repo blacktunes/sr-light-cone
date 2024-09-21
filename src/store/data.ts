@@ -1,17 +1,23 @@
-export const setting: {
+export const state: {
   lightConeID?: number
-  details: boolean
-  download: boolean
   screenshot: boolean
 } = reactive({
   lightConeID: undefined,
-  details: false,
-  download: true,
   screenshot: false
 })
 
+export const setting: {
+  details: boolean
+  download: boolean
+  quality: number
+} = reactive({
+  details: false,
+  download: true,
+  quality: 1
+})
+
 export const currentLightCone = computed(() => {
-  const index = data.lightCone.findIndex((item) => item.id === setting.lightConeID)
+  const index = data.lightCone.findIndex((item) => item.id === state.lightConeID)
   if (index === -1) return
   return data.lightCone[index]
 })
@@ -24,20 +30,19 @@ export const data = reactive<{
 
 try {
   const _setting = JSON.parse(localStorage.getItem('sr-light-cone-setting') || '{}')
-  if (_setting.details !== undefined) {
-    setting.details = _setting.details
-  }
-  if (_setting.download !== undefined) {
-    setting.download = _setting.download
+  for (const _key in _setting) {
+    const key = _key as keyof typeof setting
+    if (
+      _setting[_key] !== undefined &&
+      setting[key] !== undefined &&
+      _setting[_key] !== setting[key] &&
+      typeof _setting[_key] === typeof setting[key]
+    ) {
+      ;(setting[key] as any) = _setting[_key]
+    }
   }
 } finally {
-  watch([() => setting.details, () => setting.download], () => {
-    localStorage.setItem(
-      'sr-light-cone-setting',
-      JSON.stringify({
-        details: setting.details,
-        download: setting.download
-      })
-    )
+  watch(setting, () => {
+    localStorage.setItem('sr-light-cone-setting', JSON.stringify(toRaw(setting)))
   })
 }

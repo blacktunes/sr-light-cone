@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "mitt": "^3.0.1",
-    "star-rail-vue": "^1.2.5",
+    "star-rail-vue": "^1.2.6",
     "vue": "^3.5.4",
     "vue-dompurify-html": "^5.1.0"
   },

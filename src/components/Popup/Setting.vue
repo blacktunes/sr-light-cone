@@ -7,12 +7,12 @@
       <div class="data">
         <div
           class="info"
-          title="切换显示模式"
+          title="切换显示光锥的界面类型"
           @click="setting.details = !setting.details"
         >
           <div class="text">
-            <span class="label">显示模式</span>
-            <span class="value">{{ setting.details ? '智库界面' : '跃迁界面' }}</span>
+            <span class="label">界面类型</span>
+            <span class="value">{{ setting.details ? '智库' : '跃迁' }}</span>
           </div>
           <Icon
             name="change"
@@ -21,12 +21,28 @@
         </div>
         <div
           class="info"
-          title="切换下载模式"
+          title="切换截图的保存模式"
           @click="setting.download = !setting.download"
         >
           <div class="text">
-            <span class="label">下载模式</span>
-            <span class="value">{{ setting.download ? '下载图片' : '打开新窗口' }}</span>
+            <span class="label">截图保存</span>
+            <span class="value">{{ setting.download ? '下载图片' : '新窗口打开图片' }}</span>
+          </div>
+          <Icon
+            name="change"
+            class="icon"
+          />
+        </div>
+        <div
+          class="info"
+          title="切换截图的图片质量"
+          @click="qualityChange"
+        >
+          <div class="text">
+            <span class="label">图片质量</span>
+            <span class="value">{{
+              setting.quality === 1 ? '高(3200×1800)' : '低(1600×900)'
+            }}</span>
           </div>
           <Icon
             name="change"
@@ -101,6 +117,14 @@ const countStrToSize = (str: string) => {
 }
 
 const dataUsage = computed(() => ` (${countStrToSize(JSON.stringify(data.lightCone))})`)
+
+const qualityChange = () => {
+  if (setting.quality === 1) {
+    setting.quality = 0.5
+  } else {
+    setting.quality = 1
+  }
+}
 
 const reserDatabase = () => {
   popupManager.open('confirm', {

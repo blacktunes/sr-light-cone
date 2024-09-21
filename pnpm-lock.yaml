@@ -12,8 +12,8 @@ importers:
         specifier: ^3.0.1
         version: 3.0.1
       star-rail-vue:
-        specifier: ^1.2.5
-        version: 1.2.5(typescript@5.6.2)
+        specifier: ^1.2.6
+        version: 1.2.6(typescript@5.6.2)
       vue:
         specifier: ^3.5.4
         version: 3.5.4(typescript@5.6.2)
@@ -2661,8 +2661,8 @@ packages:
   stampit@1.2.0:
     resolution: {integrity: sha512-DzVKo18iiu9dHcs1y/51Th/bOB4qbC5G1mfBcK4/cq2QNxZqExWH6MG9YbXSx96nC293B65pEsC0fT7MKmsGnA==}
 
-  star-rail-vue@1.2.5:
-    resolution: {integrity: sha512-1VcEOwkULmLapY79oL772GYkdCvjr0RgKiCWcrgQAFUh168at4dr0vxMFq9sqUimRd0gBFEkdEXOyHxd5H7lew==}
+  star-rail-vue@1.2.6:
+    resolution: {integrity: sha512-1lCfd7EdDXT1vDKcrRQ3leG8E2Tls1tJXeNjoRWIycOZxnMXc+BLn9dVX7t20LnzGlfTNcfYCdfzDFJS6n48KQ==}
 
   string-width@1.0.2:
     resolution: {integrity: sha512-0XsVpQLnVCXHJfyEs8tC0zpTVIr5PKKsQtkT29IwupnPTjtPmQ3xT/4yCREF9hYkV/3M3kzcUTSAZT6a6h81tw==}
@@ -2741,6 +2741,7 @@ packages:
 
   super-image-cropper@1.0.18:
     resolution: {integrity: sha512-x36nt6DV6jdQqXKyNRFxXWCxnR1+Ld3DTISBWPxhHRexhP8rlxV8KQYlVwgQT6cVTO933A5zjnSyHyfQALJdmA==}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
 
   superjson@2.2.1:
     resolution: {integrity: sha512-8iGv75BYOa0xRJHK5vRLEjE2H/i4lulTjzpUXic3Eg8akftYjkmQDa8JARQ42rlczXyFR3IeRoeFCc7RxHsYZA==}
@@ -5952,7 +5953,7 @@ snapshots:
     dependencies:
       mout: 0.5.0
 
-  star-rail-vue@1.2.5(typescript@5.6.2):
+  star-rail-vue@1.2.6(typescript@5.6.2):
     dependencies:
       html-to-image: 1.11.11
       super-image-cropper: 1.0.18
