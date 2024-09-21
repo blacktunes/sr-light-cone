@@ -19,6 +19,11 @@ export const fateList = <const>[
   '神秘'
 ]
 
+declare global {
+  /** 命途列表 */
+  type Fate = (typeof fateList)[number]
+}
+
 type FateIcon = Partial<Record<(typeof fateList)[number], string>>
 
 export const fateIcon: FateIcon = {
