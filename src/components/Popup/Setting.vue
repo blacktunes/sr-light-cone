@@ -7,12 +7,12 @@
       <div class="data">
         <div
           class="info"
-          title="切换显示光锥的界面类型"
+          title="切换显示光锥的显示模式"
           @click="setting.details = !setting.details"
         >
           <div class="text">
-            <span class="label">界面类型</span>
-            <span class="value">{{ setting.details ? '智库' : '跃迁' }}</span>
+            <span class="label">显示模式</span>
+            <span class="value">{{ setting.details ? '智库界面' : '跃迁界面' }}</span>
           </div>
           <Icon
             name="change"
@@ -26,7 +26,7 @@
         >
           <div class="text">
             <span class="label">截图保存</span>
-            <span class="value">{{ setting.download ? '下载图片' : '新窗口打开图片' }}</span>
+            <span class="value">{{ setting.download ? '下载图片' : '新窗口打开' }}</span>
           </div>
           <Icon
             name="change"
@@ -39,9 +39,9 @@
           @click="qualityChange"
         >
           <div class="text">
-            <span class="label">图片质量</span>
+            <span class="label">截图质量</span>
             <span class="value">{{
-              setting.quality === 1 ? '高(3200×1800)' : '低(1600×900)'
+              setting.quality === 1 ? '高(1600px)' : '低(900px)'
             }}</span>
           </div>
           <Icon
