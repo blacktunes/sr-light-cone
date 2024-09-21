@@ -128,11 +128,10 @@ $top = 50px
   background-position 100% 0
   background-size 103%
   background-repeat no-repeat
-  box-shadow 0 0 20px 20px rgba(0, 0, 0, 0.7) inset
 
   &:before
     position absolute
-    top 20px
+    top 40px
     right 50px
     bottom 40px
     left 50px
