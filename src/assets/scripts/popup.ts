@@ -1,3 +1,4 @@
+import DataManager from '@/components/Popup/DataManager.vue'
 import Setting from '@/components/Popup/Setting.vue'
 import Show from '@/components/Popup/Show/Show.vue'
 import { state } from '@/store/data'
@@ -15,6 +16,7 @@ export const popupManager = createPopupManager({
     }
   },
   log,
+  data: { component: DataManager },
   setting: { component: Setting },
   cropper,
   confirm,

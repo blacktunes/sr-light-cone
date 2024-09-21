@@ -62,10 +62,16 @@ export const onShareClick = (dom?: HTMLElement | null) => {
     if (dom) {
       if (!currentLightCone.value) return
 
-      console.log(setting.quality)
       screenshot(
         dom,
-        { name: currentLightCone.value.name, download: setting.download },
+        {
+          name: currentLightCone.value.name,
+          download: setting.download,
+          data: {
+            raw: JSON.stringify(toRaw(currentLightCone.value)),
+            filename: 'raw.lc'
+          }
+        },
         { pixelRatio: setting.quality }
       )
         .catch(() => {

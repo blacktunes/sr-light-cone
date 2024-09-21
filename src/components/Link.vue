@@ -31,7 +31,15 @@
       />
     </a>
     <div class="sep"></div>
-    <div>
+    <div title="数据管理">
+      <Icon
+        class="icon"
+        name="data"
+        @click.stop="popupManager.open('data')"
+      />
+    </div>
+    <div class="sep"></div>
+    <div title="设置">
       <Icon
         class="icon setting"
         name="setting"
