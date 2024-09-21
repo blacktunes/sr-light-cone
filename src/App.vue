@@ -5,6 +5,7 @@
   >
     <Index />
     <Link />
+    <Shadow />
   </Main>
 </template>
 
@@ -13,4 +14,5 @@ import { Main } from 'star-rail-vue'
 import { popupManager } from './assets/scripts/popup'
 import Index from './components/Index.vue'
 import Link from './components/Link.vue'
+import Shadow from './components/Shadow.vue'
 </script>

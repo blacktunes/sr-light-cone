@@ -137,7 +137,7 @@
         <div class="line"></div>
         <div
           class="info"
-          :class="{ hidden: setting.screenshot }"
+          :class="{ hidden: state.screenshot }"
         >
           <div class="type-tip">
             <div class="icon">
@@ -235,20 +235,20 @@
 </template>
 
 <script lang="ts" setup>
+import { emitter } from '@/assets/scripts/event'
+import { fateIcon } from '@/assets/scripts/images'
+import { popupManager } from '@/assets/scripts/popup'
+import Icon from '@/components/Common/Icon.vue'
 import LightCone from '@/components/Common/LightCone.vue'
 import MenuBtn from '@/components/Common/MenuBtn.vue'
-import Icon from '@/components/Common/Icon.vue'
-import { emitter } from '@/assets/scripts/event'
-import { popupManager } from '@/assets/scripts/popup'
-import { fateIcon } from '@/assets/scripts/images'
-import { currentLightCone, setting } from '@/store/data'
+import { currentLightCone, state } from '@/store/data'
 import {
-  updateTime,
-  onNameClick,
-  onTypeClick,
-  onLevelClick,
   onImageClick,
-  onShareClick
+  onLevelClick,
+  onNameClick,
+  onShareClick,
+  onTypeClick,
+  updateTime
 } from './utils'
 
 defineEmits<{

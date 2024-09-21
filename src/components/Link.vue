@@ -24,6 +24,7 @@
       href="https://sr.shenmedouyou.top/"
       target="_blank"
       title="短信编辑器"
+      style="margin: -10px 0"
     >
       <Icon
         class="icon"
@@ -31,7 +32,15 @@
       />
     </a>
     <div class="sep"></div>
-    <div>
+    <div title="数据管理">
+      <Icon
+        class="icon"
+        name="data"
+        @click.stop="popupManager.open('data')"
+      />
+    </div>
+    <div class="sep"></div>
+    <div title="设置">
       <Icon
         class="icon setting"
         name="setting"

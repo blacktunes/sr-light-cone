@@ -2,6 +2,9 @@
   <div
     class="index"
     @click.stop
+    @dragenter.prevent
+    @dragover.prevent
+    @drop.prevent.stop="handleDrop"
   >
     <Transition
       name="box-slide-bottom"
@@ -56,12 +59,13 @@
 </template>
 
 <script lang="ts" setup>
-import GroupBtn from './Common/GroupBtn.vue'
-import Card from './Common/Card.vue'
-import { currentLightCone, data, setting } from '@/store/data'
+import { uploadFile } from '@/assets/scripts/upload'
 import { fateList } from '@/assets/scripts/images'
-import { popupManager } from '@/assets/scripts/popup'
 import { getDetails } from '@/assets/scripts/lightcone'
+import { popupManager } from '@/assets/scripts/popup'
+import { currentLightCone, data, setting } from '@/store/data'
+import Card from './Common/Card.vue'
+import GroupBtn from './Common/GroupBtn.vue'
 
 const select = ref<'全部' | Fate>('全部')
 
@@ -110,6 +114,12 @@ const handleDelete = (id: number) => {
     })
   }
 }
+
+const handleDrop = (e: DragEvent) => {
+  if (e?.dataTransfer?.files) {
+    uploadFile(e.dataTransfer.files[0])
+  }
+}
 </script>
 
 <style lang="stylus" scoped>
@@ -128,11 +138,10 @@ $top = 50px
   background-position 100% 0
   background-size 103%
   background-repeat no-repeat
-  box-shadow 0 0 20px 20px rgba(0, 0, 0, 0.7) inset
 
   &:before
     position absolute
-    top 20px
+    top 40px
     right 50px
     bottom 40px
     left 50px

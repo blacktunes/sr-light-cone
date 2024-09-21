@@ -38,35 +38,36 @@
           </div>
         </div>
       </Transition>
-      <Transition
-        name="mask"
-        appear-active-class="mask-appear-active"
-        appear
-      >
-        <div
-          class="mask"
-          v-show="currentLightCone.image && elementShow.effects"
-        ></div>
-      </Transition>
-      <Transition name="fade">
-        <div
-          class="light-view"
-          v-show="currentLightCone.image && elementShow.effects"
+      <template v-if="!gold">
+        <Transition
+          name="mask"
+          appear-active-class="mask-appear-active"
+          appear
         >
           <div
-            class="light"
-            v-for="(item, index) in light"
-            :key="`light-${index}`"
-            :style="item"
+            class="mask"
+            v-show="currentLightCone.image && elementShow.effects"
           ></div>
-        </div>
-      </Transition>
-      <Transition name="ray">
+        </Transition>
+        <Transition name="fade">
+          <div
+            class="light-view"
+            v-show="currentLightCone.image && elementShow.effects"
+          >
+            <div
+              class="light"
+              v-for="(item, index) in light"
+              :key="`light-${index}`"
+              :style="item"
+            ></div>
+          </div>
+        </Transition>
         <div
           class="ray-view"
           v-if="animation"
         >
           <img
+            v-if="currentLightCone.level !== 5"
             class="figure"
             src="@/assets/images/figure.webp"
             alt=""
@@ -83,90 +84,158 @@
             alt=""
           />
         </div>
-      </Transition>
-      <Transition
-        name="rainbow"
-        appear
-      >
-        <img
-          src="@/assets/images/彩虹.webp"
-          alt=""
-          class="rainbow"
-        />
-      </Transition>
-    </div>
-    <Transition
-      name="info"
-      appear
-      @after-appear="animation = false"
-    >
-      <div
-        class="info"
-        @click.stop
-        v-if="currentLightCone.image"
-      >
-        <img
-          src="@/assets/images/光锥.webp"
-          alt=""
-          class="label"
-        />
-        <div class="name-box">
+        <div
+          class="figure-view"
+          v-if="animation && currentLightCone.level === 5"
+        >
           <img
-            :src="fateFullIcon[currentLightCone.type]"
+            class="figure"
+            src="@/assets/images/figure.webp"
             alt=""
-            class="type"
-            @click.stop="onTypeClick"
           />
-          <div class="name-content">
-            <div class="name">
-              <span @click.stop="onNameClick">
-                {{ currentLightCone.name }}
-              </span>
-              <img
-                class="new"
-                src="@/assets/images/new.webp"
-                alt=""
-                :class="[currentLightCone.new ? 'show' : 'hide']"
-                @click.stop="onNewFlagClick"
-              />
-            </div>
-            <div
-              class="level"
-              @click.stop="onLevelClick"
-            >
-              <Icon
-                v-for="(_, index) in currentLightCone.level"
-                :key="index"
-                name="star"
-              />
+        </div>
+        <Transition
+          name="rainbow"
+          appear
+        >
+          <img
+            src="@/assets/images/彩虹.webp"
+            alt=""
+            class="rainbow"
+          />
+        </Transition>
+      </template>
+    </div>
+    <template v-if="!gold">
+      <Transition
+        name="info"
+        appear
+        @after-appear="animation = false"
+      >
+        <div
+          class="info"
+          @click.stop
+          v-if="currentLightCone.image"
+        >
+          <img
+            src="@/assets/images/光锥.webp"
+            alt=""
+            class="label"
+          />
+          <div class="name-box">
+            <img
+              :src="fateFullIcon[currentLightCone.type]"
+              alt=""
+              class="type"
+              @click.stop="onTypeClick"
+            />
+            <div class="name-content">
+              <div class="name">
+                <span @click.stop="onNameClick">
+                  {{ currentLightCone.name }}
+                </span>
+                <img
+                  class="new"
+                  src="@/assets/images/new.webp"
+                  alt=""
+                  :class="[currentLightCone.new ? 'show' : 'hide']"
+                  @click.stop="onNewFlagClick"
+                />
+              </div>
+              <div
+                class="level"
+                @click.stop="onLevelClick"
+              >
+                <Icon
+                  v-for="(_, index) in currentLightCone.level"
+                  :key="index"
+                  name="star"
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </Transition>
+      </Transition>
+      <Transition
+        name="extra"
+        appear
+      >
+        <div class="extra">
+          <img
+            :src="extraImage"
+            alt=""
+            :class="[elementShow.extra ? 'show' : 'hide']"
+            @click.stop="elementShow.extra = !elementShow.extra"
+          />
+        </div>
+      </Transition>
+      <Transition
+        name="light-cone"
+        appear
+      >
+        <div class="light-cone-box">
+          <LightCone
+            class="light-cone"
+            @click.stop="onImageClick"
+            :image="currentLightCone.image"
+          />
+        </div>
+      </Transition>
+    </template>
     <Transition
-      name="extra"
+      name="gold"
       appear
+      @after-appear="gold = false"
+      :duration="{ enter: 1000, leave: 0 }"
     >
-      <div class="extra">
-        <img
-          :src="extraImage"
-          alt=""
-          :class="[elementShow.extra ? 'show' : 'hide']"
-          @click.stop="elementShow.extra = !elementShow.extra"
-        />
-      </div>
-    </Transition>
-    <Transition
-      name="light-cone"
-      appear
-    >
-      <div class="light-cone-box">
-        <LightCone
-          class="light-cone"
-          @click.stop="onImageClick"
-          :image="currentLightCone.image"
-        />
+      <div
+        class="gold-animation-view"
+        v-if="gold"
+      >
+        <div class="gold-animation">
+          <img
+            :src="fateFullIcon[currentLightCone.type]"
+            alt=""
+            class="animation-type"
+          />
+          <div class="light-group-1">
+            <div class="animation-light"></div>
+            <div class="animation-light"></div>
+          </div>
+          <div class="light-group-2">
+            <div class="animation-light"></div>
+            <div class="animation-light"></div>
+          </div>
+          <div class="light-group-3">
+            <div class="animation-light"></div>
+          </div>
+          <div class="star-group-1">
+            <Icon
+              name="star"
+              class="animation-star"
+            />
+            <Icon
+              name="star"
+              class="animation-star"
+            />
+          </div>
+          <div class="star-group-2">
+            <Icon
+              name="star"
+              class="animation-star"
+            />
+            <Icon
+              name="star"
+              class="animation-star"
+            />
+          </div>
+          <div class="star-group-3">
+            <Icon
+              name="star"
+              class="animation-star"
+            />
+          </div>
+        </div>
       </div>
     </Transition>
     <MenuBtn
@@ -276,6 +345,7 @@ for (let i = 0; i < lightNum; i++) {
   light.push(getLightStyle(i))
 }
 
+const gold = ref(currentLightCone.value?.level === 5)
 const animation = ref(true)
 
 const extraImage = computed(() => {
@@ -392,6 +462,16 @@ onUnmounted(() => {
       filter drop-shadow(0 0px 10px #fff)
       pointer-events none
 
+    figure()
+      .figure
+        position absolute
+        top 50%
+        left 50%
+        width 3200px
+        height 3200px
+        transform translate(-50%, -50%) scale(0)
+        animation figure 1.4s forwards
+
     .ray-view
       position absolute
       top 0
@@ -400,15 +480,7 @@ onUnmounted(() => {
       left 0
       filter drop-shadow(0 0px 10px v-bind(rayColor))
       pointer-events none
-
-      .figure
-        position absolute
-        top 50%
-        left 50%
-        width 3200px
-        height 3200px
-        transform translate(-50%, -50%) scale(0)
-        animation figure 1.5s forwards
+      figure()
 
       .ring
         position absolute
@@ -430,13 +502,23 @@ onUnmounted(() => {
         height: (3200 / 16 * 9)px
         filter blur(10px)
         opacity 0
-        animation ray 0.7s ease-out forwards
+        animation ray 0.6s ease-out forwards
 
       .ray_1
         animation-delay 0.1s
 
       .ray_2
         transform rotateY(180deg)
+
+    .figure-view
+      position absolute
+      top 0
+      right 0
+      bottom 0
+      left 0
+      filter drop-shadow(0 0px 10px #fff)
+      pointer-events none
+      figure()
 
     .rainbow
       position absolute
@@ -535,6 +617,113 @@ onUnmounted(() => {
             &:after
               top 0
               left 0
+
+  .gold-animation-view
+    position absolute
+    z-index 9
+    display flex
+    justify-content center
+    align-items center
+    background radial-gradient(farthest-corner at 50% 110%, #151c35, #000 45%)
+    inset -5px
+
+    .gold-animation
+      display flex
+      justify-content center
+      align-items center
+      width 100%
+      height 100%
+
+      .animation-type
+        width 700px
+        filter invert(1)
+        opacity 0.3
+
+      .animation-light
+        height 100%
+        background linear-gradient(to top, rgba(38, 45, 70, 0.5) 15%, transparent 50%, rgba(38, 45, 70, 0.5))
+        transform scaleX(0.4)
+
+      .light-group-1
+      .light-group-2
+      .light-group-3
+        position absolute
+        top 50%
+        left 50%
+        display flex
+        height 100%
+        transform translate(-50%, -50%)
+
+      $group-gap-1 = 720px
+      $group-width-1 = 140px
+      $group-gap-2 = 360px
+      $group-width-2 = 135px
+      $group-width-3 = 330px
+
+      .light-group-1
+        gap $group-gap-1
+
+        .animation-light
+          width $group-width-1
+
+      .light-group-2
+        gap $group-gap-2
+
+        .animation-light
+          width $group-width-2
+
+      .light-group-3
+        .animation-light
+          width $group-width-3
+
+      .star-group-1
+      .star-group-2
+      .star-group-3
+        position absolute
+        top 50%
+        left 50%
+        display flex
+        transform translate(-50%, -50%)
+
+      .star-group-1
+        gap $group-gap-1
+
+        .animation-star
+          width $group-width-1
+          height $group-width-1
+          filter drop-shadow(0 0 15px #fff)
+          stroke-width 10px
+          stroke rgba(255, 255, 255, 0.4)
+
+          :deep(path)
+            filter drop-shadow(0 0 15px #ffcf70)
+
+      .star-group-2
+        gap $group-gap-2
+
+        .animation-star
+          width $group-width-2
+          height $group-width-2
+          filter drop-shadow(0 0 15px #fff)
+          stroke-width 10px
+          stroke rgba(255, 255, 255, 0.4)
+
+          :deep(path)
+            filter drop-shadow(0 0 15px #ffcf70)
+
+      .star-group-3
+        animation animation-star 0.3s linear forwards
+        animation-delay 0.3s
+
+        .animation-star
+          width 330px
+          height 330px
+          filter drop-shadow(0 0 20px #fff)
+          stroke-width 10px
+          stroke rgba(255, 255, 255, 0.4)
+
+          :deep(path)
+            filter drop-shadow(0 0 20px #ffcf70)
 
   .share-btn
     position absolute
@@ -678,10 +867,88 @@ onUnmounted(() => {
     opacity 0
 
 .light-cone-enter-active
-  transition opacity 0.7s, transform 0.35s
+  transition transform 0.1s
 
 .light-cone-enter-from
-  transform scale(3)
+  transform scale(2)
+
+@keyframes animation-star
+  0%
+    filter brightness(1)
+
+  50%
+    filter brightness(2)
+
+  100%
+    filter brightness(1)
+
+.gold-enter-active
+  transition opacity 0.8s
+
+.gold-leave-active
+  transition opacity 0s
+
+.gold-enter-from
+.gold-leave-from
+.gold-leave-to
+  opacity 0
+
+.gold-enter-active .animation-type
+  transition all 0.5s
+
+.gold-enter-from .animation-type
+  opacity 0
+  transform translateY(100px)
+
+.gold-enter-active .light-group-1 .animation-light
+.gold-enter-active .light-group-2 .animation-light
+  transition all 0.4s
+
+.gold-enter-active .light-group-3 .animation-light
+  transition all 0.8s
+
+.gold-enter-active .light-group-1 .animation-light
+  transition-delay 0.1s
+
+.gold-enter-active .light-group-2 .animation-light
+  transition-delay 0.2s
+
+.gold-enter-active .light-group-3 .animation-light
+  transition-delay 0.35s
+
+.gold-enter-to .light-group-1 .animation-light
+.gold-enter-to .light-group-2 .animation-light
+.gold-enter-to .light-group-3 .animation-light
+  opacity 0
+  transform scaleX(0) !important
+
+.gold-enter-active .star-group-1
+.gold-enter-active .star-group-2
+.gold-enter-active .star-group-3
+  transition all 0.3s
+
+.gold-enter-active .star-group-1
+  transition-delay 0.2s
+
+.gold-enter-active .star-group-2
+  transition-delay 0.25s
+
+.gold-enter-active .star-group-3
+  transition-delay 0.3s
+
+.gold-enter-from .star-group-1
+.gold-enter-from .star-group-2
+.gold-enter-from .star-group-3
+  opacity 0
+  transform translate(-50%, 50%) !important
+
+.gold-enter-active .gold-animation
+  transition transform 0.3s, opacity 0.5s
+  transition-delay 0.7s
+
+.gold-enter-to .gold-animation
+  opacity 0
+  transform scale(0.8)
 
 .rainbow-enter-active
   transition opacity 1s
@@ -717,10 +984,4 @@ onUnmounted(() => {
 .mask-leave-to
   opacity 0
   transform translateY(50%)
-
-.ray-leave-active
-  transition-delay 2s
-
-.ray-leave-to
-  opacity 0
 </style>

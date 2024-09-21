@@ -19,6 +19,11 @@ export const fateList = <const>[
   '神秘'
 ]
 
+declare global {
+  /** 命途列表 */
+  type Fate = (typeof fateList)[number]
+}
+
 type FateIcon = Partial<Record<(typeof fateList)[number], string>>
 
 export const fateIcon: FateIcon = {
@@ -40,14 +45,14 @@ export const fateIcon: FateIcon = {
 }
 
 export const fateFullIcon: FateIcon = {
-  开拓: 'https://patchwiki.biligame.com/images/sr/7/7e/audd034jxzmfmfkkeluyzm4nz1cpogk.png',
-  毁灭: 'https://patchwiki.biligame.com/images/sr/d/dd/5d3peyjx2zx12z5do4z2s8yh00glp8j.png',
-  巡猎: 'https://patchwiki.biligame.com/images/sr/c/cd/2zjsly4r0sjvl81p7u5v0kafsk5jfn2.png',
-  智识: 'https://patchwiki.biligame.com/images/sr/3/3e/517a28zga8ufjxcujfqcs5ycsq75n8w.png',
-  同谐: 'https://patchwiki.biligame.com/images/sr/4/44/l84guf6iv5iltvetpb6x53jlpo3340s.png',
-  虚无: 'https://patchwiki.biligame.com/images/sr/5/54/oi1xyd1qyboiwrjjr405xfk0eyc3tox.png',
-  存护: 'https://patchwiki.biligame.com/images/sr/e/ee/poj7ygfrfv3ncutemra1g1md892p78r.png',
-  丰饶: 'https://patchwiki.biligame.com/images/sr/5/53/1okpzbf8i1jh38zh61oupczeytz45rg.png',
+  开拓: getImage('开拓', true),
+  毁灭: getImage('毁灭', true),
+  巡猎: getImage('巡猎', true),
+  智识: getImage('智识', true),
+  同谐: getImage('同谐', true),
+  虚无: getImage('虚无', true),
+  存护: getImage('存护', true),
+  丰饶: getImage('丰饶', true),
   欢愉: getImage('欢愉', true),
   记忆: getImage('记忆', true),
   繁育: getImage('繁育', true),

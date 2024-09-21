@@ -7,7 +7,7 @@
       <div class="data">
         <div
           class="info"
-          title="切换显示模式"
+          title="切换显示光锥的显示模式"
           @click="setting.details = !setting.details"
         >
           <div class="text">
@@ -21,12 +21,12 @@
         </div>
         <div
           class="info"
-          title="切换下载模式"
+          title="切换截图的保存模式"
           @click="setting.download = !setting.download"
         >
           <div class="text">
-            <span class="label">下载模式</span>
-            <span class="value">{{ setting.download ? '下载图片' : '打开新窗口' }}</span>
+            <span class="label">截图保存</span>
+            <span class="value">{{ setting.download ? '下载图片' : '新窗口打开' }}</span>
           </div>
           <Icon
             name="change"
@@ -35,15 +35,17 @@
         </div>
         <div
           class="info"
-          title="重置数据库"
-          @click="reserDatabase"
+          title="切换截图的图片质量"
+          @click="qualityChange"
         >
           <div class="text">
-            <span class="label">光锥数量</span>
-            <span class="value">{{ data.lightCone.length }}{{ dataUsage }} </span>
+            <span class="label">截图质量</span>
+            <span class="value">{{
+              setting.quality === 1 ? '高(1600px)' : '低(900px)'
+            }}</span>
           </div>
           <Icon
-            name="trash"
+            name="change"
             class="icon"
           />
         </div>
@@ -67,11 +69,11 @@
 </template>
 
 <script lang="ts" setup>
+import Log from '@/assets/data/log'
 import { popupManager } from '@/assets/scripts/popup'
-import { data, setting } from '@/store/data'
+import { setting } from '@/store/data'
 import { Popup, Window } from 'star-rail-vue'
 import Icon from '../Common/Icon.vue'
-import Log from '@/assets/data/log'
 
 const props = defineProps<{
   name: string
@@ -86,38 +88,12 @@ const close = () => {
   emits('close', props.name)
 }
 
-const countStrToSize = (str: string) => {
-  let count = 0
-  for (let i = 0; i < str.length; i++) {
-    count += Math.ceil(str.charCodeAt(i).toString(2).length / 8)
+const qualityChange = () => {
+  if (setting.quality === 1) {
+    setting.quality = 0.5
+  } else {
+    setting.quality = 1
   }
-
-  if (count === 0) return '0 B'
-  const k = 1024,
-    sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
-    i = Math.floor(Math.log(count) / Math.log(k))
-
-  return `${Number((count / Math.pow(k, i)).toPrecision(3))} ${sizes[i]}`
-}
-
-const dataUsage = computed(() => ` (${countStrToSize(JSON.stringify(data.lightCone))})`)
-
-const reserDatabase = () => {
-  popupManager.open('confirm', {
-    title: '重置数据库',
-    tip: '该操作会清除所有光锥',
-    text: ['确定重置数据库吗？'],
-    fn: () => {
-      popupManager.open('loading')
-      const request = indexedDB.deleteDatabase('sr-light-cone')
-      request.onblocked = () => {
-        location.reload()
-      }
-      request.onsuccess = () => {
-        location.reload()
-      }
-    }
-  })
 }
 </script>
 

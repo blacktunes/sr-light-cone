@@ -1,20 +1,22 @@
+import DataManager from '@/components/Popup/DataManager.vue'
 import Setting from '@/components/Popup/Setting.vue'
 import Show from '@/components/Popup/Show/Show.vue'
-import { setting } from '@/store/data'
-import { loading, confirm, createPopupManager, cropper, input, select, log } from 'star-rail-vue'
+import { state } from '@/store/data'
+import { confirm, createPopupManager, cropper, input, loading, log, select } from 'star-rail-vue'
 
 export const popupManager = createPopupManager({
   loading,
   show: {
     component: Show,
     open: (id: number) => {
-      setting.lightConeID = id
+      state.lightConeID = id
     },
     close: () => {
-      setting.lightConeID = undefined
+      state.lightConeID = undefined
     }
   },
   log,
+  data: { component: DataManager },
   setting: { component: Setting },
   cropper,
   confirm,

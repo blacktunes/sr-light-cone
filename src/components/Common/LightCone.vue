@@ -173,7 +173,7 @@ defineProps<{
     .border-8
       width 50px
       height 30px
-      transform translate3d(807px, 5px, 75px) rotateY(-90deg) rotateX(-45deg)
+      transform translate3d(807px, 5px, 75px) rotateY(-91deg) rotateX(-45deg)
       transform-origin top
 
   .mask

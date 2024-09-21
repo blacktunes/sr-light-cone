@@ -1,7 +1,7 @@
 import { fateList } from '@/assets/scripts/images'
 import { popupManager } from '@/assets/scripts/popup'
+import { currentLightCone, setting, state } from '@/store/data'
 import { screenshot } from 'star-rail-vue'
-import { currentLightCone, setting } from '@/store/data'
 
 export const updateTime = () => {
   if (!currentLightCone.value) return
@@ -56,13 +56,24 @@ export const onImageClick = () => {
 export const onShareClick = (dom?: HTMLElement | null) => {
   if (popupManager.isLoading()) return
 
-  setting.screenshot = true
+  state.screenshot = true
   popupManager.open('loading')
   nextTick(() => {
     if (dom) {
       if (!currentLightCone.value) return
 
-      screenshot(dom, { name: currentLightCone.value.name, download: setting.download })
+      screenshot(
+        dom,
+        {
+          name: currentLightCone.value.name,
+          download: setting.download,
+          data: {
+            raw: JSON.stringify(toRaw(currentLightCone.value)),
+            filename: 'raw.lc'
+          }
+        },
+        { pixelRatio: setting.quality }
+      )
         .catch(() => {
           popupManager.open('confirm', {
             title: '图片保存异常',
@@ -72,12 +83,12 @@ export const onShareClick = (dom?: HTMLElement | null) => {
         })
         .finally(() => {
           setTimeout(() => {
-            setting.screenshot = false
+            state.screenshot = false
             popupManager.close('loading')
           }, 1000)
         })
     } else {
-      setting.screenshot = false
+      state.screenshot = false
       popupManager.close('loading')
     }
   })
