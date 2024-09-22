@@ -117,7 +117,7 @@ const handleDelete = (id: number) => {
 
 const handleDrop = (e: DragEvent) => {
   if (e?.dataTransfer?.files) {
-    uploadFile(e.dataTransfer.files[0])
+    uploadFile(e.dataTransfer.files[0], true)
   }
 }
 </script>

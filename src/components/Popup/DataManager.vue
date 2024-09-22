@@ -50,7 +50,7 @@
 
 <script lang="ts" setup>
 import { popupManager } from '@/assets/scripts/popup'
-import { uploadFile } from '@/assets/scripts/upload'
+import { Accept, uploadFile } from '@/assets/scripts/upload'
 import { data } from '@/store/data'
 import { compressToUint8Array } from 'lz-string'
 import { Popup, Window } from 'star-rail-vue'
@@ -83,10 +83,6 @@ const countStrToSize = (str: string) => {
 }
 
 const dataUsage = computed(() => `${countStrToSize(JSON.stringify(data.lightCone))}`)
-
-enum Accept {
-  lightCone = '.srlc'
-}
 
 const hasData = computed(() => data.lightCone.length > 0)
 

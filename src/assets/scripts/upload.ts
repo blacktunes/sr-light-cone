@@ -48,14 +48,14 @@ const dataRule = {
   }
 }
 
-enum Accept {
+export enum Accept {
   lightCone = '.srlc'
 }
 
 setLocale(zhLocale)
 const parameter = new Parameter()
 
-export const uploadFile = async (file: File) => {
+export const uploadFile = async (file: File, open?: boolean) => {
   const accept = file.name.split('.').pop()
   if (`.${accept}` === Accept.lightCone) {
     const reader = new FileReader()
@@ -86,11 +86,6 @@ export const uploadFile = async (file: File) => {
               title: '光锥导入失败',
               text: ['请检查文件是否正确']
             })
-          } else if (num < lightConeList.length) {
-            popupManager.open('confirm', {
-              title: '光锥导入完成',
-              text: ['部分光锥导入失败']
-            })
           } else {
             popupManager.open('confirm', {
               title: '光锥导入完成',
@@ -114,7 +109,9 @@ export const uploadFile = async (file: File) => {
         throw Error()
       }
       const lightCone = JSON.parse(decompress(await raw.async('text'))) as LightCone
-      lightCone.time = Date.now()
+      const time = Date.now()
+      lightCone.time = time
+      lightCone.id = time
       const val = parameter.validate(dataRule, lightCone)
       if (val) {
         val.forEach((err) => {
@@ -123,10 +120,14 @@ export const uploadFile = async (file: File) => {
         throw Error()
       } else {
         data.lightCone.push(lightCone)
-        popupManager.open('confirm', {
-          title: '光锥导入完成',
-          text: ['已添加新光锥', lightCone.name]
-        })
+        if (open) {
+          popupManager.open('show', lightCone.id)
+        } else {
+          popupManager.open('confirm', {
+            title: '光锥导入完成',
+            text: ['已添加新光锥', lightCone.name]
+          })
+        }
       }
     } catch {
       popupManager.open('confirm', {
