@@ -8,9 +8,9 @@ import { hotkey } from './assets/scripts/hotkey'
 import { logCheck } from './assets/scripts/log'
 import { updateCheck } from './assets/scripts/update'
 
-window.BUILD_TIME = new Date(BUILD_TIME)
-
-analytics('G-4MMBK9RWHE', import.meta.env.MODE === 'development')
+if (import.meta.env.MODE === 'production') {
+  analytics('G-4MMBK9RWHE')
+}
 
 createApp(App)
   .use(VueDOMPurifyHTML, {
@@ -22,5 +22,5 @@ createApp(App)
   .mount('#app')
 
 hotkey()
-logCheck('sr-light-cone-time')
+logCheck('sr-light-cone-update')
 loadDatabase().then(updateCheck)

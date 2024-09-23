@@ -1,18 +1,17 @@
 import { fileURLToPath, URL } from 'node:url'
 
-import { defineConfig, splitVendorChunkPlugin } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
+import { buildTime } from 'star-rail-vue/vite'
 import AutoImport from 'unplugin-auto-import/vite'
-import VueDevTools from 'vite-plugin-vue-devtools'
+import { defineConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
+import VueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  define: {
-    BUILD_TIME: Date.now()
-  },
   plugins: [
+    buildTime(),
     vue({
       script: {
         defineModel: true
@@ -22,7 +21,6 @@ export default defineConfig({
     AutoImport({
       imports: ['vue']
     }),
-    splitVendorChunkPlugin(),
     VueDevTools(),
     VitePWA({
       mode: 'production',
@@ -89,6 +87,14 @@ export default defineConfig({
     }
   },
   build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vue: ['vue'],
+          sr: ['star-rail-vue']
+        }
+      }
+    },
     assetsInlineLimit: 1024 * 200,
     chunkSizeWarningLimit: 1024
   }
