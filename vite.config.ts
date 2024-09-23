@@ -89,6 +89,14 @@ export default defineConfig({
     }
   },
   build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vue: ['vue'],
+          sr: ['star-rail-vue']
+        }
+      }
+    },
     assetsInlineLimit: 1024 * 200,
     chunkSizeWarningLimit: 1024
   }
