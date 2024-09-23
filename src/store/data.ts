@@ -1,3 +1,5 @@
+import { setLocalStorage } from 'star-rail-vue'
+
 export const state: {
   lightConeID?: number
   screenshot: boolean
@@ -28,21 +30,4 @@ export const data = reactive<{
   lightCone: []
 })
 
-try {
-  const _setting = JSON.parse(localStorage.getItem('sr-light-cone-setting') || '{}')
-  for (const _key in _setting) {
-    const key = _key as keyof typeof setting
-    if (
-      _setting[_key] !== undefined &&
-      setting[key] !== undefined &&
-      _setting[_key] !== setting[key] &&
-      typeof _setting[_key] === typeof setting[key]
-    ) {
-      ;(setting[key] as any) = _setting[_key]
-    }
-  }
-} finally {
-  watch(setting, () => {
-    localStorage.setItem('sr-light-cone-setting', JSON.stringify(toRaw(setting)))
-  })
-}
+setLocalStorage(setting, 'sr-light-cone-setting')
