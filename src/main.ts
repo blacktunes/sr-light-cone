@@ -8,9 +8,7 @@ import { hotkey } from './assets/scripts/hotkey'
 import { logCheck } from './assets/scripts/log'
 import { updateCheck } from './assets/scripts/update'
 
-if (import.meta.env.MODE === 'production') {
-  analytics('G-4MMBK9RWHE')
-}
+analytics('G-4MMBK9RWHE', import.meta.env.MODE === 'development')
 
 createApp(App)
   .use(VueDOMPurifyHTML, {
