@@ -1,4 +1,5 @@
-import { currentLightCone, setting } from '@/store/data'
+import { currentLightCone } from '@/store/data'
+import { setting } from '@/store/setting'
 import { emitter } from './event'
 import { popupManager } from './popup'
 

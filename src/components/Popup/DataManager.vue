@@ -31,13 +31,13 @@
             <div
               class="btn"
               :class="{ disable: !hasData }"
-              @click="downloadData"
+              @click="exportFile"
             >
               <span>导出</span>
             </div>
             <div
               class="btn"
-              @click="uploadDate"
+              @click="inputFile"
             >
               <span>导入</span>
             </div>
@@ -49,11 +49,10 @@
 </template>
 
 <script lang="ts" setup>
+import { inputFile, exportFile } from '@/assets/scripts/file'
 import { popupManager } from '@/assets/scripts/popup'
-import { Accept, uploadFile } from '@/assets/scripts/upload'
 import { data } from '@/store/data'
-import { compressToUint8Array } from 'lz-string'
-import { Popup, Window } from 'star-rail-vue'
+import { countStrToSize, Popup, Window } from 'star-rail-vue'
 
 const props = defineProps<{
   name: string
@@ -66,20 +65,6 @@ const emits = defineEmits<{
 
 const close = () => {
   emits('close', props.name)
-}
-
-const countStrToSize = (str: string) => {
-  let count = 0
-  for (let i = 0; i < str.length; i++) {
-    count += Math.ceil(str.charCodeAt(i).toString(2).length / 8)
-  }
-
-  if (count === 0) return '0 B'
-  const k = 1024,
-    sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
-    i = Math.floor(Math.log(count) / Math.log(k))
-
-  return `${Number((count / Math.pow(k, i)).toPrecision(3))} ${sizes[i]}`
 }
 
 const dataUsage = computed(() => `${countStrToSize(JSON.stringify(data.lightCone))}`)
@@ -101,32 +86,6 @@ const deleteData = () => {
       })
     }
   })
-}
-
-const downloadData = () => {
-  const str = JSON.stringify(toRaw(data.lightCone), null, 2)
-  const blob = new Blob([compressToUint8Array(str)], { type: 'application/octet-stream' })
-  const url = URL.createObjectURL(blob)
-  const a = document.createElement('a')
-  a.href = url
-  a.download = `SR-${new Date().toLocaleString()}${Accept.lightCone}`
-  a.click()
-  a.remove()
-  URL.revokeObjectURL(url)
-}
-
-const uploadDate = async () => {
-  const el = document.createElement('input')
-  el.type = 'file'
-  el.accept = `.png,${Accept.lightCone}`
-  el.onchange = async () => {
-    const file = el.files?.[0]
-    if (file) {
-      await uploadFile(file)
-    }
-  }
-  el.click()
-  el.remove()
 }
 </script>
 

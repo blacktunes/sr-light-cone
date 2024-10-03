@@ -1,7 +1,7 @@
 import DataManager from '@/components/Popup/DataManager.vue'
 import Setting from '@/components/Popup/Setting.vue'
 import Show from '@/components/Popup/Show/Show.vue'
-import { state } from '@/store/data'
+import { state } from '@/store/setting'
 import { confirm, createPopupManager, cropper, input, loading, log, select } from 'star-rail-vue'
 
 export const popupManager = createPopupManager({

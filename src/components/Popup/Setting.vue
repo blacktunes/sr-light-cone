@@ -40,9 +40,7 @@
         >
           <div class="text">
             <span class="label">截图质量</span>
-            <span class="value">{{
-              setting.quality === 1 ? '高(1600px)' : '低(900px)'
-            }}</span>
+            <span class="value">{{ setting.quality === 1 ? '高(1600px)' : '低(900px)' }}</span>
           </div>
           <Icon
             name="change"
@@ -71,7 +69,7 @@
 <script lang="ts" setup>
 import Log from '@/assets/data/log'
 import { popupManager } from '@/assets/scripts/popup'
-import { setting } from '@/store/data'
+import { setting } from '@/store/setting'
 import { Popup, Window } from 'star-rail-vue'
 import Icon from '../Common/Icon.vue'
 

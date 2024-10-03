@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts" setup>
-import { setting } from '@/store/data'
+import { setting } from '@/store/setting'
 import { Popup } from 'star-rail-vue'
 import DataBank from './DataBank.vue'
 import EventWarp from './EventWarp.vue'

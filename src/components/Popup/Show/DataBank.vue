@@ -227,7 +227,7 @@
         <MenuBtn
           v-show="!popupManager.isLoading()"
           name="share"
-          @click.stop="onShareClick(viewDom)"
+          @click.stop="createScreenshot(viewDom)"
         />
       </div>
     </Transition>
@@ -236,20 +236,15 @@
 
 <script lang="ts" setup>
 import { emitter } from '@/assets/scripts/event'
+import { createScreenshot } from '@/assets/scripts/file'
 import { fateIcon } from '@/assets/scripts/images'
 import { popupManager } from '@/assets/scripts/popup'
 import Icon from '@/components/Common/Icon.vue'
 import LightCone from '@/components/Common/LightCone.vue'
 import MenuBtn from '@/components/Common/MenuBtn.vue'
-import { currentLightCone, state } from '@/store/data'
-import {
-  onImageClick,
-  onLevelClick,
-  onNameClick,
-  onShareClick,
-  onTypeClick,
-  updateTime
-} from './utils'
+import { currentLightCone } from '@/store/data'
+import { state } from '@/store/setting'
+import { onImageClick, onLevelClick, onNameClick, onTypeClick, updateTime } from './utils'
 
 defineEmits<{
   (event: 'close'): void
@@ -345,7 +340,7 @@ const processText = (text: string, color?: boolean) => {
 }
 
 onMounted(() => {
-  emitter.on('screenshot', () => onShareClick(viewDom.value))
+  emitter.on('screenshot', () => createScreenshot(viewDom.value))
 })
 
 onUnmounted(() => {

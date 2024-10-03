@@ -21,14 +21,3 @@ interface LightConeState {
   def: string
   skill: string
 }
-
-interface Log {
-  time: string
-  text: {
-    text: string
-    info?: string | string[]
-    author?: string
-    url?: string
-    highlight?: boolean
-  }[]
-}

@@ -59,11 +59,12 @@
 </template>
 
 <script lang="ts" setup>
-import { uploadFile } from '@/assets/scripts/upload'
 import { fateList } from '@/assets/scripts/images'
 import { getDetails } from '@/assets/scripts/lightcone'
 import { popupManager } from '@/assets/scripts/popup'
-import { currentLightCone, data, setting } from '@/store/data'
+import { importFile } from '@/assets/scripts/file'
+import { currentLightCone, data } from '@/store/data'
+import { setting } from '@/store/setting'
 import Card from './Common/Card.vue'
 import GroupBtn from './Common/GroupBtn.vue'
 
@@ -117,7 +118,7 @@ const handleDelete = (id: number) => {
 
 const handleDrop = (e: DragEvent) => {
   if (e?.dataTransfer?.files) {
-    uploadFile(e.dataTransfer.files[0], true)
+    importFile(e.dataTransfer.files[0], true)
   }
 }
 </script>

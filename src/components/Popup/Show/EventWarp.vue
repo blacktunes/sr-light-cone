@@ -242,7 +242,7 @@
       :style="{ opacity: popupManager.isLoading() || animation ? 0 : undefined }"
       class="share-btn"
       name="share"
-      @click.stop="onShareClick(viewDom)"
+      @click.stop="createScreenshot(viewDom)"
     />
     <Close
       :style="{ opacity: popupManager.isLoading() || animation ? 0 : undefined }"
@@ -258,6 +258,7 @@ import r from '@/assets/images/r.webp'
 import sr from '@/assets/images/sr.webp'
 import ssr from '@/assets/images/ssr.webp'
 import { emitter } from '@/assets/scripts/event'
+import { createScreenshot } from '@/assets/scripts/file'
 import { fateFullIcon } from '@/assets/scripts/images'
 import { popupManager } from '@/assets/scripts/popup'
 import Icon from '@/components/Common/Icon.vue'
@@ -265,7 +266,7 @@ import LightCone from '@/components/Common/LightCone.vue'
 import MenuBtn from '@/components/Common/MenuBtn.vue'
 import { currentLightCone } from '@/store/data'
 import { Close } from 'star-rail-vue'
-import { onImageClick, onLevelClick, onNameClick, onShareClick, onTypeClick } from './utils'
+import { onImageClick, onLevelClick, onNameClick, onTypeClick } from './utils'
 
 defineEmits<{
   (event: 'close'): void
@@ -379,7 +380,7 @@ const onNewFlagClick = () => {
 }
 
 onMounted(() => {
-  emitter.on('screenshot', () => onShareClick(viewDom.value))
+  emitter.on('screenshot', () => createScreenshot(viewDom.value))
 })
 
 onUnmounted(() => {

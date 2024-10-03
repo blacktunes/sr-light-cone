@@ -2,6 +2,7 @@ import { data } from '@/store/data'
 import { createDatabase } from 'star-rail-vue'
 import { getDetails } from './lightcone'
 import { popupManager } from './popup'
+import { KEY } from '@/store/setting'
 
 const setDetails = () => {
   for (const i in data.lightCone) {
@@ -31,7 +32,7 @@ export const loadDatabase = () => {
       })
     }, 30 * 1000)
 
-    createDatabase('sr-light-cone', '光锥')
+    createDatabase(KEY.DATABASE_NAME, '光锥')
       .add({
         data: data,
         key: 'lightCone',
